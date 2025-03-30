@@ -16,6 +16,7 @@
             color: white;
             text-align: center;
             overflow: hidden;
+            transition: background 0.5s, color 0.5s;
         }
         #particles-js {
             position: fixed;
@@ -64,25 +65,23 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            background: transparent;
+            background: #007BFF;
+            color: white;
+            padding: 10px 15px;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
         }
-        .theme-toggle img {
-            width: 40px;
-            transition: transform 0.3s;
-        }
-        .theme-toggle:hover img {
-            transform: rotate(20deg);
+        .theme-toggle:hover {
+            background: #0056b3;
         }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
-    <button class="theme-toggle" id="theme" onclick="toggleTheme()">
-        <img class="sun" src="images/sun-regular-240.png" alt="Light">
-        <img class="moon" src="images/moon-regular-240.png" alt="Dark" style="display:none;">
-    </button><nav>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button><nav>
     <a href="about.html">About</a>
     <a href="cool.html">Games</a>
     <a href="rando.html">Music</a>
@@ -104,15 +103,13 @@
 
 <script>
     function toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        const sun = document.querySelector('.sun');
-        const moon = document.querySelector('.moon');
-        if (document.body.classList.contains('dark-mode')) {
-            sun.style.display = 'none';
-            moon.style.display = 'block';
+        document.body.classList.toggle('light-mode');
+        if (document.body.classList.contains('light-mode')) {
+            document.body.style.backgroundColor = "#fff";
+            document.body.style.color = "#000";
         } else {
-            sun.style.display = 'block';
-            moon.style.display = 'none';
+            document.body.style.backgroundColor = "#000";
+            document.body.style.color = "#fff";
         }
     }
 
