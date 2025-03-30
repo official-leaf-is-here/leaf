@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,6 +51,29 @@
             font-size: 16px;
             width: 200px;
         }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .light-mode .back-button {
+            color: black;
+            background: rgba(0, 0, 0, 0.1);
+        }
+        .light-mode .back-button:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
         nav {
             display: flex;
             justify-content: center;
@@ -79,79 +101,60 @@
             width: 80px;
             height: 80px;
         }
-        .theme-toggle {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s, color 0.3s;
-        }
-        .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        .light-mode .theme-toggle {
-            color: black;
-            background: rgba(0, 0, 0, 0.1);
-        }
-        .light-mode .theme-toggle:hover {
-            background: rgba(0, 0, 0, 0.3);
-        }
     </style>
 </head>
 <body>
-    <div id="particles-js"></div>
-    
-    <div class="header">
-        <input type="text" class="search-bar" id="search" placeholder="Search for a game...">
-        <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
-    </div>
-    
-    <nav id="game-links">
-        <a href="games/pacman-lite-master/index.html" class="game-button">
-            <img src="images/pacman.png" alt="Pac-Man Icon">
-            <p>Pac-Man</p>
-        </a>
-        <a href="games/there-is-no-game/index.html" class="game-button">
-            <img src="images/there-is-no-game.png" alt="There is No Game Icon">
-            <p>There is No Game</p>
-        </a>
-        <a href="games/vex-5/index.html" class="game-button">
-            <img src="images/vex-5.jpeg" alt="Vex 5 Icon">
-            <p>Vex 5</p>
-        </a>
-        <a href="games/drift-boss/index.html" class="game-button">
-            <img src="images/drift-boss.jpeg" alt="Drift Boss Icon">
-            <p>Drift Boss</p>
-        </a>
-    </nav>
-    
-    <script>
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
-        }
+    <div id="particles-js"></div><button class="back-button" onclick="window.location.href='index.html'">⬅ Back</button>
 
-        particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 100 },
-                "size": { "value": 3 },
-                "move": { "speed": 1, "direction": "none", "random": true }
+<div class="header">
+    <input type="text" class="search-bar" id="search" placeholder="Search for a game...">
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
+</div>
+
+<nav id="game-links">
+    <a href="games/pacman-lite-master/index.html" class="game-button">
+        <img src="images/pacman.png" alt="Pac-Man Icon">
+        <p>Pac-Man</p>
+    </a>
+    <a href="games/there-is-no-game/index.html" class="game-button">
+        <img src="images/there-is-no-game.png" alt="There is No Game Icon">
+        <p>There is No Game</p>
+    </a>
+    <a href="games/vex-5/index.html" class="game-button">
+        <img src="images/vex-5.jpeg" alt="Vex 5 Icon">
+        <p>Vex 5</p>
+    </a>
+    <a href="games/drift-boss/index.html" class="game-button">
+        <img src="images/drift-boss.jpeg" alt="Drift Boss Icon">
+        <p>Drift Boss</p>
+    </a>
+</nav>
+
+<script>
+    function toggleTheme() {
+        document.body.classList.toggle('light-mode');
+    }
+
+    particlesJS("particles-js", {
+        "particles": {
+            "number": { "value": 100 },
+            "size": { "value": 3 },
+            "move": { "speed": 1, "direction": "none", "random": true }
+        }
+    });
+
+    document.getElementById('search').addEventListener('input', function() {
+        let filter = this.value.toLowerCase();
+        let links = document.querySelectorAll('.game-button');
+        links.forEach(link => {
+            if (link.textContent.toLowerCase().includes(filter)) {
+                link.style.display = "block";
+            } else {
+                link.style.display = "none";
             }
         });
+    });
+</script>
 
-        document.getElementById('search').addEventListener('input', function() {
-            let filter = this.value.toLowerCase();
-            let links = document.querySelectorAll('.game-button');
-            links.forEach(link => {
-                if (link.textContent.toLowerCase().includes(filter)) {
-                    link.style.display = "block";
-                } else {
-                    link.style.display = "none";
-                }
-            });
-        });
-    </script>
 </body>
 </html>
