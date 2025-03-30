@@ -70,10 +70,10 @@
 <body>
     <div id="particles-js"></div>
     <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button><nav>
-        <a href="games/pacman-lite-master/index.html">Pac-Man</a>
-        <a href="games/there-is-no-game/index.html">there-is-no-game</a>
-        <a href="games/vex-5/index.html">vex-5</a>
-        
+    <a href="games/pacman-lite-master/index.html">Pac-Man</a>
+    <a href="games/there-is-no-game/index.html">there-is-no-game</a>
+    <a href="games/vex-5/index.html">vex-5</a>
+    
 </nav>
 
 <div class="container">
@@ -82,32 +82,17 @@
 </div>
 
 <script>
-    let lastClickTime = 0;
-    const clickCooldown = 500; // 500ms cooldown
-
     function toggleTheme() {
-        const now = new Date().getTime();
-        if (now - lastClickTime < clickCooldown) return;
-        lastClickTime = now;
-        
         document.body.classList.toggle('light-mode');
     }
 
-    let particlesLoaded = false;
-    document.body.addEventListener('click', () => {
-        const now = new Date().getTime();
-        if (now - lastClickTime < clickCooldown || particlesLoaded) return;
-        lastClickTime = now;
-        particlesLoaded = true;
-        
-        particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 100 },
-                "size": { "value": 3 },
-                "move": { "speed": 1, "direction": "none", "random": true }
-            }
-        });
-    }, { once: true }); // Ensures particles only load once
+    particlesJS("particles-js", {
+        "particles": {
+            "number": { "value": 100 },
+            "size": { "value": 3 },
+            "move": { "speed": 1, "direction": "none", "random": true }
+        }
+    });
 </script>
 
 </body>
