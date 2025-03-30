@@ -1,43 +1,143 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stealth Tools</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randol's Modern Website</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="https://cdn.glitch.me/db4f09eb-277d-4bef-bcc3-92bbc5be3e96%2Fimages.jpeg?v=1634854707373" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+            transition: background 0.5s, color 0.5s;
+        }
+        .light-mode {
+            background-color: #fff !important;
+            color: black !important;
+        }
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .light-mode #particles-js canvas {
+            filter: invert(1);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 2;
+        }
+        .theme-toggle {
+            background: transparent;
+            color: white;
+            padding: 10px 15px;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, color 0.3s;
+        }
+        .light-mode .theme-toggle {
+            color: black;
+            border-color: black;
+        }
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .icons-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 3;
+        }
+        .icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            z-index: 3;
+        }
+        .icon img {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            border-radius: 8px;
+        }
+        .icon span {
+            margin-top: 5px;
+            font-size: 14px;
+            color: white;
+        }
+        .icon:hover img {
+            background: rgb(255, 255, 255);
+        }
+        .content {
+            margin-top: 150px;
+            position: relative;
+            z-index: 3;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Popup Window (2025 Workaround) -->
-    <div class="card">
-      <h3>Discreet Mode</h3>
-      <p>Open in a minimal popup (no URL bar).</p>
-      <button id="popupBtn">Open Secure Window</button>
-    </div>
+    <div id="particles-js"></div><div class="header">
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
+</div>
 
-    <!-- Panic Key (2025) -->
-    <div class="card">
-      <h3>Emergency Redirect</h3>
-      <p>Press <kbd id="displayKey">Shift + P</kbd> to escape.</p>
-      <input type="text" id="keyInput" placeholder="New Key (e.g., Shift+Q)">
-      <input type="url" id="redirectUrl" placeholder="https://example.com">
-      <button id="saveBtn">Update Key</button>
+<div class="icons-container">
+    <div class="icon" onclick="window.location.href='games.html'">
+        <img src="images/console.png" alt="Games">
+        <span>Games</span>
     </div>
-
-    <!-- Tab Cloaking (2025) -->
-    <div class="card">
-      <h3>Tab Disguise</h3>
-      <select id="sitePreset">
-        <option value="Google Docs">Google Docs</option>
-        <option value="Outlook">Outlook</option>
-        <option value="Zoom">Zoom</option>
-      </select>
-      <button id="cloakBtn">Apply Disguise</button>
+    <div class="icon" onclick="window.location.href='apps.html'">
+        <img src="images/telephone.png" alt="Apps">
+        <span>Apps</span>
     </div>
-  </div>
+    <div class="icon" onclick="window.location.href='settings.html'">
+        <img src="images/settings.png" alt="Settings">
+        <span>Settings</span>
+    </div>
+</div>
 
-  <script src="settings.js"></script>
+<div class="content">
+    <h1>Welcome to My Modern Website</h1>
+    <p>This is a redesigned version of the website with a professional UI and enhanced design.</p>
+</div>
+
+<script>
+    function toggleTheme() {
+        document.body.classList.toggle('light-mode');
+    }
+
+    particlesJS("particles-js", {
+        "particles": {
+            "number": { "value": 100 },
+            "size": { "value": 3 },
+            "move": { "speed": 1, "direction": "none", "random": true }
+        }
+    });
+</script>
+
 </body>
 </html>
-
