@@ -63,21 +63,6 @@
 .moon {
   size: 20px;
 }
-html:has(> .dark) {
-  background: rgb(255,0,234);
-background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 100%);
-  background-size: 100% 100vh;
-  background-attachment: fixed;
-  
-}
-html {
-  background: rgb(246, 72, 232);
-  background: linear-gradient(0deg, rgba(246, 72, 232, 1) 0%, rgba(155, 140, 233, 1) 100%);
-  background-size: 100% 100vh;
-  background-attachment: fixed;
-  
-  
-}
 body {
   font-family: Arial, sans-serif;
 }
