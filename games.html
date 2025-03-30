@@ -45,6 +45,12 @@
             position: relative;
             z-index: 2;
         }
+        .search-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+        }
         .search-bar {
             padding: 10px;
             border-radius: 5px;
@@ -52,7 +58,6 @@
             font-size: 16px;
             width: 70%;
             max-width: 600px;
-            margin: 20px auto;
         }
         .back-button {
             position: absolute;
@@ -96,15 +101,6 @@
         .theme-toggle:hover {
             background: rgba(255, 255, 255, 0.2);
         }
-        .search-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: fixed;
-            bottom: 10px;
-            width: 100%;
-            z-index: 2;
-        }
         nav {
             display: flex;
             justify-content: center;
@@ -142,6 +138,10 @@
         <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
     </div>
 
+    <div class="search-container">
+        <input type="text" class="search-bar" id="search" placeholder="Search for a game...">
+    </div>
+
     <nav id="game-links">
         <a href="games/pacman-lite-master/index.html" class="game-button">
             <img src="images/pacman.png" alt="Pac-Man Icon">
@@ -156,14 +156,10 @@
             <p>Vex 5</p>
         </a>
         <a href="games/crossy/index.html" class="game-button">
-            <img src="images/crossy.webp" alt="Crossy Roead Icon">
-            <p>Crossy </p>
+            <img src="images/crossy.webp" alt="Crossy Icon">
+            <p>Crossy</p>
         </a>
     </nav>
-
-    <div class="search-container">
-        <input type="text" class="search-bar" id="search" placeholder="Search for a game...">
-    </div>
 
     <script>
         function toggleTheme() {
