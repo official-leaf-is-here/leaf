@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stealth Tools</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+</head>
+<body>
+  <div class="container">
+    <!-- Popup Window (2025 Workaround) -->
+    <div class="card">
+      <h3>Discreet Mode</h3>
+      <p>Open in a minimal popup (no URL bar).</p>
+      <button id="popupBtn">Open Secure Window</button>
+    </div>
+
+    <!-- Panic Key (2025) -->
+    <div class="card">
+      <h3>Emergency Redirect</h3>
+      <p>Press <kbd id="displayKey">Shift + P</kbd> to escape.</p>
+      <input type="text" id="keyInput" placeholder="New Key (e.g., Shift+Q)">
+      <input type="url" id="redirectUrl" placeholder="https://example.com">
+      <button id="saveBtn">Update Key</button>
+    </div>
+
+    <!-- Tab Cloaking (2025) -->
+    <div class="card">
+      <h3>Tab Disguise</h3>
+      <select id="sitePreset">
+        <option value="Google Docs">Google Docs</option>
+        <option value="Outlook">Outlook</option>
+        <option value="Zoom">Zoom</option>
+      </select>
+      <button id="cloakBtn">Apply Disguise</button>
+    </div>
+  </div>
+
+  <script src="settings.js"></script>
+</body>
+</html>
+
