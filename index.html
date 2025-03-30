@@ -35,15 +35,22 @@
             display: flex;
             justify-content: center;
             gap: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
         }
         nav a {
-            color: rgb(255, 255, 255);
+            color: white;
             text-decoration: none;
             font-weight: bold;
             padding: 10px 15px;
             border-radius: 5px;
             transition: background 0.3s;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
         .theme-toggle {
             position: absolute;
@@ -65,17 +72,42 @@
         .container {
             padding: 20px;
         }
+        .more-button {
+            padding: 12px 20px;
+            font-size: 18px;
+            border: none;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 10px;
+        }
+        .more-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 4px 15px rgba(255, 75, 43, 0.6);
+        }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
-    <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button><nav>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button><nav id="nav-links">
     <a href="games/pacman-lite-master/index.html">Pac-Man</a>
     <a href="games/there-is-no-game/index.html">There is no game</a>
     <a href="games/vex-5/index.html">Vex 5</a>
     <a href="games/drift-boss/index.html">Drift boss</a>
     <a href="games/crossy/index.html">Crossy</a>
+    <span id="more-links" class="hidden">
+        <a href="games/mario/index.html">Mario</a>
+        <a href="games/zelda/index.html">Zelda</a>
+        <a href="games/sonic/index.html">Sonic</a>
+    </span>
 </nav>
+
+<button class="more-button" onclick="showMore()">More</button>
 
 <div class="container">
     <h1>Welcome to My Modern Website</h1>
@@ -85,6 +117,10 @@
 <script>
     function toggleTheme() {
         document.body.classList.toggle('light-mode');
+    }
+
+    function showMore() {
+        document.getElementById("more-links").classList.toggle("hidden");
     }
 
     particlesJS("particles-js", {
