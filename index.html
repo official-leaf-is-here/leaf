@@ -38,7 +38,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.4);
             border-radius: 10px;
             backdrop-filter: blur(10px);
             position: relative;
@@ -71,18 +71,24 @@
             background: rgba(255, 255, 255, 0.3);
         }
         .theme-toggle {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.1);
             color: white;
             padding: 10px 15px;
-            border: 2px solid white;
+            border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
             transition: background 0.3s, color 0.3s;
         }
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
         .light-mode .theme-toggle {
             color: black;
-            border-color: black;
+            background: rgba(0, 0, 0, 0.1);
+        }
+        .light-mode .theme-toggle:hover {
+            background: rgba(0, 0, 0, 0.3);
         }
         .container {
             padding: 20px;
@@ -101,7 +107,7 @@
     <a href="games/vex-5/index.html">Vex 5</a>
     <a href="games/drift-boss/index.html">Drift boss</a>
     <a href="games/crossy/index.html">Crossy</a>
-    <a href="games/fnaf/index.html">Fnaf</a>
+    <a href="games/mario/index.html">Mario</a>
     <a href="games/zelda/index.html">Zelda</a>
     <a href="games/sonic/index.html">Sonic</a>
 </nav>
