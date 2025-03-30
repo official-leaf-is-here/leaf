@@ -1,34 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-    <link rel="shortcut icon" href="https://wallpapercave.com/wp/wp10819318.jpg" type="image/x-icon">
-    <style>
-        html {
-            background: rgb(246,72,232);
-background: linear-gradient(0deg, rgba(246,72,232,1) 0%, rgba(155,140,233,1) 100%);
-        background-size: 100% 100vh;
-    }
-    a {
-        color: rgb(0, 255, 140);
-        font-size: 25px;
-        font-family: 'Brush Script MT', cursive;
-        
-    }
-    </style>
-    
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Games</title>
-</head><nav>
-    <a style="color:rgb(0, 255, 140);" href="index.html">Home</a>
-</nav>
+    <title>Game Search</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        input {
+            padding: 10px;
+            width: 300px;
+            margin-bottom: 10px;
+        }
+        .modern-button {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .modern-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 4px 10px rgba(255, 75, 43, 0.6);
+        }
+        #gameResults {
+            margin-top: 20px;
+        }
+    </style>
+</head>
 <body>
-<h1 style="color: (lightblue);" >Here Are The Games That i like to play </h1>
-<p> <a href="https://sites.google.com/view/games-unblockedd/">Premium Unlblocked Games</a>.</p>
-
-  
-
+    <input type="text" id="searchBox" placeholder="Search games..." onkeyup="searchGames()" />
+    <button class="modern-button" onclick="searchDuckDuckGo()">Search on DuckDuckGo</button>
+    <div id="gameResults"></div><script src="games.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
