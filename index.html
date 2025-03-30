@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,32 +45,6 @@
             position: relative;
             z-index: 2;
         }
-        .search-bar {
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            font-size: 16px;
-            width: 200px;
-        }
-        nav {
-            padding: 10px 0;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 10px 15px;
-            border-radius: 5px;
-            transition: background 0.3s;
-            background: rgba(255, 255, 255, 0.1);
-        }
-        nav a:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
         .theme-toggle {
             background: rgba(255, 255, 255, 0.1);
             color: white;
@@ -90,58 +65,64 @@
         .light-mode .theme-toggle:hover {
             background: rgba(0, 0, 0, 0.3);
         }
-        .container {
-            padding: 20px;
+        .icons-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            padding: 50px;
+        }
+        .icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .icon:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
     </style>
 </head>
 <body>
-    <div id="particles-js"></div><div class="header">
-    <input type="text" class="search-bar" id="search" placeholder="Search for a game...">
-    <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
-</div>
+    <div id="particles-js"></div>
 
-<nav id="nav-links">
-    <a href="games/pacman-lite-master/index.html">Pac-Man</a>
-    <a href="games/there-is-no-game/index.html">There is no game</a>
-    <a href="games/vex-5/index.html">Vex 5</a>
-    <a href="games/drift-boss/index.html">Drift boss</a>
-    <a href="games/crossy/index.html">Crossy</a>
-    <a href="games/mario/index.html">Mario</a>
-    <a href="games/zelda/index.html">Zelda</a>
-    <a href="games/sonic/index.html">Sonic</a>
-</nav>
+    <div class="header">
+        <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
+    </div>
 
-<div class="container">
-    <h1>Welcome to My Modern Website</h1>
-    <p>This is a redesigned version of the website with a professional UI and enhanced design.</p>
-</div>
+    <div class="icons-container">
+        <div class="icon" onclick="window.location.href='games.html'">
+            <img src="icons/controller.png" alt="Games Icon" width="50" height="50">
+            <p>Games</p>
+        </div>
+        <div class="icon" onclick="window.location.href='apps.html'">
+            <img src="icons/phone.png" alt="Apps Icon" width="50" height="50">
+            <p>Apps</p>
+        </div>
+        <div class="icon" onclick="window.location.href='settings.html'">
+            <img src="icons/settings.png" alt="Settings Icon" width="50" height="50">
+            <p>Settings</p>
+        </div>
+    </div>
 
-<script>
-    function toggleTheme() {
-        document.body.classList.toggle('light-mode');
-    }
-    
-    particlesJS("particles-js", {
-        "particles": {
-            "number": { "value": 100 },
-            "size": { "value": 3 },
-            "move": { "speed": 1, "direction": "none", "random": true }
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
         }
-    });
-    
-    document.getElementById('search').addEventListener('input', function() {
-        let filter = this.value.toLowerCase();
-        let links = document.querySelectorAll('nav a');
-        links.forEach(link => {
-            if (link.textContent.toLowerCase().includes(filter)) {
-                link.style.display = "inline-block";
-            } else {
-                link.style.display = "none";
+
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 100 },
+                "size": { "value": 3 },
+                "move": { "speed": 1, "direction": "none", "random": true }
             }
         });
-    });
-</script>
-
+    </script>
 </body>
 </html>
