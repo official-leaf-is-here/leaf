@@ -50,23 +50,36 @@
             right: 10px;
             display: flex;
             gap: 15px;
+            align-items: center;
+            z-index: 3;
         }
         .icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            z-index: 3;
+        }
+        .icon img {
             width: 40px;
             height: 40px;
             background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 8px;
             border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
         }
-        .icon:hover {
+        .icon span {
+            margin-top: 5px;
+            font-size: 14px;
+            color: white;
+        }
+        .icon:hover img {
             background: rgba(255, 255, 255, 0.3);
         }
         .content {
             margin-top: 150px;
+            position: relative;
+            z-index: 3;
         }
     </style>
 </head>
@@ -77,13 +90,16 @@
 
 <div class="icons-container">
     <div class="icon" onclick="window.location.href='games.html'">
-        <img src="icons/controller.png" alt="Games" width="30" height="30">
+        <img src="icons/controller.png" alt="Games">
+        <span>Games</span>
     </div>
     <div class="icon" onclick="window.location.href='apps.html'">
-        <img src="icons/phone.png" alt="Apps" width="30" height="30">
+        <img src="icons/phone.png" alt="Apps">
+        <span>Apps</span>
     </div>
     <div class="icon" onclick="window.location.href='settings.html'">
-        <img src="icons/settings.png" alt="Settings" width="30" height="30">
+        <img src="icons/settings.png" alt="Settings">
+        <span>Settings</span>
     </div>
 </div>
 
