@@ -1,185 +1,37 @@
-<!DOCTYPE html>
-<style>
-    /* FAKE GOOGLE CSS */
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Website</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: black;
+            color: white;
+        }
+        .modern-button {
+            padding: 12px 20px;
+            font-size: 18px;
+            border: none;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .modern-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 4px 15px rgba(255, 75, 43, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to My Modern Website</h1>
+    <button class="modern-button">Click Me</button><script src="script.js"></script>
 
-*{
-    margin: 0;
-    padding: 0;
-}
-body{
-    font-family: Arial, sans-serif;
-    font-size: 13px;
-}
-#container{
-    width:580px;
-    margin:0 auto;
-    text-align: center;
-}
-h1#logo{
-    width: 284px;
-    height: 95px;
-    background: url("https://upload.wikimedia.org/wikipedia/commons/c/c7/GoogleLogoSept12015.png") top left no-repeat;
-    background-size: 100%;
-    text-indent: -99999px;
-    margin: 0 auto;
-}
-
-input[type="text"] {
-    width: 580px;
-    padding: 6px;
-    margin:25px 0 10px;
-    border:solid 1px #ccc;
-    font-size:16px;
-}
-input[type="text"]:hover {
-    border-color: #aaa;
-}
-input[type="submit"] {
-    background: #eee;
-    color: #333;
-    width: 132px;
-    padding: 6px;
-    margin:25px 8px 10px 0;
-    border:solid 0px #ddd;
-    font-size:14px;
-    font-family: Arial, sans-serif;
-    font-weight: bold; 
-    border:solid 0.5px #ddd;
-}
-input[type="submit"]:hover {
-    border-color: #ccc;
-    border:solid 1px #ccc;
-    cursor: pointer;
-}
-small {
-    margin: 0 auto;
-    font-size: 12px;
-}
-a:link, a:visited {
-    color: dodgerblue;
-}
-nav#header{
-    text-align:right;
-    padding: 20px;
-}
-nav#header ul li{
-    display:inline;    
-}
-
-nav#header ul li a:link, 
-nav#header ul li a:visited,
-footer nav ul li a:link,
-footer nav ul li a:visited{
-    color: #555;
-    text-decoration: none;
-    padding:11px;
-}
-nav#header ul li a:hover,
-footer nav ul li a:hover{
-    text-decoration:underline
-} 
-footer{
-    background: #eee;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-}
-footer nav{
-    padding: 0px;
-    border-top:solid 1px #ccc;
-}
-nav ul li{
-    display: inline;
-}
-
-footer nav ul.right-links{
-    float:right
-}
-footer nav ul.left-links{
-    float:left
-}
-.clearfix:after{
-    content:"";
-    display:table;
-    clear:both;
-    
-}
-html{
-    background-color: black;
-}
-
-
-
-
-</style>
-<html>
-    <head>
-        <Title>Google</Title>
-        <link rel="stylesheet" href="Google.css" type="text/css">
-
-        
-        <!--[if IE]>
-        <script
-src="https://html5shim.googlecode.com/svn/trunk/html5.js">
-</script>
-        <![endif]-->
-    
-    
-    </head>
-    
-    <body>
-        
-        <nav id="header">
-            <ul>
-                <li><a href="">+You</a></li>
-                <li><a href="">Gmail</a></li>
-                <li><a href="">Images</a></li>
-                <li><a href="">Apps</a></li>
-                <li><a href="">Sign in</a></li>
-            </ul>
-        
-        
-        </nav>
-        
-        <div id="container">
-        <h1 id="logo">Google</h1>
-        
-        <form>
-        <input type="text">
-        <input type="submit" value="Google search">
-        <input type="submit" value="Feeling Lucky">
-               
-               </form>
-        
-        <p><small>Google.ca offered in:<a href=""> Fran&ccedil;ais</a></small></p>
-            </div><!--END OF CONTAINER-->
-        
-        <footer>
-            <nav class="clearfix">
-                <ul class="left-links">
-                     <li><a href="">Advertising</a></li>
-                <li><a href="">Business</a></li>
-                <li><a href="">About</a></li>
-                </ul>
-
-               
-                   <ul class="right-links"> 
-                     <li><a href="">Privacy</a></li>
-                <li><a href="">Terms</a></li>
-                <li><a href="">Settings</a></li>
-                </ul>
-            
-            
-            </nav>
-        
-        
-        </footer>
-    <script>
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'r' || event.key === 'R') {
-                window.location.href = 'index.html'; // Replace with the real webpage URL
-            }
-        });
-    </script>
 </body>
 </html>
