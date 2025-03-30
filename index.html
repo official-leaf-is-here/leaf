@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,84 +44,67 @@
             position: relative;
             z-index: 2;
         }
-        .theme-toggle {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s, color 0.3s;
-        }
-        .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        .light-mode .theme-toggle {
-            color: black;
-            background: rgba(0, 0, 0, 0.1);
-        }
-        .light-mode .theme-toggle:hover {
-            background: rgba(0, 0, 0, 0.3);
-        }
         .icons-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-            padding: 50px;
+            gap: 15px;
         }
         .icon {
-            width: 100px;
-            height: 100px;
+            width: 40px;
+            height: 40px;
             background: rgba(255, 255, 255, 0.1);
-            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             transition: background 0.3s;
         }
         .icon:hover {
             background: rgba(255, 255, 255, 0.3);
         }
+        .content {
+            margin-top: 150px;
+        }
     </style>
 </head>
 <body>
-    <div id="particles-js"></div>
+    <div id="particles-js"></div><div class="header">
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
+</div>
 
-    <div class="header">
-        <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
+<div class="icons-container">
+    <div class="icon" onclick="window.location.href='games.html'">
+        <img src="icons/controller.png" alt="Games" width="30" height="30">
     </div>
-
-    <div class="icons-container">
-        <div class="icon" onclick="window.location.href='games.html'">
-            <img src="icons/controller.png" alt="Games Icon" width="50" height="50">
-            <p>Games</p>
-        </div>
-        <div class="icon" onclick="window.location.href='apps.html'">
-            <img src="icons/phone.png" alt="Apps Icon" width="50" height="50">
-            <p>Apps</p>
-        </div>
-        <div class="icon" onclick="window.location.href='settings.html'">
-            <img src="icons/settings.png" alt="Settings Icon" width="50" height="50">
-            <p>Settings</p>
-        </div>
+    <div class="icon" onclick="window.location.href='apps.html'">
+        <img src="icons/phone.png" alt="Apps" width="30" height="30">
     </div>
+    <div class="icon" onclick="window.location.href='settings.html'">
+        <img src="icons/settings.png" alt="Settings" width="30" height="30">
+    </div>
+</div>
 
-    <script>
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
+<div class="content">
+    <h1>Welcome to My Modern Website</h1>
+    <p>This is a redesigned version of the website with a professional UI and enhanced design.</p>
+</div>
+
+<script>
+    function toggleTheme() {
+        document.body.classList.toggle('light-mode');
+    }
+
+    particlesJS("particles-js", {
+        "particles": {
+            "number": { "value": 100 },
+            "size": { "value": 3 },
+            "move": { "speed": 1, "direction": "none", "random": true }
         }
+    });
+</script>
 
-        particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 100 },
-                "size": { "value": 3 },
-                "move": { "speed": 1, "direction": "none", "random": true }
-            }
-        });
-    </script>
 </body>
 </html>
