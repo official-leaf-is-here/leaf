@@ -44,6 +44,23 @@
             position: relative;
             z-index: 2;
         }
+        .theme-toggle {
+            background: transparent;
+            color: white;
+            padding: 10px 15px;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, color 0.3s;
+        }
+        .light-mode .theme-toggle {
+            color: black;
+            border-color: black;
+        }
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
         .icons-container {
             position: absolute;
             top: 10px;
