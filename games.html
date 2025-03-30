@@ -50,7 +50,9 @@
             border-radius: 5px;
             border: none;
             font-size: 16px;
-            width: 200px;
+            width: 70%;
+            max-width: 600px;
+            margin: 20px auto;
         }
         .back-button {
             position: absolute;
@@ -64,7 +66,7 @@
             cursor: pointer;
             font-size: 16px;
             transition: background 0.3s, color 0.3s;
-            z-index: 3; /* Ensure the back button is on top */
+            z-index: 3;
         }
         .back-button:hover {
             background: rgba(255, 255, 255, 0.3);
@@ -94,6 +96,15 @@
         .theme-toggle:hover {
             background: rgba(255, 255, 255, 0.2);
         }
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            z-index: 2;
+        }
         nav {
             display: flex;
             justify-content: center;
@@ -118,8 +129,8 @@
             background: rgba(255, 255, 255, 0.3);
         }
         .game-button img {
-            width: 80px;
-            height: 80px;
+            width: 100px; /* Adjusted size for larger images */
+            height: 100px;
         }
     </style>
 </head>
@@ -128,7 +139,6 @@
     <button class="back-button" onclick="window.location.href='index.html'">⬅ Back</button>
 
     <div class="header">
-        <input type="text" class="search-bar" id="search" placeholder="Search for a game...">
         <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
     </div>
 
@@ -145,11 +155,15 @@
             <img src="images/vex-5.jpeg" alt="Vex 5 Icon">
             <p>Vex 5</p>
         </a>
-        <a href="games/crossy/index.html" class="game-button">
-            <img src="images/crossy.webp" alt="Crossy">
-            <p>Crossy<p>
+        <a href="games/drift-boss/index.html" class="game-button">
+            <img src="images/drift-boss.jpeg" alt="Drift Boss Icon">
+            <p>Drift Boss</p>
         </a>
     </nav>
+
+    <div class="search-container">
+        <input type="text" class="search-bar" id="search" placeholder="Search for a game...">
+    </div>
 
     <script>
         function toggleTheme() {
