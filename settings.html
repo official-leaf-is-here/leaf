@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings Panel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="settings-container">
+    <!-- About:Blank Cloaking -->
+    <div class="settings-card">
+      <h3>About:Blank Cloak</h3>
+      <p>Hide the page behind an about:blank (may not work in all browsers).</p>
+      <label class="switch">
+        <input type="checkbox" id="abToggle">
+        <span class="slider"></span>
+      </label>
+      <button onclick="activateAboutBlank()">Apply</button>
+    </div>
+
+    <!-- Panic Key -->
+    <div class="settings-card">
+      <h3>Panic Key</h3>
+      <p>Press a key to instantly redirect (e.g., <kbd>Shift</kbd> + <kbd>P</kbd>).</p>
+      <input type="text" id="panicKeyInput" placeholder="e.g., Shift+P" class="key-input">
+      <input type="text" id="panicRedirectUrl" placeholder="Redirect URL (e.g., https://google.com)" class="key-input">
+      <button onclick="setPanicKey()">Save</button>
+    </div>
+
+    <!-- Other settings (from previous example) -->
+    <div class="settings-card">
+      <h3>Tab Cloaker</h3>
+      <p>Change the title and favicon.</p>
+      <select id="cloakDropdown">
+        <option value="Default">Default</option>
+        <option value="Google">Google</option>
+        <option value="Wikipedia">Wikipedia</option>
+      </select>
+      <button onclick="applyCloak()">Apply</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
