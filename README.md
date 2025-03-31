@@ -1,6 +1,6 @@
 # Made by Randy :) 
 
-Hello WHo ElsEE HAHAAH LoL <h1>CREDITS ALL TO GITHUB<h1>
+Hello WHo ElsEE HAHAAH LoL <h1>CREDITS ALL TO ME!!!<h1>
 
 
 
