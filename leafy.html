@@ -135,7 +135,8 @@
             width: 150px;
             height: 150px;
             margin: 20px;
-            transition: background 0.3s;
+            transition: background 0.3s, color 0.3s;
+            position: relative;
         }
         .game-button:hover {
             background: rgba(255, 255, 255, 0.3);
@@ -145,7 +146,17 @@
             height: 100px;
             object-fit: cover;
         }
-
+        .popular {
+            background: neon;
+            border: 2px solid white;
+        }
+        .light-mode .game-button {
+            background: rgba(0, 0, 0, 0.1);
+            color: black;
+        }
+        .light-mode .game-button:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
         .request-btn {
             position: fixed;
             bottom: 20px;
@@ -166,6 +177,19 @@
         .request-btn:hover {
             background: rgba(255, 255, 255, 0.2);
         }
+        .light-mode .request-btn {
+            background: rgba(0, 0, 0, 0.1);
+            color: black;
+        }
+        .light-mode .request-btn:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        .no-results {
+            display: none; /* Initially hidden */
+            margin-top: 20px;
+            font-size: 18px;
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -183,7 +207,7 @@
     </div>
 
     <nav id="game-links">
-        <a href="games/polytrack-main/index.html" class="game-button">
+        <a href="games/polytrack-main/index.html" class="game-button popular">
             <img src="games/polytrack-main/images/icon.svg" alt="Polly Track Icon">
             <p>Polly Track</p>
         </a>
@@ -235,7 +259,6 @@
             <img src="images/monkey.png" alt="Monkey Icon">
             <p>Monkey Mart</p>
         </a>
-       
     
             <div>
                 <a href="https://forms.gle/EfkriY8Fyp7gLx9D8" class="request-btn" target="_blank">Request a game</a>
@@ -246,9 +269,21 @@
     </a>
     </nav>
 
+    <div class="no-results" id="no-results">No results found</div>
+
     <script>
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
+            const gameButtons = document.querySelectorAll('.game-button');
+            gameButtons.forEach(button => {
+                if (document.body.classList.contains('light-mode')) {
+                    button.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+                    button.style.color = 'black';
+                } else {
+                    button.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                    button.style.color = 'white';
+                }
+            });
         }
 
         particlesJS("particles-js", {
@@ -262,13 +297,23 @@
         document.getElementById('search').addEventListener('input', function() {
             let filter = this.value.toLowerCase();
             let links = document.querySelectorAll('.game-button');
+            let noResults = document.getElementById('no-results');
+            let hasResults = false;
+
             links.forEach(link => {
                 if (link.textContent.toLowerCase().includes(filter)) {
                     link.style.display = "block";
+                    hasResults = true;
                 } else {
                     link.style.display = "none";
                 }
             });
+
+            if (hasResults) {
+                noResults.style.display = "none";
+            } else {
+                noResults.style.display = "block";
+            }
         });
     </script>
 
