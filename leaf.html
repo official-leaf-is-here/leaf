@@ -99,23 +99,41 @@
             position: relative;
             z-index: 3;
         }
+        .fade-text {
+            opacity: 0;
+            transition: opacity 1s;
+        }
+        .fade-text.show {
+            opacity: 1;
+        }
         .request-btn {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: #f1c40f;
-            color: black;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
-            transition: background 0.3s, color 0.3s;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             z-index: 4;
         }
-        .request-btn:hover {
-            background: #e67e22;
+        .request-btn img {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            border-radius: 8px;
+        }
+        .request-btn span {
+            margin-top: 5px;
+            font-size: 14px;
             color: white;
+        }
+        .request-btn:hover img {
+            background: rgb(255, 255, 255);
         }
     </style>
 </head>
@@ -141,11 +159,14 @@
     </div>
 
     <div class="content">
-        <h1>Welcome to My Website!</h1>
-        <p>Have Fun</p>
+        <h1>Welcome to My Modern Website</h1>
+        <p id="changing-text" class="fade-text show">This is a redesigned version of the website with a professional UI and enhanced design.</p>
     </div>
 
-    <a href="https://forms.gle/nP7G773NK4PkLghu6" class="request-btn" target="_blank">Request Something</a>
+    <div class="request-btn" onclick="window.open('https://forms.gle/pcEzhyZnnbNdiG7Q9', '_blank')">
+        <img src="images/request.png" alt="Request">
+        <span>Request Something</span>
+    </div>
 
     <script>
         function toggleTheme() {
@@ -159,6 +180,25 @@
                 "move": { "speed": 1, "direction": "none", "random": true }
             }
         });
+
+        const phrases = [
+            "This is a redesigned version of the website with a professional UI and enhanced design.",
+            "Explore our latest features and improvements.",
+            "Join our community and start learning today.",
+            "Stay tuned for more updates and new content."
+        ];
+
+        let currentPhraseIndex = 0;
+        const changingTextElement = document.getElementById("changing-text");
+
+        setInterval(() => {
+            changingTextElement.classList.remove("show");
+            setTimeout(() => {
+                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                changingTextElement.textContent = phrases[currentPhraseIndex];
+                changingTextElement.classList.add("show");
+            }, 1000); // Duration of the transition
+        }, 5000); // Duration of each phrase
     </script>
 
 </body>
