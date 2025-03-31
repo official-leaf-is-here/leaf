@@ -111,29 +111,20 @@
             bottom: 20px;
             right: 20px;
             background: rgba(255, 255, 255, 0.1);
-            padding: 8px;
+            padding: 12px 24px;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
             z-index: 4;
-        }
-        .request-btn img {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 8px;
-            border-radius: 8px;
-        }
-        .request-btn span {
-            margin-top: 5px;
-            font-size: 14px;
+            font-size: 16px;
             color: white;
+            text-decoration: none;
         }
-        .request-btn:hover img {
-            background: rgb(255, 255, 255);
+        .request-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
     </style>
 </head>
@@ -164,7 +155,6 @@
     </div>
 
     <a href="https://forms.gle/EfkriY8Fyp7gLx9D8" class="request-btn" target="_blank">Request a game</a>
-    </div>
 
     <script>
         function toggleTheme() {
