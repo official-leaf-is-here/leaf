@@ -16,7 +16,7 @@
             background-color: #000;
             color: white;
             text-align: center;
-            overflow: auto; /* Changed from hidden to auto */
+            overflow: auto;
             transition: background 0.5s, color 0.5s;
         }
         .light-mode {
@@ -145,7 +145,8 @@
         }
         .game-button:hover {
             background: rgba(255, 255, 255, 0.3);
-            animation: jiggle 0.3s infinite;
+            animation: jiggle 0.3s ease-in-out;
+            animation-iteration-count: 5;
         }
         .game-button img {
             width: 100px; /* Adjusted size for larger images */
@@ -213,7 +214,6 @@
 </head>
 <body>
     <div id="particles-js"></div>
-    <button class="back-button" onclick="window.location.href='leaf.html'">⬅ Back</button>
 
     <div class="header">
         <div class="right-align">
@@ -226,79 +226,79 @@
     </div>
 
     <nav id="game-links">
-        <a href="games/polytrack-main/index.html" class="game-button popular">
+        <a href="/gaming/poly.html " class="game-button popular">
             <img src="games/polytrack-main/images/icon.svg" alt="Polly Track Icon">
-            <p>Polly Track</p>
+            <p>Poly Track</p>
         </a>
-        <a href="games/pacman-lite-master/index.html" class="game-button">
+        <a href="/gaming/pacman.html" class="game-button">
             <img src="images/pacman.png" alt="Pac-Man Icon">
             <p>Pac-Man</p>
         </a>
-        <a href="games/there-is-no-game/index.html" class="game-button">
+        <a href="/gaming/none.html" class="game-button">
             <img src="images/there-is-no-game.png" alt="There is No Game Icon">
             <p>There is No Game</p>
         </a>
-        <a href="games/vex-5/index.html" class="game-button">
+        <a href="/gaming/vex-5.html" class="game-button">
             <img src="images/vex-5.png" alt="Vex 5 Icon">
             <p>Vex 5</p>
         </a>
-        <a href="games/crossy/index.html" class="game-button">
+        <a href="/gaming/crossy.html" class="game-button">
             <img src="images/crossy.webp" alt="Crossy Icon">
             <p>Crossy</p>
         </a>
-        <a href="games/vex-3/index.html" class="game-button">
+        <a href="/gaming/vex-3.html" class="game-button">
             <img src="images/vex-3.png" alt="Vex 3 Icon">
             <p>Vex 3</p>
         </a>
-        <a href="games/fnaf/index.html" class="game-button">
+        <a href="/gaming/fnaf.html" class="game-button">
             <img src="images/fnaf.webp" alt="Fnaf 2 Icon">
             <p>Fnaf-2</p>
         </a>
-        <a href="games/ctr/index.html" class="game-button">
+        <a href="/gaming/ctr.html" class="game-button">
             <img src="games/ctr/favicon.ico" alt="Cut Icon">
             <p>Cut the rope</p>
         </a>
-        <a href="games/vex-6/index.html" class="game-button">
+        <a href="/gaming/vex-6.html" class="game-button">
             <img src="games/vex-6/assets/icon.jpeg" alt="Vex 6 Icon">
             <p>Vex 6</p>
         </a>
-        <a href="games/vex4/index.html" class="game-button">
+        <a href="/gaming/vex-4.html" class="game-button">
             <img src="images/vex4.png" alt="Vex 4 Icon">
             <p>Vex 4</p>
         </a>
-        <a href="games/slope/index.html" class="game-button">
+        <a href="/gaming/subway.html" class="game-button">
+            <img src="games/subwaysurf/assets/images/app-icon-144.png" alt="Subway Icon">
+            <p>Subway</p>
+        </a> 
+        <a href="/gaming/slope.html" class="game-button">
             <img src="games/slope/TemplateData/progressLogo.Dark.png" alt="Slope Icon">
             <p>Slope</p>
         </a> 
-        <a href="games/monkey.html" class="game-button">
+        <a href="/gaming/monkey.html" class="game-button">
             <img src="images/monkey.png" alt="Monkey Icon">
             <p>Monkey Mart</p>
         </a>
-        <a href="games/2/index.html" class="game-button">
+        <a href="/gaming/moto2.html" class="game-button">
             <img src="images/2.jpeg" alt="2 Icon">
             <p>Moto 2</p>
         </a> 
-        <a href="games/4-winter/index.html" class="game-button">
+        <a href="/gaming/moto4.html" class="game-button">
             <img src="images/4.jpeg" alt="4 Icon">
             <p>Moto 4</p>
         </a> 
-        <a href="games/6-spooky-land/index.html" class="game-button">
+        <a href="/gaming/moto6.html" class="game-button">
             <img src="images/6.jpeg" alt="6 Icon">
-            <p>Moto 2</p>
+            <p>Moto 6</p>
         </a>
-        <a href="games/bejing/fonts/index.html" class="game-button">
+        <a href="/gaming/beijing.html" class="game-button">
             <img src="images/bejing.jpeg" alt="Beijing Icon">
             <p>Subway Surfers Beijing</p>
         </a>
-        <a href="games/stickman/index.html" class="game-button">
+        <a href="/gaming/stickman.html" class="game-button">
             <img src="images/stick.png" alt="Stickman Spider Icon">
             <p>Stickman Hook</p>
         </a>
-        <a href="games/subwaysurf/index.html" class="game-button">
-            <img src="images/surf.jpeg" alt="Subwaysurf Icon">
-            <p>Subway Surfers</p>
-        </a>
-
+        
         <div>
             <a href="https://forms.gle/EfkriY8Fyp7gLx9D8" class="request-btn" target="_blank">Request a game</a>
         </div>
