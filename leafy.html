@@ -124,6 +124,10 @@
             gap: 20px;
             padding-top: 50px;
         }
+        @keyframes jiggle {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
         .game-button {
             background: rgba(255, 255, 255, 0.1);
             color: white;
@@ -141,7 +145,7 @@
         }
         .game-button:hover {
             background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-5px);
+            animation: jiggle 0.3s infinite;
         }
         .game-button img {
             width: 100px; /* Adjusted size for larger images */
