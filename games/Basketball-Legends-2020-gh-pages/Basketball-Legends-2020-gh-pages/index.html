@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />    
+    <link rel="stylesheet" href="assets/css/app.css" type="text/css" />    
+    <title>Basketball Legends Unblocked - ubg235 Poki</title>    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+</head>
+
+<body>
+    <div id="content"></div>
+    <div id="orientation"></div>
+    <div id="loader">Loading ...</div>
+    <script src="patch/js/poki-sdk.js"></script>    
+    <!-- <script type="text/javascript" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script> -->
+    <script type="text/javascript" src="assets/lib/nape.min.js">
+        var nape = "nape.min.js";
+    </script>
+    <script type="text/javascript" src="assets/lib/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="assets/lib/easeljs-0.8.2.combined.js"></script>
+    <script type="text/javascript" src="assets/lib/phaser.min.js"></script>
+    <script type="text/javascript" src="assets/lib/phaser-cachebuster.min.js"></script>
+    <script type="text/javascript" src="assets/lib/phaser-super-storage.min.js"></script>
+    <script type="text/javascript" src="assets/lib/dragonBones.min.js"></script>
+    <script type="text/javascript" src="assets/lib/pksl.js"></script>
+<script type="text/javascript" src="basketball_legends_2020.min.js?94d98243d8a70da6700e"></script>
+<script src="js/analytics_ubg_v1_4.js"></script>
+<script src="js/slopegame-gitlab-io.js"></script>
+</body>
+
+</html>
+<div id="fps-counter"></div>
+<style>
+    #fps-counter {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  padding: 5px;
+  border-radius: 5px;
+  z-index: 1000; /* Ensure it stays on top */
+}
+</style>
+<script>
+const fpsCounter = document.getElementById("fps-counter"); // Moved this to the correct place
+
+function calculateFPS() {
+    let lastFrameTime = performance.now();
+    let frames = 0;
+
+    function frameLoop() {
+        const now = performance.now();
+        frames++;
+
+        if (now - lastFrameTime >= 1000) {
+            const fps = Math.round(frames / ((now - lastFrameTime) / 1000));
+            fpsCounter.textContent = `FPS: ${fps}`;
+            frames = 0;
+            lastFrameTime = now;
+        }
+        requestAnimationFrame(frameLoop);
+    }
+    frameLoop();
+}
+
+calculateFPS(); // Ensure the FPS calculation starts
+</script>
