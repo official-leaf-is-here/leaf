@@ -135,20 +135,35 @@
             width: 150px;
             height: 150px;
             margin: 20px;
-            transition: background 0.3s, color 0.3s;
+            transition: background 0.3s, color 0.3s, transform 0.3s;
             position: relative;
+            overflow: hidden;
         }
         .game-button:hover {
             background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px);
         }
         .game-button img {
             width: 100px; /* Adjusted size for larger images */
             height: 100px;
             object-fit: cover;
+            border-radius: 15px; /* Rounded edges for images */
         }
         .popular {
-            background: neon;
+            position: relative;
             border: 2px solid white;
+        }
+        .popular::after {
+            content: "MOST POPULAR";
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: red;
+            color: white;
+            padding: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 5px;
         }
         .light-mode .game-button {
             background: rgba(0, 0, 0, 0.1);
@@ -227,13 +242,13 @@
             <img src="images/crossy.webp" alt="Crossy Icon">
             <p>Crossy</p>
         </a>
-            <a href="games/vex-3/index.html" class="game-button">
-        <img src="images/vex-3.png" alt="Vex 3 Icon">
-        <p>Vex 3</p>
+        <a href="games/vex-3/index.html" class="game-button">
+            <img src="images/vex-3.png" alt="Vex 3 Icon">
+            <p>Vex 3</p>
         </a>
-            <a href="games/fnaf/index.html" class="game-button">
-        <img src="images/fnaf.webp" alt="Fnaf 2 Icon">
-        <p>Fnaf-2</p>
+        <a href="games/fnaf/index.html" class="game-button">
+            <img src="images/fnaf.webp" alt="Fnaf 2 Icon">
+            <p>Fnaf-2</p>
         </a>
         <a href="games/ctr/index.html" class="game-button">
             <img src="games/ctr/favicon.ico" alt="Cut Icon">
@@ -259,19 +274,17 @@
             <img src="images/monkey.png" alt="Monkey Icon">
             <p>Monkey Mart</p>
         </a>
-    </a> 
-    <a href="games/2/index.html" class="game-button">
-        <img src="images/2.jpeg" alt="2 Icon">
-        <p>Moto 2</p>
-
-    </a> 
-    <a href="games/4-winter/index.html" class="game-button">
-        <img src="images/4.jpeg" alt="4 Icon">
-        <p>Moto 4</p>
-    </a> 
-    <a href="games/6-spooky-land/index.html" class="game-button">
-        <img src="images/6.jpeg" alt="6 Icon">
-        <p>Moto 2</p>
+        <a href="games/2/index.html" class="game-button">
+            <img src="images/2.jpeg" alt="2 Icon">
+            <p>Moto 2</p>
+        </a> 
+        <a href="games/4-winter/index.html" class="game-button">
+            <img src="images/4.jpeg" alt="4 Icon">
+            <p>Moto 4</p>
+        </a> 
+        <a href="games/6-spooky-land/index.html" class="game-button">
+            <img src="images/6.jpeg" alt="6 Icon">
+            <p>Moto 2</p>
         </a>
         <a href="games/bejing/fonts/index.html" class="game-button">
             <img src="images/bejing.jpeg" alt="Beijing Icon">
@@ -286,13 +299,9 @@
             <p>Subway Surfers</p>
         </a>
 
-            <div>
-                <a href="https://forms.gle/EfkriY8Fyp7gLx9D8" class="request-btn" target="_blank">Request a game</a>
-
-            </div>
-        
-
-    </a>
+        <div>
+            <a href="https://forms.gle/EfkriY8Fyp7gLx9D8" class="request-btn" target="_blank">Request a game</a>
+        </div>
     </nav>
 
     <div class="no-results" id="no-results">No results found</div>
