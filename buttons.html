@@ -20,6 +20,8 @@
             text-align: center;
             overflow: hidden;
             transition: background 0.5s, color 0.5s;
+            user-select: none; /* Prevent text selection */
+            pointer-events: none; /* Make text non-clickable */
         }
         .light-mode {
             background-color: #fff !important;
@@ -56,6 +58,7 @@
             cursor: pointer;
             font-size: 16px;
             transition: background 0.3s, color 0.3s;
+            pointer-events: auto; /* Make button clickable */
         }
         .light-mode .theme-toggle {
             color: black;
@@ -80,6 +83,7 @@
             cursor: pointer;
             transition: opacity 0.3s;
             z-index: 3;
+            pointer-events: auto; /* Make icon clickable */
         }
         .icon img {
             width: 40px;
@@ -124,6 +128,7 @@
             font-size: 16px;
             color: white;
             text-decoration: none;
+            pointer-events: auto; /* Make button clickable */
         }
         .request-btn:hover {
             background: rgba(255, 255, 255, 0.2);
@@ -131,8 +136,18 @@
         .clock {
             font-size: 24px;
             margin-top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border: 2px solid white;
+            border-radius: 5px;
             user-select: none; /* Prevent text selection */
             pointer-events: none; /* Make text non-clickable */
+            transition: background 0.3s, color 0.3s;
+            display: inline-block;
+        }
+        .light-mode .clock {
+            color: black;
+            border-color: black;
         }
     </style>
 </head>
