@@ -1,6 +1,5 @@
 # Made by Randy :) 
 
-Hello WHo ElsEE HAHAAH LoL <h1>CREDITS ALL TO ME!!!<h1>
-
+DMCA takedown or something like that email me : randyvz205@gmail.com
 
 
