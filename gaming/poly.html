@@ -86,11 +86,29 @@
         .fullscreen-btn:hover {
             background: rgba(255, 255, 255, 0.3);
         }
+        .remove-particles-btn {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s, color 0.3s;
+        }
+        .remove-particles-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
     <button class="back-button" onclick="window.location.href='/leafy.html'">⬅ Back</button>
+    <button class="remove-particles-btn" onclick="removeParticles()">Remove Particles</button>
 
     <div class="iframe-container">
         <iframe src="/games/polytrack-main/index.html"></iframe>
@@ -129,6 +147,11 @@
                     document.msExitFullscreen();
                 }
             }
+        }
+
+        function removeParticles() {
+            const particlesContainer = document.getElementById('particles-js');
+            particlesContainer.parentNode.removeChild(particlesContainer);
         }
     </script>
 </body>
