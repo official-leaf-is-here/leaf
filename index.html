@@ -14,14 +14,17 @@
             font-family: Arial, sans-serif;
             scroll-behavior: smooth;
         }
+
         body {
             background-color: #f4f4f4;
             animation: fadeIn 1.5s ease-in-out;
         }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
+
         /* Navbar */
         .navbar {
             background-color: #2c3e50;
@@ -30,8 +33,9 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 50px;
-            position: relative; /* For positioning hidden button */
+            position: relative;
         }
+
         .navbar a {
             color: white;
             text-decoration: none;
@@ -39,20 +43,24 @@
             font-size: 18px;
             transition: 0.3s;
         }
+
         .navbar a:hover {
             text-decoration: underline;
             color: #f1c40f;
         }
+
         .search-box {
             background: white;
             padding: 5px;
             border-radius: 5px;
         }
+
         .search-box input {
             border: none;
             outline: none;
             padding: 5px;
         }
+
         .login-btn {
             background: #f1c40f;
             padding: 8px 15px;
@@ -61,15 +69,118 @@
             font-weight: bold;
             cursor: pointer;
         }
+
         .login-btn:hover {
             background: #e67e22;
         }
+
+        /* Hero Section */
+        .hero {
+            background: url('https://images.unsplash.com/photo-1696902271695-0031d244cd37?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        /* Course Cards */
+        .courses {
+            display: flex;
+            justify-content: space-around;
+            padding: 40px;
+        }
+
+        .course-card {
+            background: white;
+            padding: 20px;
+            width: 30%;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .course-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+        }
+
+        .course-card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .course-card a {
+            text-decoration: none;
+            color: black;
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .course-card a:hover {
+            color: #f1c40f;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .testimonial {
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        /* CTA Section */
+        .cta {
+            text-align: center;
+            background: #f1c40f;
+            padding: 40px;
+            font-size: 20px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .cta:hover {
+            background: #e67e22;
+        }
+
+        .cta a {
+            text-decoration: none;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .footer a {
+            color: #f1c40f;
+            text-decoration: none;
+        }
+
         /* Hidden Button */
         .hidden-button {
-            position: absolute;
+            position: fixed;
             top: 10px;
-            right: 10px;
-            background: #2c3e50; /* Match navbar background */
+            right: 15px; /* Adjusted to avoid overlapping with other buttons */
+            background: #2c3e50;
             color: white;
             border: 1px solid #f1c40f;
             padding: 5px 10px;
@@ -79,6 +190,7 @@
             opacity: 0.1; /* Make it "hidden" */
             transition: opacity 0.3s ease;
         }
+
         .hidden-button:hover {
             opacity: 1; /* Reveal on hover */
         }
@@ -98,10 +210,10 @@
             <input type="text" placeholder="Search courses...">
         </div>
         <a href="#" class="login-btn" onclick="openLoginModal()">Login</a>
-
-        <!-- Hidden Button in Navbar -->
-        <button class="hidden-button" onclick="openGame()">Hidden Button</button>
     </div>
+
+    <!-- Hidden Button (Positioned separately to avoid overlap) -->
+    <button class="hidden-button" onclick="openGame()">Hidden Button</button>
 
     <!-- Hero Section -->
     <div class="hero">
