@@ -172,6 +172,7 @@
             border-radius: 10px;
             z-index: 100;
             width: 250px;
+            pointer-events: auto; /* Make controls clickable */
         }
 
         .controls-header {
@@ -295,15 +296,15 @@
         <div class="controls-content" id="controls-content">
             <div class="slider-container">
                 <label for="red">Red:</label>
-                <input type="range" id="red" min="0" max="255" value="0">
+                <input type="range" id="red" min="0" max="255">
             </div>
             <div class="slider-container">
                 <label for="green">Green:</label>
-                <input type="range" id="green" min="0" max="255" value="0">
+                <input type="range" id="green" min="0" max="255">
             </div>
             <div class="slider-container">
                 <label for="blue">Blue:</label>
-                <input type="range" id="blue" min="0" max="255" value="0">
+                <input type="range" id="blue" min="0" max="255">
             </div>
             <button class="reset-button" id="reset-theme">Reset to Default</button>
         </div>
@@ -315,10 +316,10 @@
         }
 
         particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 100 },
-                "size": { "value": 3 },
-                "move": { "speed": 1, "direction": "none", "random": true }
+            particles: {
+                number: { value: 100 },
+                size: { value: 3 },
+                move: { speed: 1, direction: "none", random: true }
             }
         });
 
@@ -329,16 +330,30 @@
         const controlsContent = document.getElementById("controls-content");
         const toggleIcon = document.getElementById("toggle-icon");
 
+        // Persist slider values in localStorage
+        const savedRed = localStorage.getItem("red") || 0;
+        const savedGreen = localStorage.getItem("green") || 0;
+        const savedBlue = localStorage.getItem("blue") || 0;
+
+        redSlider.value = savedRed;
+        greenSlider.value = savedGreen;
+        blueSlider.value = savedBlue;
+
         function updateBackgroundAndParticles() {
             const red = redSlider.value;
             const green = greenSlider.value;
             const blue = blueSlider.value;
-            const color = `rgb(${red}, ${green}, ${blue})`;
 
+            // Save values in localStorage
+            localStorage.setItem("red", red);
+            localStorage.setItem("green", green);
+            localStorage.setItem("blue", blue);
+
+            const color = `rgb(${red}, ${green}, ${blue})`;
             document.body.style.backgroundColor = color;
 
             const particles = window.pJSDom[0].pJS.particles.array;
-            particles.forEach(particle => {
+            particles.forEach((particle) => {
                 particle.color.value = color;
                 particle.color.rgb = { r: red, g: green, b: blue };
             });
@@ -366,6 +381,7 @@
         blueSlider.addEventListener("input", updateBackgroundAndParticles);
         resetButton.addEventListener("click", resetToDefaultTheme);
 
+        // Apply persisted colors on page load
         updateBackgroundAndParticles();
 
         const phrases = [
@@ -386,24 +402,28 @@
                 currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
                 changingTextElement.textContent = phrases[currentPhraseIndex];
                 changingTextElement.classList.add("show");
-            }, 1000); // Duration of the transition
-        }, 5000); // Duration of each phrase
+            }, 1000); // Transition duration
+        }, 5000); // Phrase duration
 
         function updateClock() {
-            const clockElement = document.getElementById('clock');
+            const clockElement = document.getElementById("clock");
             const now = new Date();
             let hours = now.getHours();
             const minutes = now.getMinutes();
             const seconds = now.getSeconds();
-            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const ampm = hours >= 12 ? "PM" : "AM";
             hours = hours % 12;
-            hours = hours ? hours : 12; // the hour '0' should be '12'
-            const strTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} ${ampm}`;
+            hours = hours || 12; // the hour '0' should be '12'
+            const strTime = `${hours.toString().padStart(2, "0")}:${minutes
+                .toString()
+                .padStart(2, "0")}:${seconds
+                .toString()
+                .padStart(2, "0")} ${ampm}`;
             clockElement.textContent = strTime;
         }
 
         setInterval(updateClock, 1000);
-        updateClock(); // initial call to display the clock immediately
+        updateClock(); // Initial clock display
     </script>
 </body>
 
