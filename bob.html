@@ -30,7 +30,7 @@
             top: 0;
             left: 0;
             z-index: -1;
-            pointer-events: none; /* Make the background non-clickable */
+            pointer-events: none;
         }
 
         .header {
@@ -89,10 +89,9 @@
 
         .controls-content {
             overflow: hidden;
-            display: none; /* Initially hidden */
+            display: none;
         }
 
-        /* Custom Slide Animation */
         @keyframes slideDown {
             from {
                 max-height: 0;
@@ -270,14 +269,30 @@
         const controlsContent = document.getElementById("controls-content");
         const toggleIcon = document.getElementById("toggle-icon");
 
+        // Load saved colors from localStorage
+        const savedRed = localStorage.getItem("red") || 0;
+        const savedGreen = localStorage.getItem("green") || 0;
+        const savedBlue = localStorage.getItem("blue") || 0;
+
+        redSlider.value = savedRed;
+        greenSlider.value = savedGreen;
+        blueSlider.value = savedBlue;
+
         function updateBackgroundAndParticles() {
             const red = redSlider.value;
             const green = greenSlider.value;
             const blue = blueSlider.value;
+
             const color = `rgb(${red}, ${green}, ${blue})`;
+
+            // Save the RGB values to localStorage
+            localStorage.setItem("red", red);
+            localStorage.setItem("green", green);
+            localStorage.setItem("blue", blue);
 
             document.body.style.backgroundColor = color;
 
+            // Update particle canvas color dynamically
             const particles = window.pJSDom[0].pJS.particles.array;
             particles.forEach(particle => {
                 particle.color.value = color;
@@ -286,7 +301,14 @@
         }
 
         function resetToDefaultTheme() {
-            redSlider.value = greenSlider.value = blueSlider.value = 0;
+            const defaultRed = 0;
+            const defaultGreen = 0;
+            const defaultBlue = 0;
+
+            redSlider.value = defaultRed;
+            greenSlider.value = defaultGreen;
+            blueSlider.value = defaultBlue;
+
             updateBackgroundAndParticles();
         }
 
@@ -306,8 +328,10 @@
         greenSlider.addEventListener("input", updateBackgroundAndParticles);
         blueSlider.addEventListener("input", updateBackgroundAndParticles);
         resetButton.addEventListener("click", resetToDefaultTheme);
+
+        // Apply saved colors on page load
         updateBackgroundAndParticles();
     </script>
 </body>
 
-</html> 
+</html>
