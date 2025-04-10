@@ -88,8 +88,40 @@
         }
 
         .controls-content {
-            margin-top: 10px;
+            overflow: hidden;
             display: none; /* Initially hidden */
+        }
+
+        /* Custom Slide Animation */
+        @keyframes slideDown {
+            from {
+                max-height: 0;
+                opacity: 0;
+            }
+            to {
+                max-height: 300px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                max-height: 300px;
+                opacity: 1;
+            }
+            to {
+                max-height: 0;
+                opacity: 0;
+            }
+        }
+
+        .controls-content.show {
+            display: block;
+            animation: slideDown 0.5s ease forwards;
+        }
+
+        .controls-content.hide {
+            animation: slideUp 0.5s ease forwards;
         }
 
         .slider-container {
@@ -231,37 +263,21 @@
             }
         });
 
-        // RGB Slider Functionality
         const redSlider = document.getElementById("red");
         const greenSlider = document.getElementById("green");
         const blueSlider = document.getElementById("blue");
         const resetButton = document.getElementById("reset-theme");
-
-        // Load saved colors from localStorage
-        const savedRed = localStorage.getItem("red") || 0;
-        const savedGreen = localStorage.getItem("green") || 0;
-        const savedBlue = localStorage.getItem("blue") || 0;
-
-        redSlider.value = savedRed;
-        greenSlider.value = savedGreen;
-        blueSlider.value = savedBlue;
+        const controlsContent = document.getElementById("controls-content");
+        const toggleIcon = document.getElementById("toggle-icon");
 
         function updateBackgroundAndParticles() {
             const red = redSlider.value;
             const green = greenSlider.value;
             const blue = blueSlider.value;
-
             const color = `rgb(${red}, ${green}, ${blue})`;
 
-            // Save the RGB values to localStorage
-            localStorage.setItem("red", red);
-            localStorage.setItem("green", green);
-            localStorage.setItem("blue", blue);
-
-            // Update body background color
             document.body.style.backgroundColor = color;
 
-            // Update particle canvas color dynamically
             const particles = window.pJSDom[0].pJS.particles.array;
             particles.forEach(particle => {
                 particle.color.value = color;
@@ -269,49 +285,29 @@
             });
         }
 
-        // Reset to default theme
         function resetToDefaultTheme() {
-            // Default RGB values
-            const defaultRed = 0;
-            const defaultGreen = 0;
-            const defaultBlue = 0;
-
-            redSlider.value = defaultRed;
-            greenSlider.value = defaultGreen;
-            blueSlider.value = defaultBlue;
-
-            localStorage.setItem("red", defaultRed);
-            localStorage.setItem("green", defaultGreen);
-            localStorage.setItem("blue", defaultBlue);
-
+            redSlider.value = greenSlider.value = blueSlider.value = 0;
             updateBackgroundAndParticles();
         }
 
-        // Toggle the controls section visibility
         function toggleControls() {
-            const controlsContent = document.getElementById("controls-content");
-            const toggleIcon = document.getElementById("toggle-icon");
-
-            if (controlsContent.style.display === "none" || controlsContent.style.display === "") {
-                controlsContent.style.display = "block";
-                toggleIcon.textContent = "−"; // Change to minus
+            if (controlsContent.classList.contains("show")) {
+                controlsContent.classList.remove("show");
+                controlsContent.classList.add("hide");
+                toggleIcon.textContent = "+";
             } else {
-                controlsContent.style.display = "none";
-                toggleIcon.textContent = "+"; // Change back to plus
+                controlsContent.classList.remove("hide");
+                controlsContent.classList.add("show");
+                toggleIcon.textContent = "−";
             }
         }
 
-        // Attach event listeners to sliders
         redSlider.addEventListener("input", updateBackgroundAndParticles);
         greenSlider.addEventListener("input", updateBackgroundAndParticles);
         blueSlider.addEventListener("input", updateBackgroundAndParticles);
-
-        // Attach event listener to reset button
         resetButton.addEventListener("click", resetToDefaultTheme);
-
-        // Apply saved colors on page load
         updateBackgroundAndParticles();
     </script>
 </body>
 
-</html>
+</html> 
