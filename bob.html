@@ -86,29 +86,6 @@
             width: 100%;
         }
 
-        .search-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            padding: 10px 0;
-        }
-
-        .search-bar {
-            padding: 15px;
-            border-radius: 5px;
-            border: none;
-            font-size: 18px;
-            width: 60%;
-            max-width: 500px;
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        .search-bar::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
         nav {
             display: flex;
             justify-content: center;
@@ -167,10 +144,6 @@
         <button class="back-button" onclick="window.location.href='leaf.html'">⬅ Back</button>
     </div>
 
-    <div class="search-container">
-        <input type="text" class="search-bar" id="search" placeholder="Search for a game...">
-    </div>
-
     <nav id="game-links">
         <a href="/gaming/snow.html" class="game-button popular">
             <img src="images/snow.jpeg" alt="Snow Icon">
@@ -218,12 +191,26 @@
         const greenSlider = document.getElementById("green");
         const blueSlider = document.getElementById("blue");
 
+        // Load saved colors from localStorage
+        const savedRed = localStorage.getItem("red") || 0;
+        const savedGreen = localStorage.getItem("green") || 0;
+        const savedBlue = localStorage.getItem("blue") || 0;
+
+        redSlider.value = savedRed;
+        greenSlider.value = savedGreen;
+        blueSlider.value = savedBlue;
+
         function updateBackgroundAndParticles() {
             const red = redSlider.value;
             const green = greenSlider.value;
             const blue = blueSlider.value;
 
             const color = `rgb(${red}, ${green}, ${blue})`;
+
+            // Save the RGB values to localStorage
+            localStorage.setItem("red", red);
+            localStorage.setItem("green", green);
+            localStorage.setItem("blue", blue);
 
             // Update body background color
             document.body.style.backgroundColor = color;
@@ -241,18 +228,8 @@
         greenSlider.addEventListener("input", updateBackgroundAndParticles);
         blueSlider.addEventListener("input", updateBackgroundAndParticles);
 
-        // Search Functionality
-        document.getElementById('search').addEventListener('input', function () {
-            const filter = this.value.toLowerCase();
-            const links = document.querySelectorAll('.game-button');
-            links.forEach(link => {
-                if (link.textContent.toLowerCase().includes(filter)) {
-                    link.style.display = "block";
-                } else {
-                    link.style.display = "none";
-                }
-            });
-        });
+        // Apply saved colors on page load
+        updateBackgroundAndParticles();
     </script>
 </body>
 
