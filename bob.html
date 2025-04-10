@@ -23,11 +23,6 @@
             transition: background 0.5s, color 0.5s;
         }
 
-        .light-mode {
-            background-color: #fff !important;
-            color: black !important;
-        }
-
         #particles-js {
             position: fixed;
             width: 100%;
@@ -37,13 +32,9 @@
             z-index: -1;
         }
 
-        .light-mode #particles-js canvas {
-            filter: invert(1);
-        }
-
         .header {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             padding: 10px 20px;
             background: rgba(0, 0, 0, 0.4);
@@ -51,6 +42,22 @@
             backdrop-filter: blur(10px);
             position: relative;
             z-index: 2;
+        }
+
+        .back-button {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, color 0.3s;
+            z-index: 3;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
         .controls {
@@ -100,39 +107,6 @@
 
         .search-bar::placeholder {
             color: rgba(255, 255, 255, 0.5);
-        }
-
-        .light-mode .search-bar {
-            background: rgba(0, 0, 0, 0.15);
-            color: black;
-        }
-
-        .light-mode .search-bar::placeholder {
-            color: rgba(0, 0, 0, 0.5);
-        }
-
-        .theme-toggle {
-            background: transparent;
-            color: white;
-            padding: 10px 15px;
-            border: 2px solid white;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        .light-mode .theme-toggle {
-            color: black;
-            border-color: black;
-        }
-
-        .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .right-align {
-            margin-left: auto;
         }
 
         nav {
@@ -190,9 +164,7 @@
     <div id="particles-js"></div>
 
     <div class="header">
-        <div class="right-align">
-            <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
-        </div>
+        <button class="back-button" onclick="window.location.href='leaf.html'">⬅ Back</button>
     </div>
 
     <div class="search-container">
@@ -236,6 +208,7 @@
             "particles": {
                 "number": { "value": 100 },
                 "size": { "value": 3 },
+                "color": { "value": "#ffffff" }, // Default particle color
                 "move": { "speed": 1, "direction": "none", "random": true }
             }
         });
@@ -255,14 +228,11 @@
             // Update body background color
             document.body.style.backgroundColor = color;
 
-            // Update particle system color
-            particlesJS("particles-js", {
-                "particles": {
-                    "number": { "value": 100 },
-                    "color": { "value": color },
-                    "size": { "value": 3 },
-                    "move": { "speed": 1, "direction": "none", "random": true }
-                }
+            // Update particle canvas color dynamically
+            const particles = window.pJSDom[0].pJS.particles.array;
+            particles.forEach(particle => {
+                particle.color.value = color;
+                particle.color.rgb = { r: red, g: green, b: blue };
             });
         }
 
@@ -270,6 +240,19 @@
         redSlider.addEventListener("input", updateBackgroundAndParticles);
         greenSlider.addEventListener("input", updateBackgroundAndParticles);
         blueSlider.addEventListener("input", updateBackgroundAndParticles);
+
+        // Search Functionality
+        document.getElementById('search').addEventListener('input', function () {
+            const filter = this.value.toLowerCase();
+            const links = document.querySelectorAll('.game-button');
+            links.forEach(link => {
+                if (link.textContent.toLowerCase().includes(filter)) {
+                    link.style.display = "block";
+                } else {
+                    link.style.display = "none";
+                }
+            });
+        });
     </script>
 </body>
 
