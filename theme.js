@@ -1,57 +1,92 @@
-function applyTheme(theme) {
-    document.body.className = ''; // Reset all classes
+// Theme management script
+document.addEventListener("DOMContentLoaded", function () {
+    const body = document.body;
+    const redSlider = document.getElementById("red");
+    const greenSlider = document.getElementById("green");
+    const blueSlider = document.getElementById("blue");
+    const resetButton = document.getElementById("reset-theme");
+    const uploadInput = document.getElementById("upload-background");
 
-    if (theme === 'default') {
-        setParticleColor('#ffffff');
-    } else if (theme === 'light') {
-        document.body.classList.add('light-mode');
-        setParticleColor('#000000');
-    } else if (theme === 'blue') {
-        document.body.classList.add('theme-blue');
-        setParticleColor('#00bfff');
-    } else if (theme === 'green') {
-        document.body.classList.add('theme-green');
-        setParticleColor('#32cd32');
-    } else if (theme === 'red') {
-        document.body.classList.add('theme-red');
-        setParticleColor('#ff4500');
-    }
-}
+    // Load saved theme settings from localStorage
+    const savedRed = localStorage.getItem("red") || 0;
+    const savedGreen = localStorage.getItem("green") || 0;
+    const savedBlue = localStorage.getItem("blue") || 0;
+    const savedImage = localStorage.getItem("backgroundImage");
 
-function setParticleColor(color) {
-    particlesJS("particles-js", {
-        "particles": {
-            "number": { "value": 100 },
-            "color": { "value": color },
-            "size": { "value": 3 },
-            "move": { "speed": 1, "direction": "none", "random": true }
-        }
-    });
-}
-
-function saveTheme() {
-    const classList = document.body.classList;
-    let theme = 'default'; // Default theme
-
-    if (classList.contains('light-mode')) {
-        theme = 'light';
-    } else if (classList.contains('theme-blue')) {
-        theme = 'blue';
-    } else if (classList.contains('theme-green')) {
-        theme = 'green';
-    } else if (classList.contains('theme-red')) {
-        theme = 'red';
+    // Apply saved color or background image
+    if (savedImage) {
+        body.style.backgroundImage = `url('${savedImage}')`;
+        body.style.backgroundSize = "cover";
+    } else {
+        applyColor(savedRed, savedGreen, savedBlue);
     }
 
-    localStorage.setItem('theme', theme);
-}
+    // Update sliders to reflect saved values
+    if (redSlider && greenSlider && blueSlider) {
+        redSlider.value = savedRed;
+        greenSlider.value = savedGreen;
+        blueSlider.value = savedBlue;
 
-function applySavedTheme() {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        applyTheme(savedTheme);
+        // Attach slider event listeners
+        redSlider.addEventListener("input", updateTheme);
+        greenSlider.addEventListener("input", updateTheme);
+        blueSlider.addEventListener("input", updateTheme);
     }
-}
 
-// Apply the saved theme when the page loads
-applySavedTheme();
+    // Update theme based on RGB slider values
+    function updateTheme() {
+        const red = redSlider.value;
+        const green = greenSlider.value;
+        const blue = blueSlider.value;
+
+        // Save RGB values to localStorage
+        localStorage.setItem("red", red);
+        localStorage.setItem("green", green);
+        localStorage.setItem("blue", blue);
+
+        applyColor(red, green, blue);
+    }
+
+    // Apply RGB color to body
+    function applyColor(red, green, blue) {
+        body.style.backgroundImage = "none";
+        body.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+    }
+
+    // Reset to default theme
+    if (resetButton) {
+        resetButton.addEventListener("click", function () {
+            localStorage.removeItem("red");
+            localStorage.removeItem("green");
+            localStorage.removeItem("blue");
+            localStorage.removeItem("backgroundImage");
+
+            // Reset to default dark theme
+            applyColor(0, 0, 0);
+            if (redSlider && greenSlider && blueSlider) {
+                redSlider.value = 0;
+                greenSlider.value = 0;
+                blueSlider.value = 0;
+            }
+        });
+    }
+
+    // Handle custom background image upload
+    if (uploadInput) {
+        uploadInput.addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imageUrl = e.target.result;
+                    localStorage.setItem("backgroundImage", imageUrl);
+
+                    // Apply uploaded image
+                    body.style.backgroundImage = `url('${imageUrl}')`;
+                    body.style.backgroundSize = "cover";
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+});
