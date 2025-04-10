@@ -70,6 +70,26 @@
             padding: 20px;
             border-radius: 10px;
             z-index: 100;
+            width: 250px;
+        }
+
+        .controls-header {
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .controls-header:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .controls-content {
+            margin-top: 10px;
+            display: none; /* Initially hidden */
         }
 
         .slider-container {
@@ -85,6 +105,23 @@
 
         .slider-container input {
             width: 100%;
+        }
+
+        .reset-button {
+            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, color 0.3s;
+            text-align: center;
+        }
+
+        .reset-button:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
         nav {
@@ -162,17 +199,24 @@
 
     <!-- RGB Sliders -->
     <div class="controls">
-        <div class="slider-container">
-            <label for="red">Red:</label>
-            <input type="range" id="red" min="0" max="255" value="0">
+        <div class="controls-header" onclick="toggleControls()">
+            <span>Color Settings</span>
+            <span id="toggle-icon">+</span>
         </div>
-        <div class="slider-container">
-            <label for="green">Green:</label>
-            <input type="range" id="green" min="0" max="255" value="0">
-        </div>
-        <div class="slider-container">
-            <label for="blue">Blue:</label>
-            <input type="range" id="blue" min="0" max="255" value="0">
+        <div class="controls-content" id="controls-content">
+            <div class="slider-container">
+                <label for="red">Red:</label>
+                <input type="range" id="red" min="0" max="255" value="0">
+            </div>
+            <div class="slider-container">
+                <label for="green">Green:</label>
+                <input type="range" id="green" min="0" max="255" value="0">
+            </div>
+            <div class="slider-container">
+                <label for="blue">Blue:</label>
+                <input type="range" id="blue" min="0" max="255" value="0">
+            </div>
+            <button class="reset-button" id="reset-theme">Reset to Default</button>
         </div>
     </div>
 
@@ -191,6 +235,7 @@
         const redSlider = document.getElementById("red");
         const greenSlider = document.getElementById("green");
         const blueSlider = document.getElementById("blue");
+        const resetButton = document.getElementById("reset-theme");
 
         // Load saved colors from localStorage
         const savedRed = localStorage.getItem("red") || 0;
@@ -224,10 +269,45 @@
             });
         }
 
+        // Reset to default theme
+        function resetToDefaultTheme() {
+            // Default RGB values
+            const defaultRed = 0;
+            const defaultGreen = 0;
+            const defaultBlue = 0;
+
+            redSlider.value = defaultRed;
+            greenSlider.value = defaultGreen;
+            blueSlider.value = defaultBlue;
+
+            localStorage.setItem("red", defaultRed);
+            localStorage.setItem("green", defaultGreen);
+            localStorage.setItem("blue", defaultBlue);
+
+            updateBackgroundAndParticles();
+        }
+
+        // Toggle the controls section visibility
+        function toggleControls() {
+            const controlsContent = document.getElementById("controls-content");
+            const toggleIcon = document.getElementById("toggle-icon");
+
+            if (controlsContent.style.display === "none" || controlsContent.style.display === "") {
+                controlsContent.style.display = "block";
+                toggleIcon.textContent = "−"; // Change to minus
+            } else {
+                controlsContent.style.display = "none";
+                toggleIcon.textContent = "+"; // Change back to plus
+            }
+        }
+
         // Attach event listeners to sliders
         redSlider.addEventListener("input", updateBackgroundAndParticles);
         greenSlider.addEventListener("input", updateBackgroundAndParticles);
         blueSlider.addEventListener("input", updateBackgroundAndParticles);
+
+        // Attach event listener to reset button
+        resetButton.addEventListener("click", resetToDefaultTheme);
 
         // Apply saved colors on page load
         updateBackgroundAndParticles();
