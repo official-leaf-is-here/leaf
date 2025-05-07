@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaf Animation</title>
     <link rel="stylesheet" href="custombuttons.css">
-    <link rel="shortcut icon" href="images/leaf.png" type="image/x-icon">
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Lilita+One&display=swap');
 
@@ -15,7 +13,7 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #000;
+            background-color: #000; /* Solid black background */
             color: white;
             text-align: center;
             overflow-y: auto; /* Enable vertical scrolling */
@@ -56,7 +54,7 @@
             position: relative;
             width: 100%;
             min-height: 100vh; /* Allow sections to stack vertically */
-            background: url('images/background.jpg') no-repeat center center/cover; /* Add your background here */
+            background-color: #000; /* Keep the section background black */
             overflow: hidden; /* Prevent scrolling inside the section */
             display: flex;
             justify-content: center;
@@ -152,17 +150,14 @@
     </style>
 </head>
 <body>
+    <!-- Back Button -->
+    <button class="back-button" onclick="window.location.href='leaf.html'">⬅ Back</button>
+    
     <nav id="game-links">
         <a href="/gaming/snow.html" class="game-button popular">
             <img src="images/snow.jpeg" alt="Snow Icon">
             <p>Snow Rider 3D</p>
         </a>
-        <!-- Add more game buttons as needed -->
-    </nav>
-
-    <!-- Back Button -->
-    <button class="back-button" onclick="window.location.href='leaf.html'">⬅ Back</button>
-
     <!-- New Section Content -->
     <section>
         <div class="set" id="leaf-set">
