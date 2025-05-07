@@ -68,6 +68,13 @@
             display: block;
         }
 
+        section .set div img {
+            width: 10vw; /* Default size: 10% of viewport width */
+            height: auto; /* Maintain aspect ratio */
+            max-width: 150px; /* Ensure it doesn’t get too large */
+            pointer-events: none; /* Prevent interaction */
+        }
+
         /* Faster Spawning Animation */
         section .set div:nth-child(1) {
             left: 20%;
@@ -182,8 +189,21 @@
             shuffledLeaves.forEach(leaf => leafSet.appendChild(leaf)); // Append shuffled leaves
         }
 
-        // Run the shuffle function on page load
-        window.onload = shuffleLeaves;
+        // Remove leaves after animation ends
+        function setupLeafRemoval() {
+            const leafSet = document.getElementById('leaf-set');
+            leafSet.addEventListener('animationend', (event) => {
+                if (event.target && event.target.parentNode === leafSet) {
+                    leafSet.removeChild(event.target); // Remove leaf after animation
+                }
+            });
+        }
+
+        // Run the shuffle function and setup animation cleanup on page load
+        window.onload = () => {
+            shuffleLeaves();
+            setupLeafRemoval();
+        };
     </script>
 </body>
 </html>
