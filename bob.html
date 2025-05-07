@@ -15,26 +15,48 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #000;
             color: white;
             text-align: center;
             overflow: hidden;
             transition: background 0.5s, color 0.5s;
+            user-select: none; /* Disable text selection */
+        }
+
+        /* Disable Dragging */
+        * {
+            user-drag: none; /* Disable dragging */
+            -webkit-user-drag: none; /* Webkit-specific for Safari */
+            pointer-events: none; /* Disable all interactivity */
+        }
+
+        /* Back Button Styles */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: default; /* Default cursor since pointer-events is disabled */
+            font-size: 16px;
+            transition: background 0.3s, color 0.3s;
+            z-index: 10;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
        
-        section .set {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-        }
-
         section .set div {
             position: absolute;
             display: block;
         }
 
+        /* Faster Spawning Animation */
         section .set div:nth-child(1) {
             left: 20%;
             animation: animate 10s linear infinite; /* Reduced animation time */
@@ -92,7 +114,6 @@
             animation-delay: -3.5s;
         }
 
-
         @keyframes animate {
             0% {
                 opacity: 0%;
@@ -119,36 +140,6 @@
                 transform: translateX(-20px) rotate(225deg);
             }
         }
-
-        .set2 {
-            transform: scale(2) rotateY(180deg);
-            filter: blur(2px);
-        }
-
-        .set3 {
-            transform: scale(0.8) rotateX(180deg);
-            filter: blur(4px);
-        }
-
-        /* Back Button Styles */
-        .back-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 2px solid white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s, color 0.3s;
-            z-index: 10;
-        }
-
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
     </style>
 </head>
 <body>
@@ -157,16 +148,32 @@
 
     <!-- New Section Content -->
     <section>
-        <div class="set">
-            <div><img src="leafs/leaves1.png" alt="Leaf 1"></div>
-            <div><img src="leafs/leaves2.png" alt="Leaf 2"></div>
-            <div><img src="leafs/leaves3.png" alt="Leaf 3"></div>
-            <div><img src="leafs/leaves4.png" alt="Leaf 4"></div>
-            <div><img src="leafs/leaves1.png" alt="Leaf 1"></div>
-            <div><img src="leafs/leaves2.png" alt="Leaf 2"></div>
-            <div><img src="leafs/leaves3.png" alt="Leaf 3"></div>
-            <div><img src="leafs/leaves4.png" alt="Leaf 4"></div>
+        <div class="set" id="leaf-set">
+            <div><img src="leafs/leaves1.png" alt="Leaf 1" draggable="false"></div>
+            <div><img src="leafs/leaves2.png" alt="Leaf 2" draggable="false"></div>
+            <div><img src="leafs/leaves3.png" alt="Leaf 3" draggable="false"></div>
+            <div><img src="leafs/leaves4.png" alt="Leaf 4" draggable="false"></div>
+            <div><img src="leafs/leaves1.png" alt="Leaf 1" draggable="false"></div>
+            <div><img src="leafs/leaves2.png" alt="Leaf 2" draggable="false"></div>
+            <div><img src="leafs/leaves3.png" alt="Leaf 3" draggable="false"></div>
+            <div><img src="leafs/leaves4.png" alt="Leaf 4" draggable="false"></div>
+            <div><img src="leafs/leaves1.png" alt="Leaf 1" draggable="false"></div>
+            <div><img src="leafs/leaves2.png" alt="Leaf 2" draggable="false"></div>
         </div>
     </section>
+
+    <script>
+        // Shuffle the order of the leaves dynamically
+        function shuffleLeaves() {
+            const leafSet = document.getElementById('leaf-set');
+            const leaves = Array.from(leafSet.children); // Get all child divs
+            const shuffledLeaves = leaves.sort(() => Math.random() - 0.5); // Shuffle array
+            leafSet.innerHTML = ''; // Clear the container
+            shuffledLeaves.forEach(leaf => leafSet.appendChild(leaf)); // Append shuffled leaves
+        }
+
+        // Run the shuffle function on page load
+        window.onload = shuffleLeaves;
+    </script>
 </body>
 </html>
