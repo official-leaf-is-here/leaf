@@ -27,7 +27,6 @@
         * {
             user-drag: none; /* Disable dragging */
             -webkit-user-drag: none; /* Webkit-specific for Safari */
-            pointer-events: none; /* Disable all interactivity */
         }
 
         /* Back Button Styles */
@@ -50,7 +49,26 @@
             background: rgba(255, 255, 255, 0.3);
         }
 
-       
+        /* Section Styles */
+        section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: url('images/background.jpg') no-repeat center center/cover; /* Add your background here */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        section .set {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
         section .set div {
             position: absolute;
             display: block;
@@ -116,27 +134,17 @@
 
         @keyframes animate {
             0% {
-                opacity: 0%;
+                opacity: 1;
                 top: -10%;
                 transform: translateX(20px) rotate(0deg);
             }
-            10% {
-                opacity: 1;
-            }
-            20% {
-                transform: translateX(-20px) rotate(45deg);
-            }
-            40% {
+            50% {
+                opacity: 1; /* Fully visible halfway */
                 transform: translateX(-20px) rotate(90deg);
             }
-            60% {
-                transform: translateX(-20px) rotate(180deg);
-            }
-            80% {
-                transform: translateX(-20px) rotate(180deg);
-            }
             100% {
-                top: 110%;
+                top: 110%; /* Moves completely out of the screen */
+                opacity: 0; /* Fades out completely */
                 transform: translateX(-20px) rotate(225deg);
             }
         }
