@@ -16,8 +16,7 @@
             background-color: #000; /* Solid black background */
             color: white;
             text-align: center;
-            overflow-y: auto; /* Enable vertical scrolling */
-            overflow-x: hidden; /* Prevent horizontal scrolling */
+            overflow: hidden; /* Prevent scrolling */
             transition: background 0.5s, color 0.5s;
             user-select: none; /* Disable text selection */
             height: 100%; /* Ensure full height for scrolling */
@@ -31,9 +30,9 @@
 
         /* Back Button Styles */
         .back-button {
-            position: sticky; /* Keep it visible when scrolling */
-            top: 20px;
-            left: 20px;
+            position: fixed; /* Fixed position at the top left */
+            top: 10px; /* Spaced slightly from the top */
+            left: 10px; /* Spaced slightly from the left */
             background: rgba(255, 255, 255, 0.1);
             color: white;
             border: 2px solid white;
@@ -49,103 +48,111 @@
             background: rgba(255, 255, 255, 0.3);
         }
 
-        /* Navigation Styles */
-        nav#game-links {
-            margin: 0; /* Remove any default margin */
-            padding: 0; /* Remove any default padding */
-        }
-
-        nav#game-links a {
-            display: inline-block; /* Ensure buttons are inline */
-            margin: 10px; /* Add spacing between buttons */
-        }
-
-        /* Section Styles */
-        section {
-            position: relative;
-            width: 100%;
-            min-height: 100vh; /* Allow sections to stack vertically */
-            background-color: #000; /* Keep the section background black */
-            overflow: hidden; /* Prevent scrolling inside the section */
+        /* Centered Content Container */
+        .center-container {
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2; /* Ensure the content is above the falling leaves */
+            height: 100vh; /* Full height */
+        }
+
+        /* Search Bar Styles */
+        .search-bar {
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            width: 80%;
+            max-width: 400px;
+            font-size: 16px;
+            border: 2px solid white;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+        }
+
+        .search-bar::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Game Button Styles */
+        .game-button {
+            background: rgba(255, 255, 255, 0.1); /* Transparent background */
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+            width: 150px;
+            height: 200px;
+            margin: 10px; /* Space between buttons */
+            border: 2px solid white;
+            font-size: 16px;
+            transition: background 0.3s, color 0.3s, transform 0.3s;
+            overflow: hidden;
+            cursor: pointer; /* Hand cursor */
+            position: relative;
+            z-index: 1;
         }
 
-        section .set div {
+        .game-button img {
+            width: 100px; /* Adjusted image size */
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px; /* Rounded edges */
+            margin-bottom: 10px;
+            pointer-events: none; /* Disable image interaction */
+        }
+
+        .game-button p {
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            margin: 0;
+            pointer-events: none; /* Disable text interaction */
+        }
+
+        /* Hover Animation */
+        .game-button:hover {
+            background: rgba(255, 255, 255, 0.3); /* Brighter background on hover */
+            color: black; /* Change text color */
+            transform: scale(1.1); /* Slight zoom effect */
+            box-shadow: 0 8px 15px rgba(255, 255, 255, 0.2); /* Glow effect */
+        }
+
+        /* Falling Leaves Styles */
+        .falling-leaves {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Prevent scrolling */
+            pointer-events: none; /* Leaves should not interact with the user */
+            z-index: 1; /* Behind the centered content */
+        }
+
+        .falling-leaves div {
             position: absolute;
             display: block;
         }
 
-        section .set div img {
+        .falling-leaves div img {
             width: 10vw; /* Default size: 10% of viewport width */
             height: auto; /* Maintain aspect ratio */
             max-width: 150px; /* Ensure it doesn’t get too large */
-            pointer-events: none; /* Prevent interaction */
         }
 
-        /* Faster Spawning Animation */
-        section .set div:nth-child(1) {
-            left: 20%;
-            animation: animate 10s linear infinite; /* Reduced animation time */
-            animation-delay: -2s; /* Reduced delay */
-        }
-
-        section .set div:nth-child(2) {
-            left: 50%;
-            animation: animate 12s linear infinite;
-            animation-delay: -1s;
-        }
-
-        section .set div:nth-child(3) {
-            left: 70%;
-            animation: animate 10s linear infinite;
-            animation-delay: -3s;
-        }
-
-        section .set div:nth-child(4) {
-            left: 0%;
-            animation: animate 10s linear infinite;
-            animation-delay: -2s;
-        }
-
-        section .set div:nth-child(5) {
-            left: 85%;
-            animation: animate 14s linear infinite;
-            animation-delay: -4s;
-        }
-
-        section .set div:nth-child(6) {
-            left: 0%;
-            animation: animate 8s linear infinite;
-        }
-
-        section .set div:nth-child(7) {
-            left: 15%;
-            animation: animate 10s linear infinite;
-        }
-
-        section .set div:nth-child(8) {
-            left: 60%;
-            animation: animate 10s linear infinite;
-        }
-
-        section .set div:nth-child(9) {
-            left: 35%;
-            animation: animate 9s linear infinite; /* Added more leaves */
-            animation-delay: -5s;
-        }
-
-        section .set div:nth-child(10) {
-            left: 75%;
-            animation: animate 11s linear infinite;
-            animation-delay: -3.5s;
-        }
-
+        /* Falling Leaves Animation */
         @keyframes animate {
             0% {
                 opacity: 1;
-                top: -10%;
+                top: -10%; /* Start above the top edge of the screen */
                 transform: translateX(20px) rotate(0deg);
             }
             50% {
@@ -158,60 +165,88 @@
                 transform: translateX(-20px) rotate(225deg);
             }
         }
+
+        .falling-leaves div:nth-child(1) {
+            left: 20%;
+            animation: animate 10s linear infinite; /* Reduced animation time */
+            animation-delay: -2s; /* Reduced delay */
+        }
+
+        .falling-leaves div:nth-child(2) {
+            left: 50%;
+            animation: animate 12s linear infinite;
+            animation-delay: -1s;
+        }
+
+        .falling-leaves div:nth-child(3) {
+            left: 70%;
+            animation: animate 10s linear infinite;
+            animation-delay: -3s;
+        }
+
+        .falling-leaves div:nth-child(4) {
+            left: 0%;
+            animation: animate 10s linear infinite;
+            animation-delay: -2s;
+        }
+
+        .falling-leaves div:nth-child(5) {
+            left: 85%;
+            animation: animate 14s linear infinite;
+            animation-delay: -4s;
+        }
     </style>
 </head>
 <body>
     <!-- Back Button -->
     <button class="back-button" onclick="window.location.href='leaf.html'">⬅ Back</button>
-    
-    <nav id="game-links">
-        <a href="/gaming/snow.html" class="game-button popular">
-            <img src="images/snow.jpeg" alt="Snow Icon">
-            <p>Snow Rider 3D</p>
-        </a>
-    </nav>
 
-    <!-- New Section Content -->
-    <section>
-        <div class="set" id="leaf-set">
-            <div><img src="leafs/leaves1.png" alt="Leaf 1" draggable="false"></div>
-            <div><img src="leafs/leaves2.png" alt="Leaf 2" draggable="false"></div>
-            <div><img src="leafs/leaves3.png" alt="Leaf 3" draggable="false"></div>
-            <div><img src="leafs/leaves4.png" alt="Leaf 4" draggable="false"></div>
-            <div><img src="leafs/leaves1.png" alt="Leaf 1" draggable="false"></div>
-            <div><img src="leafs/leaves2.png" alt="Leaf 2" draggable="false"></div>
-            <div><img src="leafs/leaves3.png" alt="Leaf 3" draggable="false"></div>
-            <div><img src="leafs/leaves4.png" alt="Leaf 4" draggable="false"></div>
-            <div><img src="leafs/leaves1.png" alt="Leaf 1" draggable="false"></div>
-            <div><img src="leafs/leaves2.png" alt="Leaf 2" draggable="false"></div>
+    <!-- Falling Leaves -->
+    <div class="falling-leaves">
+        <div><img src="leafs/leaves1.png" alt="Leaf 1"></div>
+        <div><img src="leafs/leaves2.png" alt="Leaf 2"></div>
+        <div><img src="leafs/leaves3.png" alt="Leaf 3"></div>
+        <div><img src="leafs/leaves4.png" alt="Leaf 4"></div>
+        <div><img src="leafs/leaves1.png" alt="Leaf 1"></div>
+    </div>
+
+    <!-- Centered Content -->
+    <div class="center-container">
+        <!-- Search Bar -->
+        <input type="text" id="searchBar" class="search-bar" placeholder="Search for a game..." oninput="filterGames()">
+        
+        <!-- Game Buttons -->
+        <div id="game-links">
+            <a href="/gaming/snow.html" class="game-button" data-name="Snow Rider 3D">
+                <img src="images/snow.jpeg" alt="Snow Icon">
+                <p>Snow Rider 3D</p>
+            </a>
+            <a href="/gaming/poly.html" class="game-button" data-name="Poly Track">
+                <img src="images/polytrack.png" alt="Poly Track Icon">
+                <p>Poly Track</p>
+            </a>
+            <a href="/gaming/pacman.html" class="game-button" data-name="Pac-Man">
+                <img src="images/pacman.png" alt="Pac-Man Icon">
+                <p>Pac-Man</p>
+            </a>
         </div>
-    </section>
+    </div>
 
     <script>
-        // Shuffle the order of the leaves dynamically
-        function shuffleLeaves() {
-            const leafSet = document.getElementById('leaf-set');
-            const leaves = Array.from(leafSet.children); // Get all child divs
-            const shuffledLeaves = leaves.sort(() => Math.random() - 0.5); // Shuffle array
-            leafSet.innerHTML = ''; // Clear the container
-            shuffledLeaves.forEach(leaf => leafSet.appendChild(leaf)); // Append shuffled leaves
-        }
+        // Function to filter game buttons based on search input
+        function filterGames() {
+            const searchQuery = document.getElementById("searchBar").value.toLowerCase();
+            const gameButtons = document.querySelectorAll(".game-button");
 
-        // Remove leaves after animation ends
-        function setupLeafRemoval() {
-            const leafSet = document.getElementById('leaf-set');
-            leafSet.addEventListener('animationend', (event) => {
-                if (event.target && event.target.parentNode === leafSet) {
-                    leafSet.removeChild(event.target); // Remove leaf after animation
+            gameButtons.forEach((button) => {
+                const gameName = button.getAttribute("data-name").toLowerCase();
+                if (gameName.includes(searchQuery)) {
+                    button.style.display = "inline-flex";
+                } else {
+                    button.style.display = "none";
                 }
             });
         }
-
-        // Run the shuffle function and setup animation cleanup on page load
-        window.onload = () => {
-            shuffleLeaves();
-            setupLeafRemoval();
-        };
     </script>
 </body>
 </html>
