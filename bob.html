@@ -6,7 +6,6 @@
     <title>Leaf</title>
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="images/leaf.png" type="image/x-icon">
-    <script src="theme.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Lilita+One&display=swap');
@@ -27,6 +26,33 @@
             color: black !important;
         }
 
+        /* Back Button Styles */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, color 0.3s;
+            z-index: 10;
+        }
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .light-mode .back-button {
+            color: black;
+            background: rgba(0, 0, 0, 0.1);
+            border-color: black;
+        }
+        .light-mode .back-button:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
         /* New Section Styles */
         section {
             position: relative;
@@ -38,13 +64,6 @@
             justify-content: center;
             align-items: center;
             pointer-events: none; /* Disables all interactivity */
-        }
-
-        section h2 {
-            color: #fff;
-            font-size: 8em;
-            text-transform: uppercase;
-            font-family: 'Lilita One', sans-serif; /* Applying Lilita One font */
         }
 
         section .set {
@@ -141,30 +160,14 @@
             transform: scale(0.8) rotateX(180deg);
             filter: blur(4px);
         }
-
-        /* Other existing styles remain unchanged */
     </style>
 </head>
 <body>
+    <!-- Back Button -->
     <button class="back-button" onclick="window.location.href='leaf.html'">⬅ Back</button>
-
-    <div class="header">
-        <div class="right-align">
-            <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
-        </div>
-    </div>
-
-    <div class="search-container">
-        <input type="text" class="search-bar" id="search" placeholder="Search for a game...">
-    </div>
-
-    <nav id="game-links">
-        <!-- Game buttons remain unchanged -->
-    </nav>
 
     <!-- New Section Content -->
     <section>
-        <h2 class="lilita-one-regular">Welcome</h2>
         <div class="set">
             <div><img src="leafs/leaves1.png" alt="Leaf 1"></div>
             <div><img src="leafs/leaves2.png" alt="Leaf 2"></div>
@@ -176,45 +179,5 @@
             <div><img src="leafs/leaves4.png" alt="Leaf 4"></div>
         </div>
     </section>
-
-    <div class="no-results" id="no-results">No results found but if you want me to add the game you were looking for I can add it! Just request in the Google forms in the bottom corner!</div>
-
-    <script>
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
-            const gameButtons = document.querySelectorAll('.game-button');
-            gameButtons.forEach(button => {
-                if (document.body.classList.contains('light-mode')) {
-                    button.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
-                    button.style.color = 'black';
-                } else {
-                    button.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                    button.style.color = 'white';
-                }
-            });
-        }
-
-        document.getElementById('search').addEventListener('input', function() {
-            let filter = this.value.toLowerCase();
-            let links = document.querySelectorAll('.game-button');
-            let noResults = document.getElementById('no-results');
-            let hasResults = false;
-
-            links.forEach(link => {
-                if (link.textContent.toLowerCase().includes(filter)) {
-                    link.style.display = "block";
-                    hasResults = true;
-                } else {
-                    link.style.display = "none";
-                }
-            });
-
-            if (hasResults) {
-                noResults.style.display = "none";
-            } else {
-                noResults.style.display = "block";
-            }
-        });
-    </script>
 </body>
 </html>
