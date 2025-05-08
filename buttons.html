@@ -1,235 +1,300 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaf</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="images/leaf.png" type="image/x-icon">
-    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
-    <script src="theme.js"></script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+        scroll-behavior: smooth;
+    }
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            color: white;
-            text-align: center;
-            overflow: hidden;
-            transition: background 0.5s, color 0.5s;
-            user-select: none; /* Prevent text selection */
-            pointer-events: none; /* Make text non-clickable */
+    body {
+        background-color: #f4f4f4;
+        animation: fadeIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* Navbar */
+    .navbar {
+        background-color: #2c3e50;
+        color: white;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+    }
+
+    .navbar a {
+        color: white;
+        text-decoration: none;
+        margin: 0 10px;
+        font-size: 16px;
+        transition: 0.3s;
+    }
+
+    .navbar a:hover {
+        text-decoration: underline;
+        color: #f1c40f;
+    }
+
+    .search-box {
+        background: white;
+        padding: 5px;
+        border-radius: 5px;
+        flex-grow: 1;
+        max-width: 300px;
+        margin: 10px 0;
+    }
+
+    .search-box input {
+        border: none;
+        outline: none;
+        padding: 5px;
+        width: 100%;
+    }
+
+    .login-btn {
+        background: #f1c40f;
+        padding: 8px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .login-btn:hover {
+        background: #e67e22;
+    }
+
+    /* Hero Section */
+    .hero {
+        background: url('https://images.unsplash.com/photo-1696902271695-0031d244cd37?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 5vw;
+        font-weight: bold;
+        text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        text-align: center;
+    }
+
+    /* Course Cards */
+    .courses {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding: 40px;
+    }
+
+    .course-card {
+        background: white;
+        padding: 20px;
+        flex: 1 1 calc(30% - 20px);
+        max-width: 350px;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        transition: 0.3s;
+    }
+
+    .course-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+    }
+
+    .course-card img {
+        width: 100%;
+        border-radius: 10px;
+        height: auto;
+    }
+
+    .course-card a {
+        text-decoration: none;
+        color: black;
+        display: block;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    .course-card a:hover {
+        color: #f1c40f;
+    }
+
+    /* Testimonials */
+    .testimonials {
+        text-align: center;
+        padding: 40px;
+        background: white;
+        animation: fadeIn 2s ease-in-out;
+    }
+
+    .testimonial {
+        margin-top: 20px;
+        font-style: italic;
+    }
+
+    /* CTA Section */
+    .cta {
+        text-align: center;
+        background: #f1c40f;
+        padding: 40px;
+        font-size: 20px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .cta:hover {
+        background: #e67e22;
+    }
+
+    .cta a {
+        text-decoration: none;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    /* Footer */
+    .footer {
+        background: #2c3e50;
+        color: white;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .footer a {
+        color: #f1c40f;
+        text-decoration: none;
+    }
+
+    /* Hidden Button */
+    .hidden-button {
+        position: fixed;
+        top: 10px;
+        right: 15px;
+        background: #2c3e50;
+        color: white;
+        border: 1px solid #f1c40f;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+        opacity: 0.1; /* Make it "hidden" */
+        transition: opacity 0.3s ease;
+    }
+
+    .hidden-button:hover {
+        opacity: 1;
+    }
+
+    /* Modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+        padding-top: 60px;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 90%;
+        max-width: 300px;
+        text-align: center;
+    }
+
+    .modal input {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .modal button {
+        padding: 10px 20px;
+        background-color: #2c3e50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .modal button:hover {
+        background-color: #f1c40f;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 14px;
+    }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+        .navbar {
+            flex-direction: column;
+            align-items: flex-start;
         }
-        .light-mode {
-            background-color: #fff !important;
-            color: black !important;
+
+        .navbar a {
+            font-size: 14px;
+            margin: 5px 0;
         }
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
+
+        .hero {
+            font-size: 6vw;
         }
-        .light-mode #particles-js canvas {
-            filter: invert(1);
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            position: relative;
-            z-index: 2;
-        }
-        .theme-toggle {
-            background: transparent;
-            color: white;
-            padding: 10px 15px;
-            border: 2px solid white;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s, color 0.3s;
-            pointer-events: auto; /* Make button clickable */
-        }
-        .light-mode .theme-toggle {
-            color: black;
-            border-color: black;
-        }
-        .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        .icons-container {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            z-index: 3;
-        }
-        .icon {
-            display: flex;
+
+        .courses {
             flex-direction: column;
             align-items: center;
-            cursor: pointer;
-            transition: opacity 0.3s;
-            z-index: 3;
-            pointer-events: auto; /* Make icon clickable */
         }
-        .icon img {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 8px;
-            border-radius: 8px;
+
+        .course-card {
+            flex: 1 1 100%;
         }
-        .icon span {
-            margin-top: 5px;
-            font-size: 14px;
-            color: white;
+    }
+
+    @media (max-width: 480px) {
+        .navbar {
+            padding: 10px;
         }
-        .icon:hover img {
-            background: rgb(255, 255, 255);
+
+        .navbar a {
+            font-size: 12px;
         }
-        .content {
-            margin-top: 150px;
-            position: relative;
-            z-index: 3;
+
+        .hero {
+            height: 200px;
+            font-size: 8vw;
         }
-        .fade-text {
-            opacity: 0;
-            transition: opacity 1s;
+
+        .search-box {
+            max-width: 100%;
         }
-        .fade-text.show {
-            opacity: 1;
-        }
-        .request-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 4;
+
+        .cta {
             font-size: 16px;
-            color: white;
-            text-decoration: none;
-            pointer-events: auto; /* Make button clickable */
-        }
-        .request-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        .clock {
-            font-size: 24px;
-            margin-top: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px 15px;
-            border: 2px solid white;
-            border-radius: 5px;
-            user-select: none; /* Prevent text selection */
-            pointer-events: none; /* Make text non-clickable */
-            transition: background 0.3s, color 0.3s;
-            display: inline-block;
-        }
-        .light-mode .clock {
-            color: black;
-            border-color: black;
-        }
-    </style>
-</head>
-<body>
-    <div id="particles-js"></div>
-    <div class="header">
-        <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
-    </div>
-
-    <div class="icons-container">
-        <div class="icon" onclick="window.location.href='leafy.html'">
-            <img src="images/console.png" alt="Games">
-            <span>Games</span>
-        </div>
-        <div class="icon" onclick="window.location.href='apps.html'">
-            <img src="images/telephone.png" alt="Apps">
-            <span>Apps</span>
-        </div>
-        <div class="icon" onclick="window.location.href='settings.html'">
-            <img src="images/settings.png" alt="Settings">
-            <span>Settings</span>
-        </div>
-    </div>
-
-    <div class="content">
-        <h1>Welcome to Leaf Hope you have a great time im still actively working on this website!!</h1>
-        <p id="changing-text" class="fade-text show">This is a redesigned version of the website with a professional UI and enhanced design.</p>
-        <div class="clock" id="clock"></div>
-    </div>
-
-    <a href="https://forms.gle/EfkriY8Fyp7gLx9D8" class="request-btn" target="_blank">Request a game</a>
-
-    <script>
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
         }
 
-        particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 100 },
-                "size": { "value": 3 },
-                "move": { "speed": 1, "direction": "none", "random": true }
-            }
-        });
-
-        const phrases = [
-            "This is a redesigned version of the website with a professional UI and enhanced design.",
-            "Have fun!.",
-            "Im still adding more games please be patitent.",
-            "Stay tuned for more updates and new content.",
-            "Theres a request game button on the bottom right of screen!",
-            "This webpage wont show up in your history broswer."
-        ];
-
-        let currentPhraseIndex = 0;
-        const changingTextElement = document.getElementById("changing-text");
-
-        setInterval(() => {
-            changingTextElement.classList.remove("show");
-            setTimeout(() => {
-                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
-                changingTextElement.textContent = phrases[currentPhraseIndex];
-                changingTextElement.classList.add("show");
-            }, 1000); // Duration of the transition
-        }, 5000); // Duration of each phrase
-
-        function updateClock() {
-            const clockElement = document.getElementById('clock');
-            const now = new Date();
-            let hours = now.getHours();
-            const minutes = now.getMinutes();
-            const seconds = now.getSeconds();
-            const ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12; // the hour '0' should be '12'
-            const strTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} ${ampm}`;
-            clockElement.textContent = strTime;
+        .cta a {
+            font-size: 20px;
         }
-
-        setInterval(updateClock, 1000);
-        updateClock(); // initial call to display the clock immediately
-    </script>
-
-</body>
-</html>
+    }
+</style>
