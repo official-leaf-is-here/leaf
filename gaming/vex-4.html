@@ -141,7 +141,7 @@
         }
 
         /* Expanded Iframe */
-        .expanded-iframe-wrapper {
+        .expanded-iframe {
             position: fixed;
             top: 0;
             left: 0;
@@ -158,20 +158,15 @@
             transition: visibility 0s, opacity 0.3s ease-in-out;
         }
 
-        .expanded-iframe-wrapper.active {
+        .expanded-iframe.active {
             visibility: visible;
             opacity: 1;
         }
 
-        .expanded-iframe-wrapper iframe {
+        .expanded-iframe iframe {
             width: 95%; /* Adjusted width for expanded view */
             height: 95%; /* Adjusted height for expanded view */
             border-radius: 0;
-        }
-
-        /* Expanded Horizontal Bar */
-        .expanded-iframe-wrapper .button-bar {
-            margin-top: 20px; /* Adjust for expanded view */
         }
     </style>
 </head>
@@ -200,9 +195,9 @@
         </div>
     </div>
 
-    <!-- Expanded Iframe Wrapper -->
-    <div id="expanded-iframe-wrapper" class="expanded-iframe-wrapper">
-        <iframe id="game-iframe-expanded" src="/games/vex4/index.html" allowfullscreen tabindex="0"></iframe>
+    <!-- Expanded Iframe -->
+    <div id="expanded-iframe" class="expanded-iframe">
+        <iframe id="game-iframe-expanded" tabindex="0"></iframe>
         <div class="button-bar">
             <button data-tooltip="Close Expanded View" onclick="closeExpandedIframe()">✖</button>
         </div>
@@ -210,6 +205,9 @@
 
     <script>
         let animationEnabled = true;
+        const mainIframe = document.getElementById('game-iframe');
+        const expandedIframeWrapper = document.getElementById('expanded-iframe');
+        const expandedIframe = document.getElementById('game-iframe-expanded');
 
         // Toggle Falling Leaves Animation
         function toggleLeaves() {
@@ -220,51 +218,35 @@
 
         // Expand Iframe
         function expandIframe() {
-            const iframeContainer = document.getElementById('iframe-container');
-            const expandedWrapper = document.getElementById('expanded-iframe-wrapper');
-
-            // Show the expanded wrapper
-            expandedWrapper.classList.add('active');
-
-            // Keep the iframe content intact without reloading
-            iframeContainer.style.display = 'none';
-
-            // Focus the expanded iframe to capture keyboard inputs
-            const expandedIframe = document.getElementById('game-iframe-expanded');
+            // Move the main iframe into the expanded view
+            expandedIframeWrapper.classList.add('active');
+            expandedIframeWrapper.appendChild(mainIframe);
             expandedIframe.focus();
         }
 
         // Close Expanded Iframe
         function closeExpandedIframe() {
-            const iframeContainer = document.getElementById('iframe-container');
-            const expandedWrapper = document.getElementById('expanded-iframe-wrapper');
-
-            // Hide the expanded wrapper
-            expandedWrapper.classList.remove('active');
-
-            // Restore the original iframe container
-            iframeContainer.style.display = 'flex';
-
-            // Focus the original iframe
-            const originalIframe = document.getElementById('game-iframe');
-            originalIframe.focus();
+            // Move the iframe back to the original container
+            const originalContainer = document.getElementById('iframe-container');
+            expandedIframeWrapper.classList.remove('active');
+            originalContainer.insertBefore(mainIframe, originalContainer.firstChild);
+            mainIframe.focus();
         }
 
         // Make Iframe Fullscreen
         function makeIframeFullscreen() {
-            const iframe = document.getElementById('game-iframe');
-            if (iframe.requestFullscreen) {
-                iframe.requestFullscreen();
-            } else if (iframe.mozRequestFullScreen) {
-                iframe.mozRequestFullScreen();
-            } else if (iframe.webkitRequestFullscreen) {
-                iframe.webkitRequestFullscreen();
-            } else if (iframe.msRequestFullscreen) {
-                iframe.msRequestFullscreen();
+            if (mainIframe.requestFullscreen) {
+                mainIframe.requestFullscreen();
+            } else if (mainIframe.mozRequestFullScreen) {
+                mainIframe.mozRequestFullScreen();
+            } else if (mainIframe.webkitRequestFullscreen) {
+                mainIframe.webkitRequestFullscreen();
+            } else if (mainIframe.msRequestFullscreen) {
+                mainIframe.msRequestFullscreen();
             }
 
             // Ensure the iframe gains focus for keyboard inputs
-            iframe.focus();
+            mainIframe.focus();
         }
     </script>
 </body>
