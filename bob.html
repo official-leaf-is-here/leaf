@@ -49,36 +49,6 @@
             margin: 20px 0 10px;
         }
 
-        /* Favorites Section Styling */
-        #favorites-section {
-            margin: 20px auto;
-            padding: 20px;
-            border: 3px solid white; /* Cool outline */
-            border-radius: 10px;
-            max-width: 90%;
-            width: 600px;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            background: rgba(255, 255, 255, 0.05); /* Subtle background */
-        }
-
-        #favorites-section:hover {
-            border-color: gold; /* Highlighted border on hover */
-            box-shadow: 0 0 15px gold; /* Glow effect */
-        }
-
-        /* Favorites Buttons */
-        #favorites-links .game-button {
-            width: 120px; /* Smaller buttons */
-            height: 160px;
-            margin: 8px; /* Smaller margin */
-            font-size: 14px; /* Smaller text */
-        }
-
-        #favorites-links .game-button img {
-            width: 80px; /* Adjusted image size */
-            height: 80px;
-        }
-
         /* Search Bar Styles */
         .search-bar {
             margin: 30px auto;
@@ -142,26 +112,6 @@
             text-align: center;
             margin: 0;
             pointer-events: none; /* Disable text interaction */
-        }
-
-        /* Star Icon Styles */
-        .star-icon {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 20px;
-            color: white;
-            cursor: pointer;
-            z-index: 2;
-            transition: color 0.3s;
-        }
-
-        .star-icon.favorited {
-            color: gold; /* Highlighted when favorited */
-        }
-
-        .star-icon:hover {
-            color: gold; /* Hover effect */
         }
 
         /* Falling Leaves Layers */
@@ -245,83 +195,33 @@
     <!-- Search Bar -->
     <input type="text" id="searchBar" class="search-bar" placeholder="Search for a game..." oninput="filterGames()">
 
-    <!-- Favorites Section -->
-    <div id="favorites-section">
-        <div class="section-title">Favorites</div>
-        <div id="favorites-links"></div>
-    </div>
-
     <!-- Game Buttons -->
     <div id="game-links">
         <div class="game-button" data-name="Snow Rider 3D">
-            <span class="star-icon" onclick="toggleFavorite(this, 'Snow Rider 3D')">⭐</span>
             <img src="images/snow.jpeg" alt="Snow Icon">
             <p>Snow Rider 3D</p>
         </div>
         <div class="game-button" data-name="Poly Track">
-            <span class="star-icon" onclick="toggleFavorite(this, 'Poly Track')">⭐</span>
             <img src="games/polytrack-main/images/icon.svg" alt="Poly Track Icon">
             <p>Poly Track</p>
         </div>
         <div class="game-button" data-name="Pac-Man">
-            <span class="star-icon" onclick="toggleFavorite(this, 'Pac-Man')">⭐</span>
             <img src="images/pacman.png" alt="Pac-Man Icon">
             <p>Pac-Man</p>
         </div>
         <div class="game-button" data-name="There is No Game">
-            <span class="star-icon" onclick="toggleFavorite(this, 'There is No Game')">⭐</span>
             <img src="images/there-is-no-game.png" alt="There is No Game Icon">
             <p>There is No Game</p>
         </div>
     </div>
 
     <script>
-        // Load favorites from localStorage
-        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-
-        // Populate favorites section on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            const favoritesLinks = document.getElementById('favorites-links');
-            favorites.forEach(favorite => {
-                const gameButton = document.querySelector(`.game-button[data-name="${favorite}"]`);
-                if (gameButton) {
-                    moveToFavorites(gameButton);
-                }
-            });
-        });
-
-        // Toggle favorite functionality
-        function toggleFavorite(starElement, gameName) {
-            const gameButton = starElement.parentElement;
-
-            if (favorites.includes(gameName)) {
-                // Remove from favorites
-                favorites.splice(favorites.indexOf(gameName), 1);
-                localStorage.setItem('favorites', JSON.stringify(favorites));
-                document.getElementById('game-links').appendChild(gameButton);
-                starElement.classList.remove('favorited');
-            } else {
-                // Add to favorites
-                favorites.push(gameName);
-                localStorage.setItem('favorites', JSON.stringify(favorites));
-                moveToFavorites(gameButton);
-            }
-        }
-
-        // Move a game button to the Favorites section
-        function moveToFavorites(gameButton) {
-            const favoritesLinks = document.getElementById('favorites-links');
-            const starIcon = gameButton.querySelector('.star-icon');
-            if (starIcon) starIcon.classList.add('favorited');
-            favoritesLinks.appendChild(gameButton);
-        }
-
         // Filter games based on search query
         function filterGames() {
-            const searchQuery = document.getElementById('searchBar').value.toLowerCase();
-            const gameButtons = document.querySelectorAll("#game-links .game-button");
+            const searchQuery = document.getElementById("searchBar").value.toLowerCase();
+            const gameButtons = document.querySelectorAll(".game-button");
 
-            gameButtons.forEach(button => {
+            gameButtons.forEach((button) => {
                 const gameName = button.getAttribute("data-name").toLowerCase();
                 button.style.display = gameName.includes(searchQuery) ? 'inline-flex' : 'none';
             });
