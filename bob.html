@@ -58,12 +58,25 @@
             max-width: 90%;
             width: 600px;
             transition: border-color 0.3s, box-shadow 0.3s;
+            background: rgba(255, 255, 255, 0.05); /* Subtle background */
         }
 
         #favorites-section:hover {
             border-color: gold; /* Highlighted border on hover */
             box-shadow: 0 0 15px gold; /* Glow effect */
-            background: rgba(255, 255, 255, 0.1); /* Subtle background change */
+        }
+
+        /* Favorites Buttons */
+        #favorites-links .game-button {
+            width: 120px; /* Smaller buttons */
+            height: 160px;
+            margin: 8px; /* Smaller margin */
+            font-size: 14px; /* Smaller text */
+        }
+
+        #favorites-links .game-button img {
+            width: 80px; /* Adjusted image size */
+            height: 80px;
         }
 
         /* Search Bar Styles */
