@@ -139,6 +139,40 @@
             opacity: 1;
             visibility: visible;
         }
+
+        /* Expanded Iframe */
+        .expanded-iframe-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden; /* Initially hidden */
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s ease-in-out;
+        }
+
+        .expanded-iframe-wrapper.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .expanded-iframe-wrapper iframe {
+            width: 95%; /* Adjusted width for expanded view */
+            height: 95%; /* Adjusted height for expanded view */
+            border-radius: 0;
+        }
+
+        /* Expanded Horizontal Bar */
+        .expanded-iframe-wrapper .button-bar {
+            margin-top: 20px; /* Adjust for expanded view */
+        }
     </style>
 </head>
 <body>
@@ -161,7 +195,16 @@
         <div id="button-bar" class="button-bar">
             <button data-tooltip="Refresh Page" onclick="window.location.reload()">🔄</button>
             <button data-tooltip="Toggle Animation" onclick="toggleLeaves()">🌿</button>
+            <button data-tooltip="Expand Iframe" onclick="expandIframe()">⛶</button>
             <button data-tooltip="Fullscreen Iframe" onclick="makeIframeFullscreen()">🔲</button>
+        </div>
+    </div>
+
+    <!-- Expanded Iframe Wrapper -->
+    <div id="expanded-iframe-wrapper" class="expanded-iframe-wrapper">
+        <iframe id="game-iframe-expanded" src="/games/vex4/index.html" allowfullscreen tabindex="0"></iframe>
+        <div class="button-bar">
+            <button data-tooltip="Close Expanded View" onclick="closeExpandedIframe()">✖</button>
         </div>
     </div>
 
@@ -173,6 +216,38 @@
             const leaves = document.getElementById('falling-leaves');
             animationEnabled = !animationEnabled;
             leaves.style.display = animationEnabled ? 'block' : 'none';
+        }
+
+        // Expand Iframe
+        function expandIframe() {
+            const iframeContainer = document.getElementById('iframe-container');
+            const expandedWrapper = document.getElementById('expanded-iframe-wrapper');
+
+            // Show the expanded wrapper
+            expandedWrapper.classList.add('active');
+
+            // Keep the iframe content intact without reloading
+            iframeContainer.style.display = 'none';
+
+            // Focus the expanded iframe to capture keyboard inputs
+            const expandedIframe = document.getElementById('game-iframe-expanded');
+            expandedIframe.focus();
+        }
+
+        // Close Expanded Iframe
+        function closeExpandedIframe() {
+            const iframeContainer = document.getElementById('iframe-container');
+            const expandedWrapper = document.getElementById('expanded-iframe-wrapper');
+
+            // Hide the expanded wrapper
+            expandedWrapper.classList.remove('active');
+
+            // Restore the original iframe container
+            iframeContainer.style.display = 'flex';
+
+            // Focus the original iframe
+            const originalIframe = document.getElementById('game-iframe');
+            originalIframe.focus();
         }
 
         // Make Iframe Fullscreen
