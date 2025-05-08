@@ -150,6 +150,7 @@
             z-index: 3;
             background: rgba(0, 0, 0, 0.9);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             visibility: hidden; /* Initially hidden */
@@ -163,9 +164,14 @@
         }
 
         .expanded-iframe-wrapper iframe {
-            width: 100%;
-            height: 100%;
+            width: 90%; /* Adjusted width for expanded view */
+            height: 90%; /* Adjusted height for expanded view */
             border-radius: 0;
+        }
+
+        /* Expanded Horizontal Bar */
+        .expanded-iframe-wrapper .button-bar {
+            margin-top: 20px; /* Adjust for expanded view */
         }
     </style>
 </head>
@@ -197,7 +203,9 @@
     <!-- Expanded Iframe Wrapper -->
     <div id="expanded-iframe-wrapper" class="expanded-iframe-wrapper">
         <iframe id="game-iframe-expanded" src="/games/vex4/index.html" allowfullscreen></iframe>
-        <button class="back-button" style="position: absolute; top: 20px; right: 20px;" onclick="closeExpandedIframe()">✖ Close</button>
+        <div class="button-bar">
+            <button data-tooltip="Close Expanded View" onclick="closeExpandedIframe()">✖</button>
+        </div>
     </div>
 
     <script>
