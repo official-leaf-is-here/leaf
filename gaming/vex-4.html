@@ -141,14 +141,28 @@
         }
 
         /* Expanded Iframe */
-        .expanded-iframe {
+        .expanded-iframe-wrapper {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 2;
+            z-index: 3;
             background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .expanded-iframe-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+        }
+
+        /* Hide Iframe Container when Expanded */
+        .hidden {
+            display: none;
         }
     </style>
 </head>
@@ -164,7 +178,7 @@
     <button class="back-button" onclick="window.location.href='/leafy.html'">⬅ Back</button>
 
     <!-- Iframe Container -->
-    <div class="iframe-container">
+    <div class="iframe-container" id="iframe-container">
         <!-- Iframe -->
         <iframe id="game-iframe" src="/games/vex4/index.html"></iframe>
 
@@ -175,6 +189,12 @@
             <button data-tooltip="Expand Iframe" onclick="expandIframe()">⛶</button>
             <button data-tooltip="Fullscreen Iframe" onclick="makeIframeFullscreen()">🔲</button>
         </div>
+    </div>
+
+    <!-- Expanded Iframe Wrapper -->
+    <div id="expanded-iframe-wrapper" class="expanded-iframe-wrapper hidden">
+        <iframe id="expanded-iframe" src="" allowfullscreen></iframe>
+        <button class="back-button" style="position: absolute; top: 20px; right: 20px;" onclick="closeExpandedIframe()">✖ Close</button>
     </div>
 
     <script>
@@ -189,18 +209,31 @@
 
         // Expand Iframe
         function expandIframe() {
-            const iframeContainer = document.querySelector('.iframe-container');
-            iframeContainer.style.position = 'fixed';
-            iframeContainer.style.top = '0';
-            iframeContainer.style.left = '0';
-            iframeContainer.style.width = '100%';
-            iframeContainer.style.height = '100%';
-            iframeContainer.style.zIndex = '3';
+            const iframeContainer = document.getElementById('iframe-container');
+            const expandedWrapper = document.getElementById('expanded-iframe-wrapper');
+            const expandedIframe = document.getElementById('expanded-iframe');
+            const gameIframe = document.getElementById('game-iframe');
 
-            const iframe = document.getElementById('game-iframe');
-            iframe.style.width = '100%';
-            iframe.style.height = '100%';
-            iframe.style.borderRadius = '0';
+            // Hide the original iframe container and show the expanded view
+            iframeContainer.classList.add('hidden');
+            expandedWrapper.classList.remove('hidden');
+
+            // Set the same src to the expanded iframe
+            expandedIframe.src = gameIframe.src;
+        }
+
+        // Close Expanded Iframe
+        function closeExpandedIframe() {
+            const iframeContainer = document.getElementById('iframe-container');
+            const expandedWrapper = document.getElementById('expanded-iframe-wrapper');
+            const expandedIframe = document.getElementById('expanded-iframe');
+
+            // Show the original iframe container and hide the expanded view
+            iframeContainer.classList.remove('hidden');
+            expandedWrapper.classList.add('hidden');
+
+            // Remove the src from the expanded iframe to stop it from loading in the background
+            expandedIframe.src = '';
         }
 
         // Make Iframe Fullscreen
