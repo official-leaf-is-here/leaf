@@ -222,6 +222,17 @@
         <img src="https://randyvz205.github.io/leafs/leaves2.png" alt="Leaf 2" style="--random-x: 0.5; --scale: 0.7;">
         <img src="https://randyvz205.github.io/leafs/leaves3.png" alt="Leaf 3" style="--random-x: 0.9; --scale: 0.6;">
     </div>
+    <div class="falling-leaves-layer layer2">
+        <img src="https://randyvz205.github.io/leafs/leaves1.png" alt="Leaf 1" style="--random-x: 0.3; --scale: 1;">
+        <img src="https://randyvz205.github.io/leafs/leaves4.png" alt="Leaf 4" style="--random-x: 0.8; --scale: 0.9;">
+        <img src="https://randyvz205.github.io/leafs/leaves2.png" alt="Leaf 2" style="--random-x: 0.6; --scale: 1.1;">
+    </div>
+    <div class="falling-leaves-layer layer3">
+        <img src="https://randyvz205.github.io/leafs/leaves3.png" alt="Leaf 3" style="--random-x: 0.2; --scale: 1.2;">
+        <img src="https://randyvz205.github.io/leafs/leaves1.png" alt="Leaf 1" style="--random-x: 0.7; --scale: 1.4;">
+        <img src="https://randyvz205.github.io/leafs/leaves2.png" alt="Leaf 2" style="--random-x: 0.4; --scale: 1.3;">
+    </div>
+
     <!-- Back Button -->
     <button class="back-button" onclick="window.location.href='/leafy.html'">⬅ Back</button>
 
@@ -249,7 +260,6 @@
         let animationEnabled = true;
         const mainIframe = document.getElementById('game-iframe');
         const expandedIframeWrapper = document.getElementById('expanded-iframe');
-        const expandedIframe = document.getElementById('expanded-game-iframe');
         const iframeContainer = document.getElementById('iframe-container');
 
         // Toggle Falling Leaves Animation
@@ -264,14 +274,15 @@
         // Expand Iframe
         function expandIframe() {
             expandedIframeWrapper.classList.add('active');
-            expandedIframe.src = mainIframe.src; // Copy the iframe source
-            expandedIframe.focus();
+            expandedIframeWrapper.appendChild(mainIframe); // Move iframe to expanded container
+            mainIframe.focus();
         }
 
         // Close Expanded Iframe
         function closeExpandedIframe() {
             expandedIframeWrapper.classList.remove('active');
-            expandedIframe.src = ''; // Clear the iframe source to preserve state
+            iframeContainer.appendChild(mainIframe); // Return iframe to original container
+            mainIframe.focus();
         }
 
         // Make Iframe Fullscreen
