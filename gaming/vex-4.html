@@ -228,6 +228,10 @@
 
             // Keep the iframe content intact without reloading
             iframeContainer.style.display = 'none';
+
+            // Focus the expanded iframe to capture keyboard inputs
+            const expandedIframe = document.getElementById('game-iframe-expanded');
+            expandedIframe.focus();
         }
 
         // Close Expanded Iframe
@@ -240,6 +244,10 @@
 
             // Restore the original iframe container
             iframeContainer.style.display = 'flex';
+
+            // Focus the original iframe
+            const originalIframe = document.getElementById('game-iframe');
+            originalIframe.focus();
         }
 
         // Make Iframe Fullscreen
@@ -254,6 +262,9 @@
             } else if (iframe.msRequestFullscreen) {
                 iframe.msRequestFullscreen();
             }
+
+            // Focus the iframe to capture keyboard inputs
+            iframe.focus();
         }
     </script>
 </body>
