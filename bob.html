@@ -49,6 +49,23 @@
             margin: 20px 0 10px;
         }
 
+        /* Favorites Section Styling */
+        #favorites-section {
+            margin: 20px auto;
+            padding: 20px;
+            border: 3px solid white; /* Cool outline */
+            border-radius: 10px;
+            max-width: 90%;
+            width: 600px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        #favorites-section:hover {
+            border-color: gold; /* Highlighted border on hover */
+            box-shadow: 0 0 15px gold; /* Glow effect */
+            background: rgba(255, 255, 255, 0.1); /* Subtle background change */
+        }
+
         /* Search Bar Styles */
         .search-bar {
             margin: 30px auto;
@@ -256,12 +273,13 @@
                 const gameButton = document.querySelector(`.game-button[data-name="${favorite}"]`);
                 if (gameButton) {
                     const clone = gameButton.cloneNode(true);
-                    clone.querySelector('.star-icon').classList.add('favorited');
+                    clone.querySelector('.star-icon').remove(); // Remove star icon in favorites
                     favoritesLinks.appendChild(clone);
+                    gameButton.remove(); // Remove from main game list
                 }
             });
 
-            // Mark stars as highlighted for saved favorites
+            // Highlight stars for saved favorites
             const starIcons = document.querySelectorAll('.star-icon');
             starIcons.forEach(icon => {
                 const gameName = icon.parentElement.getAttribute('data-name');
@@ -274,27 +292,19 @@
         // Toggle favorite functionality
         function toggleFavorite(starElement, gameName) {
             const favoritesLinks = document.getElementById('favorites-links');
-            const index = favorites.indexOf(gameName);
+            const gameButton = starElement.parentElement;
 
-            if (index === -1) {
+            if (!favorites.includes(gameName)) {
                 // Add to favorites
                 favorites.push(gameName);
                 localStorage.setItem('favorites', JSON.stringify(favorites));
                 starElement.classList.add('favorited');
 
-                const gameButton = starElement.parentElement.cloneNode(true);
-                gameButton.querySelector('.star-icon').remove();
-                favoritesLinks.appendChild(gameButton);
-            } else {
-                // Remove from favorites
-                favorites.splice(index, 1);
-                localStorage.setItem('favorites', JSON.stringify(favorites));
-                starElement.classList.remove('favorited');
+                const clone = gameButton.cloneNode(true);
+                clone.querySelector('.star-icon').remove(); // Remove star icon in favorites
+                favoritesLinks.appendChild(clone);
 
-                const favoriteButton = [...favoritesLinks.children].find(
-                    button => button.getAttribute('data-name') === gameName
-                );
-                if (favoriteButton) favoritesLinks.removeChild(favoriteButton);
+                gameButton.remove(); // Remove from main game list
             }
         }
 
