@@ -4,46 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaf</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="images/leaf.png" type="image/x-icon">
-    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
     <style>
-        body {
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Lilita+One&display=swap');
+
+        /* General Body Styles */
+        html, body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #000;
+            background: linear-gradient(135deg, #8B4513, #A0522D, #CD853F); /* Gradient brownish background */
             color: white;
             text-align: center;
-            overflow: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            overflow: hidden; /* Prevent scrolling */
             height: 100vh;
-            transition: background 0.5s, color 0.5s;
+            position: relative;
         }
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
+
+        /* Falling Leaves Layers */
+        .falling-leaves-layer {
+            position: absolute;
             top: 0;
             left: 0;
-            z-index: -1;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none; /* Leaves should not interact with the user */
+            z-index: 0; /* Place behind all other content */
         }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            position: relative;
-            z-index: 2;
-        }
-        .back-button {
+
+        .falling-leaves-layer img {
             position: absolute;
+            width: calc(5vw + 5vw * var(--scale));
+            height: auto;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100%) rotate(0); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        /* Back Button Styles */
+        .back-button {
+            position: fixed;
             top: 10px;
             left: 10px;
             background: rgba(255, 255, 255, 0.1);
@@ -53,82 +58,201 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            transition: background 0.3s, color 0.3s;
             z-index: 3;
         }
+
         .back-button:hover {
             background: rgba(255, 255, 255, 0.3);
         }
+
+        /* Horizontal Bar */
+        .button-bar {
+            position: absolute;
+            top: 10px;
+            width: calc(80% - 20px);
+            left: 10%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 10px;
+            z-index: 2;
+        }
+
+        /* Button Styles */
+        .button-bar button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        .button-bar button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* Tooltip */
+        .button-bar button::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 5px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            white-space: nowrap;
+        }
+
+        .button-bar button:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Hide Button Bar */
+        .hide-bar {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .hide-bar:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Show Bar Button */
+        #show-bar {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            color: white;
+            display: none;
+        }
+
+        #show-bar:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Iframe Container */
         .iframe-container {
             width: 80%;
             max-width: 800px;
+            margin: auto;
             position: relative;
+            z-index: 1;
         }
+
         .iframe-container iframe {
             width: 100%;
             height: 450px;
             border: none;
             border-radius: 10px;
         }
-        .fullscreen-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 2px solid white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background 0.3s, color 0.3s;
-        }
-        .fullscreen-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+
+        /* Expanded Iframe */
+        .expanded-iframe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.9);
         }
     </style>
 </head>
 <body>
-    <div id="particles-js"></div>
+    <!-- Falling Leaves -->
+    <div id="falling-leaves" class="falling-leaves-layer">
+        <img src="leafs/leaves1.png" style="--scale: 0.6; animation-duration: 10s;">
+        <img src="leafs/leaves2.png" style="--scale: 0.8; animation-duration: 12s;">
+        <img src="leafs/leaves3.png" style="--scale: 0.7; animation-duration: 15s;">
+    </div>
+
+    <!-- Back Button -->
     <button class="back-button" onclick="window.location.href='/leafy.html'">⬅ Back</button>
 
+    <!-- Button Bar -->
+    <div id="button-bar" class="button-bar">
+        <button data-tooltip="Refresh Page" onclick="window.location.reload()">🔄</button>
+        <button data-tooltip="Toggle Animation" onclick="toggleLeaves()">🌿</button>
+        <button data-tooltip="Expand Iframe" onclick="expandIframe()">⛶</button>
+        <button data-tooltip="Fullscreen Iframe" onclick="makeIframeFullscreen()">🔲</button>
+    </div>
+
+    <!-- Hide Button Bar -->
+    <button class="hide-bar" onclick="hideBar()">✖</button>
+
+    <!-- Show Bar Button -->
+    <button id="show-bar" onclick="showBar()">Show Bar</button>
+
+    <!-- Iframe Container -->
     <div class="iframe-container">
-        <iframe src="/games/vex4/index.html"></iframe>
-        <button class="fullscreen-btn" onclick="toggleFullscreen()">🔲 Fullscreen</button>
+        <iframe id="game-iframe" src="/games/vex4/index.html"></iframe>
     </div>
 
     <script>
-        particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 100 },
-                "size": { "value": 3 },
-                "move": { "speed": 1, "direction": "none", "random": true }
-            }
-        });
+        let animationEnabled = true;
 
-        function toggleFullscreen() {
-            const iframe = document.querySelector('iframe');
-            if (!document.fullscreenElement) {
-                if (iframe.requestFullscreen) {
-                    iframe.requestFullscreen();
-                } else if (iframe.mozRequestFullScreen) {
-                    iframe.mozRequestFullScreen();
-                } else if (iframe.webkitRequestFullscreen) {
-                    iframe.webkitRequestFullscreen();
-                } else if (iframe.msRequestFullscreen) {
-                    iframe.msRequestFullscreen();
-                }
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                }
+        // Toggle Falling Leaves Animation
+        function toggleLeaves() {
+            const leaves = document.getElementById('falling-leaves');
+            animationEnabled = !animationEnabled;
+            leaves.style.display = animationEnabled ? 'block' : 'none';
+        }
+
+        // Expand Iframe
+        function expandIframe() {
+            const iframe = document.getElementById('game-iframe');
+            iframe.classList.toggle('expanded-iframe');
+            iframe.style.borderRadius = iframe.classList.contains('expanded-iframe') ? '0' : '10px';
+        }
+
+        // Make Iframe Fullscreen
+        function makeIframeFullscreen() {
+            const iframe = document.getElementById('game-iframe');
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.mozRequestFullScreen) {
+                iframe.mozRequestFullScreen();
+            } else if (iframe.webkitRequestFullscreen) {
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) {
+                iframe.msRequestFullscreen();
             }
+        }
+
+        // Hide Horizontal Bar
+        function hideBar() {
+            document.getElementById('button-bar').style.display = 'none';
+            document.getElementById('show-bar').style.display = 'block';
+        }
+
+        // Show Horizontal Bar
+        function showBar() {
+            document.getElementById('button-bar').style.display = 'flex';
+            document.getElementById('show-bar').style.display = 'none';
         }
     </script>
 </body>
