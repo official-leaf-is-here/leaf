@@ -41,7 +41,7 @@
             opacity: 0.8; /* Slight transparency for depth */
         }
 
-        /* Layer 1 (Far Background) */
+        /* Falling Leaf Animations */
         .layer1 img {
             animation: animateLayer1 15s linear infinite;
         }
@@ -53,7 +53,6 @@
             100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-10px) scale(var(--scale)) rotate(90deg); opacity: 0; }
         }
 
-        /* Layer 2 (Middle Background) */
         .layer2 img {
             animation: animateLayer2 12s linear infinite;
         }
@@ -65,7 +64,6 @@
             100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-20px) scale(var(--scale)) rotate(180deg); opacity: 0; }
         }
 
-        /* Layer 3 (Foreground) */
         .layer3 img {
             animation: animateLayer3 10s linear infinite;
         }
@@ -224,17 +222,6 @@
         <img src="https://randyvz205.github.io/leafs/leaves2.png" alt="Leaf 2" style="--random-x: 0.5; --scale: 0.7;">
         <img src="https://randyvz205.github.io/leafs/leaves3.png" alt="Leaf 3" style="--random-x: 0.9; --scale: 0.6;">
     </div>
-    <div class="falling-leaves-layer layer2">
-        <img src="https://randyvz205.github.io/leafs/leaves1.png" alt="Leaf 1" style="--random-x: 0.3; --scale: 1;">
-        <img src="https://randyvz205.github.io/leafs/leaves4.png" alt="Leaf 4" style="--random-x: 0.8; --scale: 0.9;">
-        <img src="https://randyvz205.github.io/leafs/leaves2.png" alt="Leaf 2" style="--random-x: 0.6; --scale: 1.1;">
-    </div>
-    <div class="falling-leaves-layer layer3">
-        <img src="https://randyvz205.github.io/leafs/leaves3.png" alt="Leaf 3" style="--random-x: 0.2; --scale: 1.2;">
-        <img src="https://randyvz205.github.io/leafs/leaves1.png" alt="Leaf 1" style="--random-x: 0.7; --scale: 1.4;">
-        <img src="https://randyvz205.github.io/leafs/leaves2.png" alt="Leaf 2" style="--random-x: 0.4; --scale: 1.3;">
-    </div>
-
     <!-- Back Button -->
     <button class="back-button" onclick="window.location.href='/leafy.html'">⬅ Back</button>
 
@@ -254,7 +241,7 @@
 
     <!-- Expanded Iframe -->
     <div id="expanded-iframe" class="expanded-iframe">
-        <div id="iframe-container-expanded"></div>
+        <iframe id="expanded-game-iframe" tabindex="0"></iframe>
         <button class="close-button" onclick="closeExpandedIframe()">✖ Close</button>
     </div>
 
@@ -262,30 +249,29 @@
         let animationEnabled = true;
         const mainIframe = document.getElementById('game-iframe');
         const expandedIframeWrapper = document.getElementById('expanded-iframe');
-        const expandedIframeContainer = document.getElementById('iframe-container-expanded');
-        const originalIframeContainer = document.getElementById('iframe-container');
+        const expandedIframe = document.getElementById('expanded-game-iframe');
+        const iframeContainer = document.getElementById('iframe-container');
 
         // Toggle Falling Leaves Animation
         function toggleLeaves() {
-            const leaves = document.getElementById('falling-leaves');
+            const layers = document.querySelectorAll('.falling-leaves-layer');
             animationEnabled = !animationEnabled;
-            leaves.style.display = animationEnabled ? 'block' : 'none';
+            layers.forEach(layer => {
+                layer.style.display = animationEnabled ? 'block' : 'none';
+            });
         }
 
         // Expand Iframe
         function expandIframe() {
-            // Move the main iframe into the expanded view
             expandedIframeWrapper.classList.add('active');
-            expandedIframeContainer.appendChild(mainIframe);
-            mainIframe.focus();
+            expandedIframe.src = mainIframe.src; // Copy the iframe source
+            expandedIframe.focus();
         }
 
         // Close Expanded Iframe
         function closeExpandedIframe() {
-            // Move the iframe back to the original container
             expandedIframeWrapper.classList.remove('active');
-            originalIframeContainer.insertBefore(mainIframe, originalIframeContainer.firstChild);
-            mainIframe.focus();
+            expandedIframe.src = ''; // Clear the iframe source to preserve state
         }
 
         // Make Iframe Fullscreen
@@ -300,8 +286,7 @@
                 mainIframe.msRequestFullscreen();
             }
 
-            // Ensure the iframe gains focus for keyboard inputs
-            mainIframe.focus();
+            mainIframe.focus(); // Ensure the iframe gains focus for keyboard inputs
         }
     </script>
 </body>
