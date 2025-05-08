@@ -29,8 +29,8 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            pointer-events: none; /* Leaves should not interact with the user */
-            z-index: 0;
+            z-index: 0; /* Place behind all other content */
+            pointer-events: none; /* Allow interaction with elements below */
         }
 
         .falling-leaves-layer img {
