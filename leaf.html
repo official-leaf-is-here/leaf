@@ -19,7 +19,9 @@
             background: linear-gradient(130deg, #8bc34a 0%, #388e3c 35%, #a1882f 100%);
             color: #fff;
             text-align: center;
-            overflow: hidden;
+            overflow: hidden; /* Prevent scrollbars or unwanted lines */
+            background-repeat: no-repeat; /* Fix potential background repetition */
+            background-size: cover; /* Ensure background covers the entire viewport */
             transition: background 0.5s, color 0.5s;
             user-select: none;
             pointer-events: none;
