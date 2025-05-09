@@ -516,13 +516,19 @@
     </div>
 
     <script>
-        // Filter games based on search query
-        function filterGames() {
+       function filterGames() {
             const searchQuery = document.getElementById("searchBar").value.toLowerCase();
             const gameButtons = document.querySelectorAll(".game-button");
 
             gameButtons.forEach((button) => {
-                const gameName = button.getAttribute("data-name").toLowerCase();
+                // Use the visible <p> text if data-name is missing
+                let gameName = button.getAttribute("data-name");
+                if (!gameName) {
+                    // fallback to the <p> tag inside the button
+                    const p = button.querySelector("p");
+                    gameName = p ? p.textContent : "";
+                }
+                gameName = gameName.toLowerCase();
                 button.style.display = gameName.includes(searchQuery) ? 'inline-flex' : 'none';
             });
         }
