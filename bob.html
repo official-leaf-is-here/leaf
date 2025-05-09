@@ -41,7 +41,7 @@
             opacity: 0.8; /* Slight transparency for depth */
         }
 
-        /* Layer 1 (Far Background) */
+        /* Layer 1 Animation */
         .layer1 img {
             animation: animateLayer1 15s linear infinite;
         }
@@ -53,7 +53,7 @@
             100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-10px) scale(var(--scale)) rotate(90deg); opacity: 0; }
         }
 
-        /* Layer 2 (Middle Background) */
+        /* Layer 2 Animation */
         .layer2 img {
             animation: animateLayer2 12s linear infinite;
         }
@@ -65,7 +65,7 @@
             100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-20px) scale(var(--scale)) rotate(180deg); opacity: 0; }
         }
 
-        /* Layer 3 (Foreground) */
+        /* Layer 3 Animation */
         .layer3 img {
             animation: animateLayer3 10s linear infinite;
         }
@@ -146,52 +146,6 @@
             background: rgba(255, 255, 255, 0.3);
             transform: scale(1.1);
         }
-
-        /* Expanded Iframe */
-        .expanded-iframe {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 3;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            visibility: hidden; /* Initially hidden */
-            opacity: 0;
-            transition: visibility 0s, opacity 0.3s ease-in-out;
-        }
-
-        .expanded-iframe.active {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .expanded-iframe iframe {
-            width: 95%; /* Take up 95% of the screen width */
-            height: 95%; /* Take up 95% of the screen height */
-            border-radius: 10px;
-        }
-
-        /* Close Button in Expanded View */
-        .expanded-iframe .close-button {
-            margin-top: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 2px solid white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s;
-        }
-
-        .expanded-iframe .close-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
     </style>
 </head>
 <body>
@@ -229,17 +183,8 @@
         </div>
     </div>
 
-    <!-- Expanded Iframe -->
-    <div id="expanded-iframe" class="expanded-iframe">
-        <button class="close-button" onclick="closeExpandedIframe()">✖ Close</button>
-    </div>
-
     <script>
         let animationEnabled = true;
-        const mainIframe = document.getElementById('game-iframe');
-        const expandedIframeWrapper = document.getElementById('expanded-iframe');
-        const iframeContainer = document.getElementById('iframe-container');
-        const buttonBar = document.getElementById('button-bar');
 
         // Toggle Falling Leaves Animation
         function toggleLeaves() {
@@ -248,41 +193,6 @@
             layers.forEach(layer => {
                 layer.style.display = animationEnabled ? 'block' : 'none';
             });
-        }
-
-        // Expand Iframe
-        function expandIframe() {
-            expandedIframeWrapper.classList.add('active');
-            expandedIframeWrapper.appendChild(mainIframe); // Move iframe to expanded container
-            mainIframe.style.width = "95%";
-            mainIframe.style.height = "95%";
-            buttonBar.style.visibility = "hidden"; // Hide the horizontal bar in expanded view
-            mainIframe.focus();
-        }
-
-        // Close Expanded Iframe
-        function closeExpandedIframe() {
-            expandedIframeWrapper.classList.remove('active');
-            iframeContainer.appendChild(mainIframe); // Return iframe to original container
-            mainIframe.style.width = "100%";
-            mainIframe.style.height = "100%";
-            buttonBar.style.visibility = "visible"; // Restore the horizontal bar
-            mainIframe.focus();
-        }
-
-        // Make Iframe Fullscreen
-        function makeIframeFullscreen() {
-            if (mainIframe.requestFullscreen) {
-                mainIframe.requestFullscreen();
-            } else if (mainIframe.mozRequestFullScreen) {
-                mainIframe.mozRequestFullScreen();
-            } else if (mainIframe.webkitRequestFullscreen) {
-                mainIframe.webkitRequestFullscreen();
-            } else if (mainIframe.msRequestFullscreen) {
-                mainIframe.msRequestFullscreen();
-            }
-
-            mainIframe.focus(); // Ensure the iframe gains focus for keyboard inputs
         }
     </script>
 </body>
