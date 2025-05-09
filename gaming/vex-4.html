@@ -36,14 +36,14 @@
         /* Random Leaf Sizes */
         .falling-leaves-layer img {
             position: absolute;
-            width: calc(5vw + 5vw * var(--scale)); /* Randomized sizes */
+            width: calc(5vw + 5vw * var(--scale));
             height: auto;
             opacity: 0.8; /* Slight transparency for depth */
         }
 
-        /* Falling Leaf Animations */
+        /* Layer 1 Animation (Faster Movement) */
         .layer1 img {
-            animation: animateLayer1 15s linear infinite;
+            animation: animateLayer1 10s linear infinite;
         }
 
         @keyframes animateLayer1 {
@@ -53,8 +53,9 @@
             100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-10px) scale(var(--scale)) rotate(90deg); opacity: 0; }
         }
 
+        /* Layer 2 Animation (Faster Movement) */
         .layer2 img {
-            animation: animateLayer2 12s linear infinite;
+            animation: animateLayer2 8s linear infinite;
         }
 
         @keyframes animateLayer2 {
@@ -64,8 +65,9 @@
             100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-20px) scale(var(--scale)) rotate(180deg); opacity: 0; }
         }
 
+        /* Layer 3 Animation (Faster Movement) */
         .layer3 img {
-            animation: animateLayer3 10s linear infinite;
+            animation: animateLayer3 6s linear infinite;
         }
 
         @keyframes animateLayer3 {
@@ -102,11 +104,10 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%); /* Center the iframe */
+            transform: translate(-50%, -50%);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             z-index: 1;
         }
 
@@ -119,25 +120,25 @@
 
         /* Horizontal Bar */
         .button-bar {
-            width: 100%; /* Matches the width of the iframe container */
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
+            width: 100%;
+            margin-top: 10px;
             background: rgba(0, 0, 0, 0.5);
             padding: 10px;
             border-radius: 10px;
-            margin-top: 10px; /* Push it slightly below the iframe */
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 4;
         }
 
-        /* Button Styles */
         .button-bar button {
             background: rgba(255, 255, 255, 0.1);
             border: none;
             border-radius: 5px;
             padding: 10px;
             cursor: pointer;
-            position: relative;
             transition: background 0.3s, transform 0.3s;
+            z-index: 5;
         }
 
         .button-bar button:hover {
@@ -145,73 +146,11 @@
             transform: scale(1.1);
         }
 
-        /* Tooltip */
-        .button-bar button::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 5px 10px;
-            font-size: 12px;
-            border-radius: 5px;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
-            white-space: nowrap;
-        }
-
-        .button-bar button:hover::after {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Expanded Iframe */
-        .expanded-iframe {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 3;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            visibility: hidden; /* Initially hidden */
-            opacity: 0;
-            transition: visibility 0s, opacity 0.3s ease-in-out;
-        }
-
-        .expanded-iframe.active {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .expanded-iframe iframe {
-            width: 95%; /* Take up 95% of the screen width */
-            height: 95%; /* Take up 95% of the screen height */
-            border-radius: 10px;
-        }
-
-        /* Close Button in Expanded View */
-        .expanded-iframe .close-button {
-            margin-top: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 2px solid white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s;
-        }
-
-        .expanded-iframe .close-button:hover {
-            background: rgba(255, 255, 255, 0.3);
+        /* Icon inside buttons */
+        .button-bar button img {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
         }
     </style>
 </head>
@@ -243,24 +182,23 @@
 
         <!-- Horizontal Bar -->
         <div id="button-bar" class="button-bar">
-            <button data-tooltip="Refresh Page" onclick="window.location.reload()">🔄</button>
-            <button data-tooltip="Toggle Animation" onclick="toggleLeaves()">🌿</button>
-            <button data-tooltip="Expand Iframe" onclick="expandIframe()">⛶</button>
-            <button data-tooltip="Fullscreen Iframe" onclick="makeIframeFullscreen()">🔲</button>
+            <!-- Reload Button -->
+            <button title="Reload the page" onclick="window.location.reload()">
+                <img src="images/refresh-svgrepo-com.svg" alt="Reload Icon"> <!-- Replace with your custom reload icon -->
+            </button>
+            <!-- Toggle Animation Button -->
+            <button title="Toggle leaf animation" onclick="toggleLeaves()">
+                <img src="images/hide-svgrepo-com.svg" alt="Toggle Animation Icon"> <!-- Replace with your custom animation icon -->
+            </button>
+            <!-- Fullscreen Button -->
+            <button title="Enter fullscreen mode" onclick="makeIframeFullscreen()">
+                <img src="images/arrow-increase-svgrepo-com.svg" alt="Fullscreen Icon"> <!-- Replace with your custom fullscreen icon -->
+            </button>
         </div>
-    </div>
-
-    <!-- Expanded Iframe -->
-    <div id="expanded-iframe" class="expanded-iframe">
-        <iframe id="expanded-game-iframe" tabindex="0"></iframe>
-        <button class="close-button" onclick="closeExpandedIframe()">✖ Close</button>
     </div>
 
     <script>
         let animationEnabled = true;
-        const mainIframe = document.getElementById('game-iframe');
-        const expandedIframeWrapper = document.getElementById('expanded-iframe');
-        const iframeContainer = document.getElementById('iframe-container');
 
         // Toggle Falling Leaves Animation
         function toggleLeaves() {
@@ -271,33 +209,18 @@
             });
         }
 
-        // Expand Iframe
-        function expandIframe() {
-            expandedIframeWrapper.classList.add('active');
-            expandedIframeWrapper.appendChild(mainIframe); // Move iframe to expanded container
-            mainIframe.focus();
-        }
-
-        // Close Expanded Iframe
-        function closeExpandedIframe() {
-            expandedIframeWrapper.classList.remove('active');
-            iframeContainer.appendChild(mainIframe); // Return iframe to original container
-            mainIframe.focus();
-        }
-
         // Make Iframe Fullscreen
         function makeIframeFullscreen() {
-            if (mainIframe.requestFullscreen) {
-                mainIframe.requestFullscreen();
-            } else if (mainIframe.mozRequestFullScreen) {
-                mainIframe.mozRequestFullScreen();
-            } else if (mainIframe.webkitRequestFullscreen) {
-                mainIframe.webkitRequestFullscreen();
-            } else if (mainIframe.msRequestFullscreen) {
-                mainIframe.msRequestFullscreen();
+            const iframe = document.getElementById('game-iframe');
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.mozRequestFullScreen) { /* Firefox */
+                iframe.mozRequestFullScreen();
+            } else if (iframe.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) { /* IE/Edge */
+                iframe.msRequestFullscreen();
             }
-
-            mainIframe.focus(); // Ensure the iframe gains focus for keyboard inputs
         }
     </script>
 </body>

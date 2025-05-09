@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaf</title>
-    <link rel="shortcut icon" href="images/leaf.png" type="image/x-icon">
+    <title>Leaf Animation</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Lilita+One&display=swap');
 
@@ -16,9 +15,103 @@
             background: linear-gradient(135deg, #8B4513, #A0522D, #CD853F); /* Gradient brownish background */
             color: white;
             text-align: center;
-            overflow: hidden; /* Prevent scrolling */
-            height: 100vh;
+            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+            transition: background 0.5s, color 0.5s;
+            user-select: none; /* Disable text selection */
+            height: 100%; /* Ensure full height */
+        }
+
+        /* Back Button Styles */
+        .back-button {
+            position: fixed; /* Fixed position at the top left */
+            top: 10px; /* Spaced slightly from the top */
+            left: 10px; /* Spaced slightly from the left */
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, color 0.3s;
+            z-index: 10;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0 10px;
+        }
+
+        /* Search Bar Styles */
+        .search-bar {
+            margin: 30px auto;
+            padding: 15px 20px; /* Larger padding for a bigger search bar */
+            width: 90%;
+            max-width: 500px; /* Wider search bar */
+            font-size: 18px; /* Larger font size */
+            border: 2px solid white;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+        }
+
+        .search-bar::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Game Button Styles */
+        .game-button {
+            background: rgba(255, 255, 255, 0.1); /* Transparent background */
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+            width: 150px;
+            height: 200px;
+            margin: 10px; /* Space between buttons */
+            border: 2px solid white; /* Solid color border */
+            font-size: 16px;
+            transition: background 0.3s, color 0.3s, transform 0.3s, border-color 0.3s;
+            overflow: hidden;
+            cursor: pointer; /* Hand cursor */
             position: relative;
+            z-index: 1;
+        }
+
+        .game-button:hover {
+            background: #A0522D; /* Brownish hover effect */
+            color: black; /* Change text color */
+            transform: scale(1.1); /* Slight zoom effect */
+            border-color: #CD853F; /* Change border color on hover */
+        }
+
+        .game-button img {
+            width: 100px; /* Adjusted image size */
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px; /* Rounded edges */
+            margin-bottom: 10px;
+            pointer-events: none; /* Disable image interaction */
+        }
+
+        .game-button p {
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            margin: 0;
+            pointer-events: none; /* Disable text interaction */
         }
 
         /* Falling Leaves Layers */
@@ -36,14 +129,14 @@
         /* Random Leaf Sizes */
         .falling-leaves-layer img {
             position: absolute;
-            width: calc(5vw + 5vw * var(--scale));
+            width: calc(5vw + 5vw * var(--scale)); /* Randomized sizes */
             height: auto;
             opacity: 0.8; /* Slight transparency for depth */
         }
 
-        /* Layer 1 Animation (Faster Movement) */
+        /* Layer 1 (Far Background) */
         .layer1 img {
-            animation: animateLayer1 10s linear infinite;
+            animation: animateLayer1 15s linear infinite;
         }
 
         @keyframes animateLayer1 {
@@ -53,9 +146,9 @@
             100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-10px) scale(var(--scale)) rotate(90deg); opacity: 0; }
         }
 
-        /* Layer 2 Animation (Faster Movement) */
+        /* Layer 2 (Middle Background) */
         .layer2 img {
-            animation: animateLayer2 8s linear infinite;
+            animation: animateLayer2 12s linear infinite;
         }
 
         @keyframes animateLayer2 {
@@ -65,9 +158,9 @@
             100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-20px) scale(var(--scale)) rotate(180deg); opacity: 0; }
         }
 
-        /* Layer 3 Animation (Faster Movement) */
+        /* Layer 3 (Foreground) */
         .layer3 img {
-            animation: animateLayer3 6s linear infinite;
+            animation: animateLayer3 10s linear infinite;
         }
 
         @keyframes animateLayer3 {
@@ -76,151 +169,362 @@
             50% { transform: translateX(-30px) rotate(135deg); }
             100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-30px) scale(var(--scale)) rotate(270deg); opacity: 0; }
         }
-
-        /* Back Button Styles */
-        .back-button {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 2px solid white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            z-index: 3;
-        }
-
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        /* Iframe Container */
-        .iframe-container {
-            width: 80%;
-            max-width: 800px;
-            height: 500px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 1;
-        }
-
-        .iframe-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 10px;
-        }
-
-        /* Horizontal Bar */
-        .button-bar {
-            width: 100%;
-            margin-top: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 4;
-        }
-
-        .button-bar button {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            border-radius: 5px;
-            padding: 10px;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.3s;
-            z-index: 5;
-        }
-
-        .button-bar button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
-
-        /* Icon inside buttons */
-        .button-bar button img {
-            width: 20px;
-            height: 20px;
-            vertical-align: middle;
-        }
     </style>
 </head>
 <body>
+    <!-- Back Button -->
+    <button class="back-button" onclick="window.location.href='leaf.html'">⬅ Back</button>
+
     <!-- Falling Leaves -->
     <div class="falling-leaves-layer layer1">
-        <img src="https://randyvz205.github.io/leafs/leaves1.png" alt="Leaf 1" style="--random-x: 0.1; --scale: 0.8;">
-        <img src="https://randyvz205.github.io/leafs/leaves2.png" alt="Leaf 2" style="--random-x: 0.5; --scale: 0.7;">
-        <img src="https://randyvz205.github.io/leafs/leaves3.png" alt="Leaf 3" style="--random-x: 0.9; --scale: 0.6;">
+        <img src="leafs/leaves1.png" alt="Leaf 1" style="--random-x: 0.1; --scale: 0.8;">
+        <img src="leafs/leaves2.png" alt="Leaf 2" style="--random-x: 0.5; --scale: 0.7;">
+        <img src="leafs/leaves3.png" alt="Leaf 3" style="--random-x: 0.9; --scale: 0.6;">
     </div>
     <div class="falling-leaves-layer layer2">
-        <img src="https://randyvz205.github.io/leafs/leaves1.png" alt="Leaf 1" style="--random-x: 0.3; --scale: 1;">
-        <img src="https://randyvz205.github.io/leafs/leaves4.png" alt="Leaf 4" style="--random-x: 0.8; --scale: 0.9;">
-        <img src="https://randyvz205.github.io/leafs/leaves2.png" alt="Leaf 2" style="--random-x: 0.6; --scale: 1.1;">
+        <img src="leafs/leaves1.png" alt="Leaf 1" style="--random-x: 0.3; --scale: 1;">
+        <img src="leafs/leaves4.png" alt="Leaf 4" style="--random-x: 0.8; --scale: 0.9;">
+        <img src="leafs/leaves2.png" alt="Leaf 2" style="--random-x: 0.6; --scale: 1.1;">
     </div>
     <div class="falling-leaves-layer layer3">
-        <img src="https://randyvz205.github.io/leafs/leaves3.png" alt="Leaf 3" style="--random-x: 0.2; --scale: 1.2;">
-        <img src="https://randyvz205.github.io/leafs/leaves1.png" alt="Leaf 1" style="--random-x: 0.7; --scale: 1.4;">
-        <img src="https://randyvz205.github.io/leafs/leaves2.png" alt="Leaf 2" style="--random-x: 0.4; --scale: 1.3;">
+        <img src="leafs/leaves3.png" alt="Leaf 3" style="--random-x: 0.2; --scale: 1.2;">
+        <img src="leafs/leaves1.png" alt="Leaf 1" style="--random-x: 0.7; --scale: 1.4;">
+        <img src="leafs/leaves2.png" alt="Leaf 2" style="--random-x: 0.4; --scale: 1.3;">
     </div>
 
-    <!-- Back Button -->
-    <button class="back-button" onclick="window.location.href='/leafy.html'">⬅ Back</button>
+    <!-- Search Bar -->
+    <input type="text" id="searchBar" class="search-bar" placeholder="Search for a game..." oninput="filterGames()">
 
-    <!-- Iframe Container -->
-    <div class="iframe-container" id="iframe-container">
-        <!-- Iframe -->
-        <iframe id="game-iframe" src="/games/vex4/index.html" tabindex="0"></iframe>
-
-        <!-- Horizontal Bar -->
-        <div id="button-bar" class="button-bar">
-            <!-- Reload Button -->
-            <button title="Reload the page" onclick="window.location.reload()">
-                <img src="images/refresh-svgrepo-com.svg" alt="Reload Icon"> <!-- Replace with your custom reload icon -->
-            </button>
-            <!-- Toggle Animation Button -->
-            <button title="Toggle leaf animation" onclick="toggleLeaves()">
-                <img src="images/hide-svgrepo-com.svg" alt="Toggle Animation Icon"> <!-- Replace with your custom animation icon -->
-            </button>
-            <!-- Fullscreen Button -->
-            <button title="Enter fullscreen mode" onclick="makeIframeFullscreen()">
-                <img src="images/arrow-increase-svgrepo-com.svg" alt="Fullscreen Icon"> <!-- Replace with your custom fullscreen icon -->
-            </button>
-        </div>
+    <!-- Game Buttons -->
+    <div id="game-links">
+        <a href="snow-rider-3d.html" class="game-button" data-name="Snow Rider 3D">
+            <img src="images/snow.jpeg" alt="Snow Icon">
+            <p>Snow Rider 3D</p>
+        </a>
+        <a href="poly-track.html" class="game-button" data-name="Poly Track">
+            <img src="games/polytrack-main/images/icon.svg" alt="Poly Track Icon">
+            <p>Poly Track</p>
+        </a>
+        <a href="pacman.html" class="game-button" data-name="Pac-Man">
+            <img src="images/pacman.png" alt="Pac-Man Icon">
+            <p>Pac-Man</p>
+        </a>
+        <a href="there-is-no-game.html" class="game-button" data-name="There is No Game">
+            <img src="images/there-is-no-game.png" alt="There is No Game Icon">
+            <p>There is No Game</p>
+        </a>
+        </a>
+        <a href="/gaming/vex-5.html" class="game-button">
+            <img src="images/vex-5.png" alt="Vex 5 Icon">
+            <p>Vex 5</p>
+        </a>
+        <a href="/gaming/crossy.html" class="game-button">
+            <img src="images/crossy.webp" alt="Crossy Icon">
+            <p>Crossy</p>
+        </a>
+        <a href="/gaming/vex-3.html" class="game-button">
+            <img src="images/vex-3.png" alt="Vex 3 Icon">
+            <p>Vex 3</p>
+        </a>
+        <a href="/gaming/fnaf.html" class="game-button">
+            <img src="images/fnaf.webp" alt="Fnaf 2 Icon">
+            <p>Fnaf 2</p>
+        </a>
+        <a href="/gaming/vex-6.html" class="game-button">
+            <img src="games/vex-6/assets/icon.jpeg" alt="Vex 6 Icon">
+            <p>Vex 6</p>
+        </a>
+        <a href="/gaming/vex-4.html" class="game-button">
+            <img src="images/vex4.png" alt="Vex 4 Icon">
+            <p>Vex 4</p>
+        </a>
+        <a href="/gaming/subway.html" class="game-button">
+            <img src="games/subwaysurf/assets/images/app-icon-144.png" alt="Subway Icon">
+            <p>Subway</p>
+        </a> 
+        <a href="/gaming/slope.html" class="game-button">
+            <img src="images/slope.jpg" alt="Slope Icon">
+            <p>Slope</p>
+        </a> 
+        <a href="/gaming/monkey.html" class="game-button">
+            <img src="images/monkey.png" alt="Monkey Icon">
+            <p>Monkey Mart</p>
+        </a>
+        <a href="/gaming/moto2.html" class="game-button">
+            <img src="images/2.jpeg" alt="2 Icon">
+            <p>Moto 2</p>
+        </a> 
+        <a href="/gaming/moto4.html" class="game-button">
+            <img src="images/4.jpeg" alt="4 Icon">
+            <p>Moto 4</p>
+        </a> 
+        <a href="/gaming/moto6.html" class="game-button">
+            <img src="images/6.jpeg" alt="6 Icon">
+            <p>Moto 6</p>
+        </a>
+        <a href="/gaming/beijing.html" class="game-button">
+            <img src="images/bejing.jpeg" alt="Beijing Icon">
+            <p>Subway Surfers Beijing</p>
+        </a>
+        <a href="/gaming/stickman.html" class="game-button">
+            <img src="images/stick.png" alt="Stickman Spider Icon">
+            <p>Stickman Hook</p>
+        </a>
+        <a href="/gaming/fire1.html" class="game-button">
+            <img src="images/fire1.jpeg" alt="Fire1 Icon">
+            <p>Fire Boy & Water Girl 1</p>
+        </a>
+        <a href="/gaming/fire2.html" class="game-button">
+            <img src="images/fire2.jpeg" alt="Stickman Spider Icon">
+            <p>Fire Boy & Water Girl 2</p>
+        </a>
+        <a href="/gaming/fire3.html" class="game-button">
+            <img src="images/fire3.jpeg" alt="Stickman Spider Icon">
+            <p>Fire Boy & Water Girl 3</p>
+        </a>
+        <a href="/gaming/fire4.html" class="game-button">
+            <img src="images/fire4.jpeg" alt="Stickman Spider Icon">
+            <p>Fire Boy & Water Girl 4</p>
+        </a>
+        <a href="/gaming/fire5.html" class="game-button">
+            <img src="images/fire5.jpeg" alt="Stickman Spider Icon">
+            <p>Fire Boy & Water Girl 5</p>
+        </a>
+        <a href="/gaming/fire6.html" class="game-button">
+            <img src="images/fire6.jpeg" alt="Stickman Spider Icon">
+            <p>Fire Boy & Water Girl 6</p>
+        </a>
+        <a href="/gaming/black.html" class="game-button">
+            <img src="images/black-jack.jpeg" alt="Black Jack Icon">
+            <p>Black Jack</p>
+        </a>
+        </a>
+        <a href="/gaming/basket.html" class="game-button">
+            <img src="images/basket-ball.jpeg" alt="Basketball Leg Icon">
+            <p>Basketball Legends 2020</p>
+        </a>
+        <a href="/gaming/boxing.html" class="game-button">
+            <img src="images/boxing.jpeg" alt="Boxin Icon">
+            <p>Boxing Random </p>
+        </a>
+        <a href="/gaming/retro.html" class="game-button">
+            <img src="images/retro.avif" alt="Retro Bowl Icon">
+            <p>Retro Bowl</p>
+        </a>
+        <a href="/gaming/rooftop.html" class="game-button">
+            <img src="images/roof.jpeg" alt="Stickman Spider Icon">
+            <p>Rooftop Snipers</p>
+        </a>
+        <a href="/gaming/doodle.html" class="game-button">
+            <img src="images/doodle.png" alt="Doodle Jump Icon">
+            <p>Doodle Jump</p>
+        </a>
+        <a href="/gaming/stack.html" class="game-button">
+            <img src="images/stack.jpeg" alt="Stack Icon">
+            <p>Stack</p>
+        </a>
+        <a href="/gaming/stack-ball.html" class="game-button">
+            <img src="images/stack-ball.jpg" alt="Stack-Ball Icon">
+            <p>Stack-Ball</p>
+        </a>
+        <a href="/gaming/cluster.html" class="game-button">
+            <img src="images/cluster.jpeg" alt="Cluster Rush Icon">
+            <p>Cluster Rush</p>
+        </a>
+        <a href="minecraft.html" class="game-button">
+      <img src="images/minecraft.webp" alt="Minecraft Icon">
+          <p>Minecraft Games versions</p>
+        </a>
+        <a href="/gaming/vex-7.html" class="game-button">
+         <img src="images/vex-7.jpeg" alt="Vex 7 Icon">
+         <p>Vex 7</p>
+        </a>
+        <a href="/gaming/hardest.html" class="game-button">
+        <img src="images/hard.jpeg" alt="Hard Game Icon">
+        <p>Hardest game 2</p>
+        </a>
+        <a href="/gaming/volly.html" class="game-button">
+        <img src="images/volly.png" alt="Volly Icon">
+        <p>Volly Random</p>
+        </a>
+        <a href="/gaming/basket-random.html" class="game-button">
+         <img src="images/basket.jpeg" alt="Basket Random Icon">
+        <p>Basket Random</p>
+        </a>
+        <a href="/gaming/tunnel.html" class="game-button">
+        <img src="images/tunnel.jpeg" alt="Tunnel Rush Icon">
+            <p>Tunnel Rush</p>
+        </a>
+         <a href="/gaming/mad-car.html" class="game-button">
+          <img src="images/drive.png" alt="Mad Car Icon">
+          <p>Mad Car</p>
+            </a>
+         <a href="/gaming/ovo.html" class="game-button">
+         <img src="images/ovo.jpeg" alt="Mad Car Icon">
+             <p>Ovo</p>
+         </a>
+         <a href="/gaming/socer.html" class="game-button">
+         <img src="images/soccer.webp" alt="Mad Car Icon">
+            <p>Soccer Random</p>
+         </a>
+         <a href="/gaming/baldis-basics.html" class="game-button">
+        <img src="images/baldi.png" alt="Baldi Icon">
+         <p>Baldis Basics</p>
+         </a>
+         <a href="/gaming/awsometanks.html" class="game-button">
+         <img src="images/awsome.jpg" alt="Awsome tanks Icon">
+              <p>Awsome tanks</p>
+         </a>       
+         <a href="/gaming/awsometanks2.html" class="game-button">
+         <img src="images/awsome2.png" alt="Awsome tanks 2 Icon">
+             <p>Awsome tanks 2</p>
+            </a>       
+             <a href="/gaming/burrito.html" class="game-button">
+             <img src="images/burrito.png" alt="Burrito bison Icon">
+                 <p>Burrito Bison</p>
+            </a>      
+            <a href="/gaming/clash-tank.html" class="game-button">
+            <img src="images/clash-tanks.png" alt="Clash of tanks Icon">
+                 <p>Clash of tanks </p>
+            </a>       
+            <a href="https://randyvz205.github.io/games/cookie-clicker/" class="game-button">
+            <img src="images/cookie-clicker.jpeg" alt="Cookie Clicker Icon">
+                <p>Cookie Clicker</p>
+            </a>       
+            <a href="/gaming/fnaf4.html" class="game-button">
+             <img src="images/fnaf4.jpeg" alt="Fnaf4 Icon">
+                <p>Fnaf4</p>
+             </a>      
+              <a href="/gaming/gun-master.html" class="game-button">
+            <img src="images/gunmaster.jpeg" alt="Gun master Icon">
+                 <p>Gun Master</p>
+             </a>
+             <a href="/gaming/gun-zombie.html" class="game-button">
+            <img src="images/pixel-shooter-zombie.avif" alt="Pixel shooter zombie Icon">
+                 <p>Pixel Shooter Zombie</p>
+            </a>
+             <a href="/gaming/mario.html" class="game-button">
+             <img src="images/mario64.jpeg" alt="Mario 64 Icon">
+                <p>Mario 64</p>
+            </a>
+             <a href="/gaming/tunnel2.html" class="game-button">
+            <img src="images/tunnel-rush2.jpeg" alt="Tunnel rush 2 Icon">   
+                 <p>Tunnel Rush 2</p>
+             </a>
+             <a href="/gaming/templerun2.html" class="game-button">
+             <img src="images/temple-run-2.png" alt="Cut The Rope Timetravel Icon">
+                 <p>Temple run 2 </p>
+             </a>
+            <a href="/gaming/slope2.html" class="game-button">
+            <img src="images/slope-2.png" alt="Cut The Rope Timetravel Icon">
+                 <p>Slope 2 </p>
+             </a>
+            <a href="/gaming/tinyfish.html" class="game-button">
+            <img src="images/tinyfishing.png" alt="Cut The Rope Timetravel Icon">
+             <p>Tiny Fishing  </p>
+         </a>
+         <a href="/gaming/funnyshooter2.html" class="game-button">
+            <img src="images/funny2.jpeg" alt="Cut The Rope Timetravel Icon">
+             <p>Funny Shooter 2  </p>
+         </a>
+         <a href="/gaming/infinite-craft.html" class="game-button">
+            <img src="images/infinite.png" alt="Cut The Rope Timetravel Icon">
+             <p>Infinite Craft</p>
+         </a>
+         <a href="/gaming/jetpack.html" class="game-button">
+            <img src="images/jetpack.png" alt="Cut The Rope Timetravel Icon">
+             <p>Jetpack Joyride</p>
+         </a>
+         <a href="/gaming/soccerworld.html" class="game-button">
+            <img src="images/soccerworld.jpeg" alt="Soccer skills world cup Icon">
+             <p>Soccery Skills World Cup</p>
+         </a>
+         <a href="/gaming/gba_emulator.html" class="game-button">
+            <img src="images/gba.png" alt="Soccer gba_emulator">
+             <p>GBA Emulator</p>
+         </a>
+         <a href="/gaming/bitlife.html" class="game-button">
+            <img src="images/bitlife.jpeg" alt="Soccer gba_emulator">
+             <p>Bit life Simulator </p>
+         </a>
+         <a href="/gaming/deepestsword.html" class="game-button">
+            <img src="images/deepest-sword.png" alt="Soccer gba_emulator">
+             <p>Deepest Sword </p>
+         </a>
+         <a href="/gaming/basket-cannon.html" class="game-button">
+            <img src="images/basket-cannon.jpeg" alt="Soccer gba_emulator">
+             <p>Cannon Basketball 4 </p>
+         </a>        
+          </a>
+         <a href="/gaming/gimme-the-airpod.html" class="game-button">
+            <img src="games/gimme-the-airpod/img/logo.png" alt="Soccer gba_emulator">
+             <p>Gimme the airpod </p>
+         </a>
+         <a href="/games/cut-the-rope copy/index.html" class="game-button">
+            <img src="images/cut.png" alt="Soccer gba_emulator">
+             <p>Cut the rope </p>
+         </a>
+         <a href="/gaming/fruitmerge.html" class="game-button">
+            <img src="images/fruit.webp" alt="Soccer gba_emulator">
+             <p>Fruit Merge</p>
+         </a>
+         <a href="/gaming/n-gon.html" class="game-button">
+            <img src="images/n-gon.jpeg" alt="Soccer gba_emulator">
+             <p>N-Gon </p>
+         </a>
+         <a href="/gaming/airship-stickman.html" class="game-button">
+            <img src="images/airship.png" alt="Soccer gba_emulator">
+             <p>Henry Stickman escaping airship </p>
+         </a>
+         <a href="/gaming/run3.html" class="game-button">
+            <img src="images/run3.png" alt="Soccer gba_emulator">
+             <p>Run 3</p>
+         </a>
+         <a href="/gaming/prison-stickman.html" class="game-button">
+            <img src="images/bank.jpeg" alt="Soccer gba_emulator">
+             <p>Breaking the bank</p>
+         </a>
+         <a href="/games/evil-glitch/index.html" class="game-button">
+            <img src="games/evil-glitch/icon.jpeg" alt="Soccer gba_emulator">
+             <p>Evil Glitch</p>
+         </a>
+         <a href="/gaming/superhot.html" class="game-button">
+            <img src="games/superhot/hot.jpg" alt="Soccer gba_emulator">
+             <p>Superhot</p>
+         </a>
+         <a href="/gaming/waterworks.html" class="game-button">
+            <img src="games/waterworks/square.png" alt="Soccer gba_emulator">
+             <p>Waterworks</p>
+         </a>
+         <a href="/gaming/block.html" class="game-button">
+            <img src="images/block.jpeg" alt="Soccer gba_emulator">
+             <p>BlockBlast</p>
+         </a>
+        </a>
+        <a href="/gaming/waterworks.html" class="game-button">
+           <img src="images/prison.avif" alt="Soccer gba_emulator">
+            <p>Escaping the prison</p>
+        </a>
+            <a href="/gaming/sand-tetris.html" class="game-button">
+           <img src="games/SANDTRIS-main/favicon.png" alt="Soccer gba_emulator">
+            <p>Sand Tetris</p>
+        </a>
+            <a href="/gaming/3d-mario.html" class="game-button">
+           <img src="games/SANDTRIS-main/favicon.png" alt="Soccer gba_emulator">
+            <p>3D Mario</p>
+        </a>
     </div>
 
     <script>
-        let animationEnabled = true;
+        // Filter games based on search query
+        function filterGames() {
+            const searchQuery = document.getElementById("searchBar").value.toLowerCase();
+            const gameButtons = document.querySelectorAll(".game-button");
 
-        // Toggle Falling Leaves Animation
-        function toggleLeaves() {
-            const layers = document.querySelectorAll('.falling-leaves-layer');
-            animationEnabled = !animationEnabled;
-            layers.forEach(layer => {
-                layer.style.display = animationEnabled ? 'block' : 'none';
+            gameButtons.forEach((button) => {
+                const gameName = button.getAttribute("data-name").toLowerCase();
+                button.style.display = gameName.includes(searchQuery) ? 'inline-flex' : 'none';
             });
-        }
-
-        // Make Iframe Fullscreen
-        function makeIframeFullscreen() {
-            const iframe = document.getElementById('game-iframe');
-            if (iframe.requestFullscreen) {
-                iframe.requestFullscreen();
-            } else if (iframe.mozRequestFullScreen) { /* Firefox */
-                iframe.mozRequestFullScreen();
-            } else if (iframe.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-                iframe.webkitRequestFullscreen();
-            } else if (iframe.msRequestFullscreen) { /* IE/Edge */
-                iframe.msRequestFullscreen();
-            }
         }
     </script>
 </body>
