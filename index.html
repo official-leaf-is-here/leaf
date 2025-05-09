@@ -36,6 +36,24 @@
             position: relative;
         }
 
+        .navbar-left {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Custom Leaf Image Section */
+        .navbar-leaf {
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-leaf img {
+            height: 40px; /* Adjust the size as needed */
+            width: auto;
+            display: block;
+        }
+
         .navbar a {
             color: white;
             text-decoration: none;
@@ -245,13 +263,31 @@
             font-size: 14px;
         }
 
+        @media (max-width: 900px) {
+            .courses {
+                flex-direction: column;
+                align-items: center;
+            }
+            .course-card {
+                width: 80%;
+                margin-bottom: 20px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <!-- Navbar -->
     <div class="navbar">
-        <div><b>EduLearn</b></div>
+        <div class="navbar-left">
+            <!-- Make the leaf image clickable, opening about:blank in a new tab -->
+            <div class="navbar-leaf">
+                <a href="about:blank" target="_blank" rel="noopener">
+                    <img src="randyvz205.github.io/images/leaf-autumn-fall-svgrepo-com.svg" alt="Leaf Logo">
+                </a>
+            </div>
+            <div><b>EduLearn</b></div>
+        </div>
         <div>
             <a href="index.html">Home</a>
             <a href="/edu/courses.html">Courses</a>
