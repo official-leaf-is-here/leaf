@@ -284,7 +284,7 @@
     </div>
 
     <div class="search-container">
-        <input type="text" class="search-bar" id="search" placeholder="Search for a game...">
+    <input type="text" id="searchBar" class="search-bar" placeholder="Search for a game..." oninput="filterGames()">
     </div>
 
     <nav id="game-links">
@@ -643,28 +643,15 @@
         // This is the JavaScript search function to filter .game-button elements based on input.
 // Place this script at the end of your HTML (before </body>), or in an external JS file.
 
-document.getElementById('search').addEventListener('input', function() {
-    const filter = this.value.toLowerCase();
-    const links = document.querySelectorAll('.game-button');
-    const noResults = document.getElementById('no-results');
-    let hasResults = false;
-    links.forEach(link => {
-        // Check both the <p> text and alt attributes for the filter
-        const text = link.querySelector('p')?.textContent?.toLowerCase() || '';
-        const alt = link.querySelector('img')?.alt?.toLowerCase() || '';
-        if (text.includes(filter) || alt.includes(filter)) {
-            link.style.display = "";
-            hasResults = true;
-        } else {
-            link.style.display = "none";
+ function filterGames() {
+            const searchQuery = document.getElementById("searchBar").value.toLowerCase();
+            const gameButtons = document.querySelectorAll(".game-button");
+
+            gameButtons.forEach((button) => {
+                const gameName = button.getAttribute("data-name").toLowerCase();
+                button.style.display = gameName.includes(searchQuery) ? 'inline-flex' : 'none';
+            });
         }
-    });
-    if (hasResults) {
-        noResults.style.display = "none";
-    } else {
-        noResults.style.display = "block";
-    }
-});
     </script>
 
 </body>
