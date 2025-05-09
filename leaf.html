@@ -163,7 +163,7 @@
             font-weight: bold;
             padding: 16px 32px;
             border-radius: 20px;
-            background: linear-gradient(135deg, #9ccc65bb, #8d6e63cc 80%);
+            background: #333333; /* Fixed dark gray background */
             color: #fffde4;
             border: 3px solid #fffde4;
             box-shadow: 0 0 40px #cddc3999, 0 0 12px #fff7;
@@ -171,13 +171,11 @@
             user-select: none;
             pointer-events: none;
             z-index: 100;
-            animation: clockPulse 2s infinite alternate;
         }
 
         @keyframes clockPulse {
             to {
                 box-shadow: 0 0 80px #a1882f, 0 0 40px #fff9;
-                background: linear-gradient(135deg, #a1882f, #8bc34a 80%);
             }
         }
 
