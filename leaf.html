@@ -37,13 +37,13 @@
 
         .header {
             display: flex;
-            justify-content: flex-end;
+            justify-content: center;
             align-items: center;
-            padding: 10px 30px 0 0;
+            padding: 10px;
             background: transparent;
             position: relative;
             z-index: 2;
-            min-height: 30px;
+            min-height: 80px;
         }
 
         .icons-container {
@@ -51,7 +51,7 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            margin-top: 80px;
+            margin-top: 100px;
             position: relative;
             z-index: 3;
             pointer-events: none;
@@ -101,7 +101,7 @@
         }
 
         .content {
-            margin-top: 140px;
+            margin-top: 110px;
             position: relative;
             z-index: 3;
         }
@@ -140,12 +140,13 @@
 
         .clock {
             position: fixed;
-            top: 48px;
-            right: 52px;
-            font-size: 3.7rem;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.7rem;
             font-weight: bold;
-            padding: 24px 50px;
-            border-radius: 20px 7px 20px 7px;
+            padding: 16px 32px;
+            border-radius: 20px;
             background: linear-gradient(135deg, #9ccc65bb, #8d6e63cc 80%);
             color: #fffde4;
             border: 3px solid #fffde4;
@@ -213,7 +214,7 @@
 <body>
     <div id="particles-js"></div>
     <div class="header">
-        <!-- (header is now just a spacer, left empty) -->
+        <!-- Header is now empty -->
     </div>
 
     <div class="clock" id="clock"></div>
