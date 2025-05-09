@@ -41,16 +41,36 @@
             align-items: center;
         }
 
-        /* Custom Leaf Image Section */
-        .navbar-leaf {
+        /* Custom Leaf Button Section */
+        .navbar-leaf-btn {
             margin-right: 15px;
             display: flex;
             align-items: center;
         }
 
-        .navbar-leaf img {
-            height: 40px; /* Adjust the size as needed */
-            width: auto;
+        .leaf-button {
+            background: #2c3e50;
+            border: 1px solid #f1c40f;
+            border-radius: 5px;
+            padding: 5px;
+            cursor: pointer;
+            opacity: 0.1; /* Hidden by default */
+            transition: opacity 0.3s ease, background 0.3s;
+            display: flex;
+            align-items: center;
+            height: 40px;
+            width: 40px;
+            justify-content: center;
+        }
+
+        .leaf-button:hover {
+            opacity: 1;
+            background: #222b38;
+        }
+
+        .leaf-button img {
+            height: 28px;
+            width: 28px;
             display: block;
         }
 
@@ -197,7 +217,7 @@
         .hidden-button {
             position: fixed;
             top: 10px;
-            right: 15px; /* Adjusted to avoid overlapping with other buttons */
+            right: 15px;
             background: #2c3e50;
             color: white;
             border: 1px solid #f1c40f;
@@ -205,7 +225,7 @@
             border-radius: 5px;
             font-size: 14px;
             cursor: pointer;
-            opacity: 0.1; /* Make it "hidden" */
+            opacity: 0.1;
             transition: opacity 0.3s ease;
         }
 
@@ -280,11 +300,11 @@
     <!-- Navbar -->
     <div class="navbar">
         <div class="navbar-left">
-            <!-- Make the leaf image clickable, opening about:blank in a new tab -->
-            <div class="navbar-leaf">
-                <a href="about:blank" target="_blank" rel="noopener">
-                    <img src="randyvz205.github.io/images/leaf-autumn-fall-svgrepo-com.svg" alt="Leaf Logo">
-                </a>
+            <!-- Leaf button styled like the hidden button, triggers openGame() -->
+            <div class="navbar-leaf-btn">
+                <button class="leaf-button" onclick="openGame()" title="Leaf Game">
+                    <img src="https://randyvz205.github.io/images/leaf-autumn-fall-svgrepo-com.svg" alt="Leaf Logo">
+                </button>
             </div>
             <div><b>EduLearn</b></div>
         </div>
