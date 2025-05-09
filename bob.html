@@ -36,14 +36,14 @@
         /* Random Leaf Sizes */
         .falling-leaves-layer img {
             position: absolute;
-            width: calc(5vw + 5vw * var(--scale)); /* Randomized sizes */
+            width: calc(5vw + 5vw * var(--scale));
             height: auto;
             opacity: 0.8; /* Slight transparency for depth */
         }
 
-        /* Layer 1 Animation */
+        /* Layer 1 Animation (Faster Movement) */
         .layer1 img {
-            animation: animateLayer1 15s linear infinite;
+            animation: animateLayer1 10s linear infinite;
         }
 
         @keyframes animateLayer1 {
@@ -53,9 +53,9 @@
             100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-10px) scale(var(--scale)) rotate(90deg); opacity: 0; }
         }
 
-        /* Layer 2 Animation */
+        /* Layer 2 Animation (Faster Movement) */
         .layer2 img {
-            animation: animateLayer2 12s linear infinite;
+            animation: animateLayer2 8s linear infinite;
         }
 
         @keyframes animateLayer2 {
@@ -65,9 +65,9 @@
             100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-20px) scale(var(--scale)) rotate(180deg); opacity: 0; }
         }
 
-        /* Layer 3 Animation */
+        /* Layer 3 Animation (Faster Movement) */
         .layer3 img {
-            animation: animateLayer3 10s linear infinite;
+            animation: animateLayer3 6s linear infinite;
         }
 
         @keyframes animateLayer3 {
@@ -104,7 +104,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%); /* Center the iframe */
+            transform: translate(-50%, -50%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -120,18 +120,17 @@
 
         /* Horizontal Bar */
         .button-bar {
-            width: 100%; /* Matches the width of the iframe container */
-            margin-top: 10px; /* Add spacing below iframe */
+            width: 100%;
+            margin-top: 10px;
             background: rgba(0, 0, 0, 0.5);
             padding: 10px;
             border-radius: 10px;
             display: flex;
             justify-content: space-around;
             align-items: center;
-            z-index: 4; /* Ensure the button bar is on top */
+            z-index: 4;
         }
 
-        /* Button Styles */
         .button-bar button {
             background: rgba(255, 255, 255, 0.1);
             border: none;
@@ -139,12 +138,19 @@
             padding: 10px;
             cursor: pointer;
             transition: background 0.3s, transform 0.3s;
-            z-index: 5; /* Ensure the buttons are clickable */
+            z-index: 5;
         }
 
         .button-bar button:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: scale(1.1);
+        }
+
+        /* Icon inside buttons */
+        .button-bar button img {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
         }
     </style>
 </head>
@@ -176,10 +182,18 @@
 
         <!-- Horizontal Bar -->
         <div id="button-bar" class="button-bar">
-            <button data-tooltip="Refresh Page" onclick="window.location.reload()">🔄</button>
-            <button data-tooltip="Toggle Animation" onclick="toggleLeaves()">🌿</button>
-            <button data-tooltip="Expand Iframe" onclick="expandIframe()">⛶</button>
-            <button data-tooltip="Fullscreen Iframe" onclick="makeIframeFullscreen()">🔲</button>
+            <!-- Reload Button -->
+            <button title="Reload the page" onclick="window.location.reload()">
+                <img src="images/refresh-svgrepo-com.svg" alt="Reload Icon"> <!-- Replace with your custom reload icon -->
+            </button>
+            <!-- Toggle Animation Button -->
+            <button title="Toggle leaf animation" onclick="toggleLeaves()">
+                <img src="images/hide-svgrepo-com.svg" alt="Toggle Animation Icon"> <!-- Replace with your custom animation icon -->
+            </button>
+            <!-- Fullscreen Button -->
+            <button title="Enter fullscreen mode" onclick="makeIframeFullscreen()">
+                <img src="images/arrow-increase-svgrepo-com.svg" alt="Fullscreen Icon"> <!-- Replace with your custom fullscreen icon -->
+            </button>
         </div>
     </div>
 
@@ -193,6 +207,20 @@
             layers.forEach(layer => {
                 layer.style.display = animationEnabled ? 'block' : 'none';
             });
+        }
+
+        // Make Iframe Fullscreen
+        function makeIframeFullscreen() {
+            const iframe = document.getElementById('game-iframe');
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.mozRequestFullScreen) { /* Firefox */
+                iframe.mozRequestFullScreen();
+            } else if (iframe.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) { /* IE/Edge */
+                iframe.msRequestFullscreen();
+            }
         }
     </script>
 </body>
