@@ -640,27 +640,31 @@
             }
         });
 
-        document.getElementById('search').addEventListener('input', function() {
-            let filter = this.value.toLowerCase();
-            let links = document.querySelectorAll('.game-button');
-            let noResults = document.getElementById('no-results');
-            let hasResults = false;
+        // This is the JavaScript search function to filter .game-button elements based on input.
+// Place this script at the end of your HTML (before </body>), or in an external JS file.
 
-            links.forEach(link => {
-                if (link.textContent.toLowerCase().includes(filter)) {
-                    link.style.display = "block";
-                    hasResults = true;
-                } else {
-                    link.style.display = "none";
-                }
-            });
-
-            if (hasResults) {
-                noResults.style.display = "none";
-            } else {
-                noResults.style.display = "block";
-            }
-        });
+document.getElementById('search').addEventListener('input', function() {
+    const filter = this.value.toLowerCase();
+    const links = document.querySelectorAll('.game-button');
+    const noResults = document.getElementById('no-results');
+    let hasResults = false;
+    links.forEach(link => {
+        // Check both the <p> text and alt attributes for the filter
+        const text = link.querySelector('p')?.textContent?.toLowerCase() || '';
+        const alt = link.querySelector('img')?.alt?.toLowerCase() || '';
+        if (text.includes(filter) || alt.includes(filter)) {
+            link.style.display = "";
+            hasResults = true;
+        } else {
+            link.style.display = "none";
+        }
+    });
+    if (hasResults) {
+        noResults.style.display = "none";
+    } else {
+        noResults.style.display = "block";
+    }
+});
     </script>
 
 </body>
