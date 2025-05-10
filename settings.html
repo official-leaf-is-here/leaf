@@ -93,7 +93,7 @@
             font-weight: 600;
         }
 
-        select, input[type="text"], input[type="range"] {
+        select, input[type="text"], input[type="range"], input[type="color"] {
             width: 100%;
             padding: 8px 12px;
             border-radius: 5px;
@@ -127,6 +127,12 @@
             cursor: pointer;
         }
 
+        input[type="color"] {
+            height: 40px;
+            padding: 2px;
+            cursor: pointer;
+        }
+
         .radio-group {
             display: flex;
             gap: 15px;
@@ -151,6 +157,7 @@
             font-weight: 600;
             transition: background 0.3s;
             margin-top: 20px;
+            width: 100%;
         }
 
         .save-btn:hover {
@@ -210,6 +217,42 @@
             10% { opacity: 1; }
             50% { transform: translateX(-30px) rotate(135deg); }
             100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-30px) scale(var(--scale)) rotate(270deg); opacity: 0; }
+        }
+
+        /* Snow Animation */
+        .snowflake {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        /* Bubbles Animation */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            pointer-events: none;
+        }
+
+        /* Stars Animation */
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
@@ -319,16 +362,18 @@
     </div>
 
     <script>
-        // Load saved settings
+        // Animation elements
+        let currentAnimation = 'leaves';
+        let animationElements = [];
+
+        // DOM Content Loaded
         document.addEventListener('DOMContentLoaded', function() {
+            loadSettings();
+            setupEventListeners();
+        });
+
+        // Load settings from localStorage
+        function loadSettings() {
             const savedSettings = JSON.parse(localStorage.getItem('leafSettings')) || {};
             
-            // Tab Customization
-            if (savedSettings.tabTitle) {
-                document.getElementById('tabTitle').value = savedSettings.tabTitle;
-                document.title = savedSettings.tabTitle;
-            }
-            
-            if (savedSettings.tabIcon) {
-                document.getElementById('tabIcon').value = savedSettings.tabIcon;
-                const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+            // Tab
