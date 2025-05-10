@@ -4,40 +4,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Theme Selector</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="images/leaf.png" type="image/x-icon">
-    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
-    <script src="theme.js" defer></script>
+    <title>Settings</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Lilita+One&display=swap');
+
+        /* General Body Styles */
+        html, body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #8B4513, #A0522D, #CD853F);
+            color: white;
+            text-align: center;
+            overflow-y: auto;
+            overflow-x: hidden;
+            transition: background 0.5s, color 0.5s;
+            user-select: none;
+            height: 100%;
+        }
+
+        /* Header Styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        /* Button Styles */
+        .button {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Settings Container */
+        .settings-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border: 2px solid white;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Settings Sections */
+        .settings-section {
+            margin-bottom: 25px;
+            text-align: left;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .settings-section h3 {
+            margin-top: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 8px;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        select, input[type="text"], input[type="range"] {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 12px;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Save Button */
+        .save-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        .save-btn:hover {
+            background: #45a049;
+        }
+
+        /* Falling Leaves Layers */
+        .falling-leaves-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .falling-leaves-layer img {
+            position: absolute;
+            width: calc(5vw + 5vw * var(--scale));
+            height: auto;
+            opacity: 0.8;
+        }
+
+        /* Layer 1 (Far Background) */
+        .layer1 img {
+            animation: animateLayer1 15s linear infinite;
+        }
+
+        @keyframes animateLayer1 {
+            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); transform: translateX(10px) scale(var(--scale)); opacity: 0; }
+            10% { opacity: 1; }
+            50% { transform: translateX(-10px) rotate(45deg); }
+            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-10px) scale(var(--scale)) rotate(90deg); opacity: 0; }
+        }
+
+        /* Layer 2 (Middle Background) */
+        .layer2 img {
+            animation: animateLayer2 12s linear infinite;
+        }
+
+        @keyframes animateLayer2 {
+            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); transform: translateX(20px) scale(var(--scale)); opacity: 0; }
+            10% { opacity: 1; }
+            50% { transform: translateX(-20px) rotate(90deg); }
+            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-20px) scale(var(--scale)) rotate(180deg); opacity: 0; }
+        }
+
+        /* Layer 3 (Foreground) */
+        .layer3 img {
+            animation: animateLayer3 10s linear infinite;
+        }
+
+        @keyframes animateLayer3 {
+            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); transform: translateX(30px) scale(var(--scale)); opacity: 0; }
+            10% { opacity: 1; }
+            50% { transform: translateX(-30px) rotate(135deg); }
+            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-30px) scale(var(--scale)) rotate(270deg); opacity: 0; }
+        }
+    </style>
 </head>
 
 <body>
-    <div id="particles-js"></div>
+    <!-- Falling Leaves -->
+    <div class="falling-leaves-layer layer1">
+        <img src="leafs/leaves1.png" alt="Leaf 1" style="--random-x: 0.1; --scale: 0.8;">
+        <img src="leafs/leaves2.png" alt="Leaf 2" style="--random-x: 0.5; --scale: 0.7;">
+        <img src="leafs/leaves3.png" alt="Leaf 3" style="--random-x: 0.9; --scale: 0.6;">
+    </div>
+    <div class="falling-leaves-layer layer2">
+        <img src="leafs/leaves1.png" alt="Leaf 1" style="--random-x: 0.3; --scale: 1;">
+        <img src="leafs/leaves4.png" alt="Leaf 4" style="--random-x: 0.8; --scale: 0.9;">
+        <img src="leafs/leaves2.png" alt="Leaf 2" style="--random-x: 0.6; --scale: 1.1;">
+    </div>
+    <div class="falling-leaves-layer layer3">
+        <img src="leafs/leaves3.png" alt="Leaf 3" style="--random-x: 0.2; --scale: 1.2;">
+        <img src="leafs/leaves1.png" alt="Leaf 1" style="--random-x: 0.7; --scale: 1.4;">
+        <img src="leafs/leaves2.png" alt="Leaf 2" style="--random-x: 0.4; --scale: 1.3;">
+    </div>
+
+    <!-- Header -->
     <div class="header">
-        <h2>Theme Selector</h2>
+        <h2>Settings</h2>
         <button class="button" onclick="window.location.href='leaf.html'">⬅ Back</button>
     </div>
 
-    <div class="settings">
-        <h3>Adjust Background</h3>
-        <div class="slider-container">
-            <label for="red">Red:</label>
-            <input type="range" id="red" min="0" max="255">
+    <!-- Settings Container -->
+    <div class="settings-container">
+        <!-- Tab Customization Section -->
+        <div class="settings-section">
+            <h3>Tab Customization</h3>
+            <div class="form-group">
+                <label for="tabTitle">Tab Title:</label>
+                <input type="text" id="tabTitle" placeholder="Enter custom tab title">
+            </div>
+            <div class="form-group">
+                <label for="tabIcon">Tab Icon (URL):</label>
+                <input type="text" id="tabIcon" placeholder="Enter icon URL (e.g., https://example.com/icon.png)">
+            </div>
         </div>
-        <div class="slider-container">
-            <label for="green">Green:</label>
-            <input type="range" id="green" min="0" max="255">
-        </div>
-        <div class="slider-container">
-            <label for="blue">Blue:</label>
-            <input type="range" id="blue" min="0" max="255">
-        </div>
-        <button id="reset-theme" class="button">Reset to Default</button>
-        <div class="upload-container">
-            <label for="upload-background">Upload Background Image:</label>
-            <input type="file" id="upload-background" accept="image/*">
-        </div>
-    </div>
-</body>
 
-</html>
+        <!-- Background Animation Section -->
+        <div class="settings-section">
+            <h3>Background Animation</h3>
+            <div class="form-group">
+                <label>Animation Style:</label>
+                <select id="animationStyle">
+                    <option value="leaves">Falling Leaves</option>
+                    <option value="snow">Falling Snow</option>
+                    <option value="bubbles">Floating Bubbles</option>
+                    <option value="stars">Twinkling Stars</option>
+                    <option value="none">No Animation</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="animationSpeed">Animation Speed:</label>
+                <input type="range" id="animationSpeed" min="1" max="10" value="5">
+            </div>
+            <div class="form-group">
+                <label for="animationDensity">Animation Density:</label>
+                <input type="range" id="animationDensity" min="1" max="10" value="5">
+            </div>
+        </div>
+
+        <!-- Theme Colors Section -->
+        <div class="settings-section">
+            <h3>Theme Colors</h3>
+            <div class="form-group">
+                <label for="primaryColor">Primary Color:</label>
+                <input type="color" id="primaryColor" value="#8B4513">
+            </div>
+            <div class="form-group">
+                <label for="secondaryColor">Secondary Color:</label>
+                <input type="color" id="secondaryColor" value="#A0522D">
+            </div>
+            <div class="form-group">
+                <label for="accentColor">Accent Color:</label>
+                <input type="color" id="accentColor" value="#CD853F">
+            </div>
+        </div>
+
+        <!-- Other Settings -->
+        <div class="settings-section">
+            <h3>Other Settings</h3>
+            <div class="form-group">
+                <label>Dark Mode:</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="darkModeOn" name="darkMode" value="on">
+                        <label for="darkModeOn">On</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="darkModeOff" name="darkMode" value="off" checked>
+                        <label for="darkModeOff">Off</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="darkModeAuto" name="darkMode" value="auto">
+                        <label for="darkModeAuto">Auto</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button id="saveSettings" class="save-btn">Save Settings</button>
+    </div>
+
+    <script>
+        // Load saved settings
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedSettings = JSON.parse(localStorage.getItem('leafSettings')) || {};
+            
+            // Tab Customization
+            if (savedSettings.tabTitle) {
+                document.getElementById('tabTitle').value = savedSettings.tabTitle;
+                document.title = savedSettings.tabTitle;
+            }
+            
+            if (savedSettings.tabIcon) {
+                document.getElementById('tabIcon').value = savedSettings.tabIcon;
+                const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
