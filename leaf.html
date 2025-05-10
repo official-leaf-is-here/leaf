@@ -31,17 +31,6 @@
             pointer-events: none;
         }
 
-        .header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            background: transparent;
-            position: relative;
-            z-index: 2;
-            min-height: 80px;
-        }
-
         .icons-container {
             width: 100vw;
             display: flex;
@@ -59,7 +48,7 @@
             align-items: center;
             cursor: pointer;
             pointer-events: auto;
-            margin: 0 80px;
+            margin: 0 50px; /* Increased spacing between buttons */
             transition: transform 0.25s, box-shadow 0.25s;
             z-index: 3;
         }
@@ -121,10 +110,6 @@
 </head>
 
 <body>
-    <div class="header">
-        <!-- Header content -->
-    </div>
-
     <div class="icons-container">
         <!-- First Button: Games -->
         <div class="icon icon-big" onclick="window.location.href='leafy.html'">
