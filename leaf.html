@@ -133,34 +133,15 @@
         </div>
         
         <!-- Second Button: Settings -->
-        <div class="icon icon-big">
-            <label for="upload-icon" style="cursor: pointer;">
-                <img id="settings-icon" src="images/settings-placeholder.svg" alt="Settings">
-                <span>Settings</span>
-            </label>
-            <input type="file" id="upload-icon" accept=".svg" style="display: none;" onchange="updateIcon(this)">
+        <div class="icon icon-big" onclick="window.location.href='settings.html'">
+            <img src="images/settings-icon.svg" alt="Settings">
+            <span>Settings</span>
         </div>
     </div>
 
     <div class="content">
         <h1>Welcome to LeafHub!</h1>
     </div>
-
-    <script>
-        // Function to upload and update the SVG icon for the Settings button
-        function updateIcon(input) {
-            const file = input.files[0];
-            if (file && file.type === "image/svg+xml") {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById("settings-icon").src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            } else {
-                alert("Please upload a valid SVG file.");
-            }
-        }
-    </script>
 </body>
 
 </html>
