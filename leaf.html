@@ -102,15 +102,6 @@
             z-index: 3;
         }
 
-        .fade-text {
-            opacity: 0;
-            transition: opacity 1s;
-        }
-
-        .fade-text.show {
-            opacity: 1;
-        }
-
         h1 {
             font-size: 3.2rem;
             font-weight: bold;
@@ -126,14 +117,6 @@
                 color: #cddc39;
             }
         }
-
-        .fade-text, #changing-text {
-            font-size: 1.4rem;
-            margin-top: 1.5em;
-            text-shadow: 0 0 16px #fff, 0 0 10px #8bc34a88, 0 0 12px #a1882f99;
-            color: #fffde4;
-            letter-spacing: 1.5px;
-        }
     </style>
 </head>
 
@@ -143,16 +126,41 @@
     </div>
 
     <div class="icons-container">
+        <!-- First Button: Games -->
         <div class="icon icon-big" onclick="window.location.href='leafy.html'">
             <img src="images/console.png" alt="Games">
             <span>Games</span>
+        </div>
+        
+        <!-- Second Button: Settings -->
+        <div class="icon icon-big">
+            <label for="upload-icon" style="cursor: pointer;">
+                <img id="settings-icon" src="images/settings-placeholder.svg" alt="Settings">
+                <span>Settings</span>
+            </label>
+            <input type="file" id="upload-icon" accept=".svg" style="display: none;" onchange="updateIcon(this)">
         </div>
     </div>
 
     <div class="content">
         <h1>Welcome to LeafHub!</h1>
-        <p id="changing-text" class="fade-text show">This is a redesigned version of the website with a professional UI and enhanced design.</p>
     </div>
+
+    <script>
+        // Function to upload and update the SVG icon for the Settings button
+        function updateIcon(input) {
+            const file = input.files[0];
+            if (file && file.type === "image/svg+xml") {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById("settings-icon").src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert("Please upload a valid SVG file.");
+            }
+        }
+    </script>
 </body>
 
 </html>
