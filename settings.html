@@ -376,4 +376,165 @@
         function loadSettings() {
             const savedSettings = JSON.parse(localStorage.getItem('leafSettings')) || {};
             
-            // Tab
+            // Tab Customization
+            if (savedSettings.tabTitle) {
+                document.getElementById('tabTitle').value = savedSettings.tabTitle;
+                document.title = savedSettings.tabTitle;
+            }
+            
+            if (savedSettings.tabIcon) {
+                document.getElementById('tabIcon').value = savedSettings.tabIcon;
+                updateFavicon(savedSettings.tabIcon);
+            }
+            
+            // Background Animation
+            if (savedSettings.animationStyle) {
+                document.getElementById('animationStyle').value = savedSettings.animationStyle;
+                currentAnimation = savedSettings.animationStyle;
+                updateAnimationStyle(savedSettings.animationStyle);
+            }
+            
+            if (savedSettings.animationSpeed) {
+                document.getElementById('animationSpeed').value = savedSettings.animationSpeed;
+                updateAnimationSpeed(savedSettings.animationSpeed);
+            }
+            
+            if (savedSettings.animationDensity) {
+                document.getElementById('animationDensity').value = savedSettings.animationDensity;
+                updateAnimationDensity(savedSettings.animationDensity);
+            }
+            
+            // Theme Colors
+            if (savedSettings.primaryColor && savedSettings.secondaryColor && savedSettings.accentColor) {
+                document.getElementById('primaryColor').value = savedSettings.primaryColor;
+                document.getElementById('secondaryColor').value = savedSettings.secondaryColor;
+                document.getElementById('accentColor').value = savedSettings.accentColor;
+                updateThemeColors(savedSettings.primaryColor, savedSettings.secondaryColor, savedSettings.accentColor);
+            }
+            
+            // Other Settings
+            if (savedSettings.darkMode) {
+                document.getElementById(`darkMode${savedSettings.darkMode.charAt(0).toUpperCase() + savedSettings.darkMode.slice(1)}`).checked = true;
+                updateDarkMode(savedSettings.darkMode);
+            }
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Save settings button
+            document.getElementById('saveSettings').addEventListener('click', saveSettings);
+            
+            // Animation style change
+            document.getElementById('animationStyle').addEventListener('change', function() {
+                currentAnimation = this.value;
+                updateAnimationStyle(this.value);
+            });
+            
+            // Animation speed change
+            document.getElementById('animationSpeed').addEventListener('input', function() {
+                updateAnimationSpeed(this.value);
+            });
+            
+            // Animation density change
+            document.getElementById('animationDensity').addEventListener('input', function() {
+                updateAnimationDensity(this.value);
+            });
+            
+            // Theme color changes
+            document.getElementById('primaryColor').addEventListener('input', function() {
+                updateThemeColors(this.value, document.getElementById('secondaryColor').value, document.getElementById('accentColor').value);
+            });
+            
+            document.getElementById('secondaryColor').addEventListener('input', function() {
+                updateThemeColors(document.getElementById('primaryColor').value, this.value, document.getElementById('accentColor').value);
+            });
+            
+            document.getElementById('accentColor').addEventListener('input', function() {
+                updateThemeColors(document.getElementById('primaryColor').value, document.getElementById('secondaryColor').value, this.value);
+            });
+            
+            // Dark mode changes
+            document.querySelectorAll('input[name="darkMode"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    updateDarkMode(this.value);
+                });
+            });
+        }
+
+        // Save settings to localStorage
+        function saveSettings() {
+            const settings = {
+                tabTitle: document.getElementById('tabTitle').value,
+                tabIcon: document.getElementById('tabIcon').value,
+                animationStyle: document.getElementById('animationStyle').value,
+                animationSpeed: document.getElementById('animationSpeed').value,
+                animationDensity: document.getElementById('animationDensity').value,
+                primaryColor: document.getElementById('primaryColor').value,
+                secondaryColor: document.getElementById('secondaryColor').value,
+                accentColor: document.getElementById('accentColor').value,
+                darkMode: document.querySelector('input[name="darkMode"]:checked').value
+            };
+            
+            localStorage.setItem('leafSettings', JSON.stringify(settings));
+            
+            // Apply settings immediately
+            if (settings.tabTitle) {
+                document.title = settings.tabTitle;
+            }
+            
+            if (settings.tabIcon) {
+                updateFavicon(settings.tabIcon);
+            }
+            
+            updateAnimationStyle(settings.animationStyle);
+            updateAnimationSpeed(settings.animationSpeed);
+            updateAnimationDensity(settings.animationDensity);
+            updateThemeColors(settings.primaryColor, settings.secondaryColor, settings.accentColor);
+            updateDarkMode(settings.darkMode);
+            
+            alert('Settings saved successfully! They will persist across all pages.');
+        }
+
+        // Update favicon
+        function updateFavicon(iconUrl) {
+            let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+            link.type = 'image/x-icon';
+            link.rel = 'shortcut icon';
+            link.href = iconUrl;
+            document.getElementsByTagName('head')[0].appendChild(link);
+        }
+
+        // Update animation style
+        function updateAnimationStyle(style) {
+            // Remove previous animation elements
+            animationElements.forEach(el => {
+                if (el.parentNode) {
+                    el.parentNode.removeChild(el);
+                }
+            });
+            animationElements = [];
+            
+            // Hide all leaf layers initially
+            document.querySelectorAll('.falling-leaves-layer').forEach(layer => {
+                layer.style.display = 'none';
+            });
+            
+            currentAnimation = style;
+            
+            switch(style) {
+                case 'leaves':
+                    document.querySelectorAll('.falling-leaves-layer').forEach(layer => {
+                        layer.style.display = 'block';
+                    });
+                    break;
+                    
+                case 'snow':
+                    createSnowflakes();
+                    break;
+                    
+                case 'bubbles':
+                    createBubbles();
+                    break;
+                    
+                case 'stars':
+                 
