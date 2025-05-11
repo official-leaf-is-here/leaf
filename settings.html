@@ -84,6 +84,8 @@
             border-radius: 15px;
             transition: all 0.3s ease;
             border-left: 3px solid var(--accent-color);
+            position: relative;
+            overflow: hidden;
         }
         
         .settings-section:hover {
@@ -97,10 +99,14 @@
             color: var(--accent-color);
             font-size: 1.5rem;
             margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
         }
         
         .form-group {
             margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
         }
         
         label {
@@ -121,6 +127,8 @@
             color: white;
             font-family: 'Poppins', sans-serif;
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
         }
         
         input[type="text"]:focus, 
@@ -135,6 +143,8 @@
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 15px;
             margin-top: 15px;
+            position: relative;
+            z-index: 2;
         }
         
         .animation-option {
@@ -181,35 +191,65 @@
             font-size: 0.9rem;
         }
         
-        /* Animation elements */
-        .animation-element {
-            position: fixed;
+        /* Save button styles */
+        .save-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 30px auto 0;
+            width: 200px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .save-btn:hover {
+            background: #e6a048;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .save-btn:active {
+            transform: translateY(1px);
+        }
+        
+        /* Animation preview elements in settings */
+        .preview-animation {
+            position: absolute;
             pointer-events: none;
             z-index: 1;
         }
         
         /* Leaf animation */
-        .leaf {
+        .preview-leaf {
             width: 30px;
             height: 30px;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ffffff"><path d="M17 8C8 10 5.9 16.2 4 20c2-3.5 3.9-5.7 7-7 1.8 5 8 3 8-3 0-3-1-6-3-7 0 3-2 5-5 5z"/></svg>');
             background-size: contain;
-            opacity: 0.8;
+            opacity: 0.6;
             animation: falling linear infinite;
         }
         
         /* Snowflake animation */
-        .snowflake {
-            width: 10px;
-            height: 10px;
+        .preview-snowflake {
+            width: 8px;
+            height: 8px;
             background: white;
             border-radius: 50%;
-            opacity: 0.8;
+            opacity: 0.6;
             animation: falling linear infinite;
         }
         
         /* Bubble animation */
-        .bubble {
+        .preview-bubble {
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -217,12 +257,12 @@
         }
         
         /* Particle animation */
-        .particle {
-            width: 5px;
-            height: 5px;
+        .preview-particle {
+            width: 4px;
+            height: 4px;
             background: white;
             border-radius: 50%;
-            opacity: 0.7;
+            opacity: 0.6;
             animation: particleMove linear infinite;
         }
         
@@ -238,7 +278,7 @@
                 opacity: 0;
             }
             50% {
-                opacity: 0.8;
+                opacity: 0.6;
             }
             100% {
                 transform: translateY(-100vh) scale(1.2);
@@ -310,7 +350,7 @@
             </div>
         </div>
         
-        <div class="settings-section">
+        <div class="settings-section" id="animationSection">
             <h2>Background Animation</h2>
             <div class="form-group">
                 <label>Select Animation Style:</label>
@@ -346,6 +386,8 @@
                 <input type="range" id="animationDensity" min="1" max="10" value="5">
             </div>
         </div>
+        
+        <button id="saveBtn" class="save-btn">Save Settings</button>
     </div>
 
     <script>
@@ -353,6 +395,7 @@
         let animationElements = [];
         let currentAnimation = 'leaves';
         let animationInterval;
+        let previewInterval;
         let saveTimeout;
         
         // DOM Content Loaded
@@ -360,13 +403,36 @@
             loadSettings();
             setupEventListeners();
             startAnimation();
+            startPreviewAnimation();
         });
         
         // Set up all event listeners
         function setupEventListeners() {
-            // Auto-save on any change
-            document.querySelectorAll('input, select').forEach(element => {
-                element.addEventListener('input', debounce(saveSettings, 500));
+            // Save button
+            document.getElementById('saveBtn').addEventListener('click', saveSettings);
+            
+            // Input changes
+            document.getElementById('tabTitle').addEventListener('input', debounce(saveSettings, 500));
+            document.getElementById('tabIcon').addEventListener('input', debounce(saveSettings, 500));
+            document.getElementById('primaryColor').addEventListener('input', function() {
+                updateThemeColors();
+                debounce(saveSettings, 500)();
+            });
+            document.getElementById('secondaryColor').addEventListener('input', function() {
+                updateThemeColors();
+                debounce(saveSettings, 500)();
+            });
+            document.getElementById('accentColor').addEventListener('input', function() {
+                updateThemeColors();
+                debounce(saveSettings, 500)();
+            });
+            document.getElementById('animationSpeed').addEventListener('input', function() {
+                updateAnimationSpeed();
+                debounce(saveSettings, 500)();
+            });
+            document.getElementById('animationDensity').addEventListener('input', function() {
+                updateAnimationDensity();
+                debounce(saveSettings, 500)();
             });
             
             // Animation option selection
@@ -478,58 +544,4 @@
         // Update favicon
         function updateFavicon(iconUrl) {
             let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-            link.type = 'image/x-icon';
-            link.rel = 'shortcut icon';
-            link.href = iconUrl;
-            document.head.appendChild(link);
-        }
-        
-        // Update theme colors
-        function updateThemeColors() {
-            const primary = document.getElementById('primaryColor').value;
-            const secondary = document.getElementById('secondaryColor').value;
-            const accent = document.getElementById('accentColor').value;
-            
-            document.documentElement.style.setProperty('--primary-color', primary);
-            document.documentElement.style.setProperty('--secondary-color', secondary);
-            document.documentElement.style.setProperty('--accent-color', accent);
-            
-            document.body.style.background = `linear-gradient(135deg, ${primary}, ${secondary}, ${accent})`;
-        }
-        
-        // Start the selected animation
-        function startAnimation() {
-            // Clear any existing animations
-            clearInterval(animationInterval);
-            animationElements.forEach(el => {
-                if (el.parentNode) {
-                    el.parentNode.removeChild(el);
-                }
-            });
-            animationElements = [];
-            
-            const density = document.getElementById('animationDensity').value;
-            const speed = document.getElementById('animationSpeed').value;
-            
-            if (currentAnimation === 'none') return;
-            
-            // Create new animation elements based on selection
-            const count = Math.floor(density * 5);
-            
-            animationInterval = setInterval(() => {
-                if (animationElements.length > count * 3) {
-                    const toRemove = animationElements.shift();
-                    if (toRemove.parentNode) {
-                        toRemove.parentNode.removeChild(toRemove);
-                    }
-                }
-                
-                const element = document.createElement('div');
-                element.className = `animation-element ${currentAnimation}`;
-                
-                // Set random properties based on animation type
-                switch(currentAnimation) {
-                    case 'leaves':
-                        element.style.width = `${Math.random() * 30 + 20}px`;
-                        element.style.height = `${Math.random() * 30 + 20}px`;
-                        element.style.left = `${Math.random() * window.inne
+            link.type = '
