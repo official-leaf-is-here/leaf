@@ -1,6 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     const settings = JSON.parse(localStorage.getItem('siteSettings')) || {};
     const saveNotification = document.getElementById('saveNotification');
+    const tabTitleWarning = document.getElementById('tabTitleWarning');
+
+    // Default settings
+    const defaultSettings = {
+        tabTitle: "My Awesome Site",
+        tabIcon: "icon1.png",
+        primaryColor: "#8B4513",
+        secondaryColor: "#A0522D",
+        accentColor: "#CD853F",
+        animationStyle: "leaves",
+    };
 
     // Initialize settings
     loadSettings();
@@ -29,8 +40,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setupEventListeners() {
         // Tab Customization
-        document.getElementById('tabTitle').addEventListener('input', () => {
-            saveSettings();
+        const tabTitleInput = document.getElementById('tabTitle');
+        tabTitleInput.addEventListener('input', () => {
+            if (tabTitleInput.value.length > 25) {
+                tabTitleWarning.style.display = 'block';
+            } else {
+                tabTitleWarning.style.display = 'none';
+                saveSettings();
+            }
         });
 
         document.getElementById('tabIcon').addEventListener('change', () => {
@@ -63,6 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 saveSettings();
             });
         });
+
+        // Reset Settings Button
+        document.getElementById('resetSettings').addEventListener('click', () => {
+            resetSettings();
+        });
     }
 
     function saveSettings() {
@@ -90,6 +112,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (settings.animationStyle) {
             startAnimation(settings.animationStyle);
         }
+    }
+
+    function resetSettings() {
+        Object.assign(settings, defaultSettings);
+        localStorage.setItem('siteSettings', JSON.stringify(settings));
+        loadSettings();
+        showSaveNotification();
     }
 
     function showSaveNotification() {
