@@ -3,14 +3,17 @@
 
 <head>
 <script>
+<script>
 // Load settings on all pages
 document.addEventListener('DOMContentLoaded', function() {
     const settings = JSON.parse(localStorage.getItem('siteSettings')) || {};
     
+    // Apply tab title
     if (settings.tabTitle) {
         document.title = settings.tabTitle;
     }
     
+    // Apply favicon
     if (settings.tabIcon) {
         let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
         link.type = 'image/x-icon';
@@ -19,28 +22,121 @@ document.addEventListener('DOMContentLoaded', function() {
         document.head.appendChild(link);
     }
     
-    if (settings.themeColor) {
-        document.body.style.background = `linear-gradient(135deg, 
-            ${settings.themeColor}, 
-            ${adjustBrightness(settings.themeColor, -20)}, 
-            ${adjustBrightness(settings.themeColor, 20)})`;
+    // Apply theme colors
+    if (settings.primaryColor && settings.secondaryColor && settings.accentColor) {
+        document.documentElement.style.setProperty('--primary-color', settings.primaryColor);
+        document.documentElement.style.setProperty('--secondary-color', settings.secondaryColor);
+        document.documentElement.style.setProperty('--accent-color', settings.accentColor);
+        document.body.style.background = `linear-gradient(135deg, ${settings.primaryColor}, ${settings.secondaryColor}, ${settings.accentColor})`;
     }
     
-    function adjustBrightness(color, percent) {
-        const num = parseInt(color.replace("#", ""), 16);
-        const amt = Math.round(2.55 * percent);
-        const R = (num >> 16) + amt;
-        const G = (num >> 8 & 0x00FF) + amt;
-        const B = (num & 0x0000FF) + amt;
-        return `#${(
-            0x1000000 +
-            (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
-            (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 +
-            (B < 255 ? (B < 1 ? 0 : B) : 255)
-        ).toString(16).slice(1)}`;
+    // Apply background animation if enabled
+    if (settings.animationStyle && settings.animationStyle !== 'none') {
+        createBackgroundAnimation(settings);
+    }
+    
+    function createBackgroundAnimation(settings) {
+        const density = settings.animationDensity || 5;
+        const speed = settings.animationSpeed || 5;
+        const animationStyle = settings.animationStyle;
+        
+        function createElement() {
+            const element = document.createElement('div');
+            element.className = `animation-element ${animationStyle}`;
+            
+            // Set random properties based on animation type
+            switch(animationStyle) {
+                case 'leaves':
+                    element.style.width = `${Math.random() * 30 + 20}px`;
+                    element.style.height = `${Math.random() * 30 + 20}px`;
+                    element.style.left = `${Math.random() * window.innerWidth}px`;
+                    element.style.top = '-50px';
+                    element.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    element.style.animationDuration = `${20 / speed}s`;
+                    element.style.backgroundImage = 'url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"white\"><path d=\"M17 8C8 10 5.9 16.2 4 20c2-3.5 3.9-5.7 7-7 1.8 5 8 3 8-3 0-3-1-6-3-7 0 3-2 5-5 5z\"/></svg>")';
+                    element.style.backgroundSize = 'contain';
+                    break;
+                    
+                case 'snow':
+                    element.style.width = `${Math.random() * 10 + 5}px`;
+                    element.style.height = element.style.width;
+                    element.style.left = `${Math.random() * window.innerWidth}px`;
+                    element.style.top = '-10px';
+                    element.style.animationDuration = `${15 / speed}s`;
+                    element.style.background = 'white';
+                    element.style.borderRadius = '50%';
+                    break;
+                    
+                case 'bubbles':
+                    const size = Math.random() * 40 + 20;
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size}px`;
+                    element.style.left = `${Math.random() * window.innerWidth}px`;
+                    element.style.top = `${window.innerHeight + size}px`;
+                    element.style.animationDuration = `${(Math.random() * 10 + 10) / speed}s`;
+                    element.style.background = 'rgba(255, 255, 255, 0.1)';
+                    element.style.border = '1px solid rgba(255, 255, 255, 0.3)';
+                    element.style.borderRadius = '50%';
+                    break;
+                    
+                case 'particles':
+                    element.style.width = `${Math.random() * 5 + 2}px`;
+                    element.style.height = element.style.width;
+                    element.style.left = `${Math.random() * window.innerWidth}px`;
+                    element.style.top = `${Math.random() * window.innerHeight}px`;
+                    element.style.animationDuration = `${(Math.random() * 5 + 5) / speed}s`;
+                    element.style.background = 'white';
+                    element.style.borderRadius = '50%';
+                    break;
+            }
+            
+            element.style.position = 'fixed';
+            element.style.pointerEvents = 'none';
+            element.style.zIndex = '1';
+            element.style.opacity = '0.8';
+            element.style.animation = `${animationStyle === 'particles' ? 'particleMove' : 'falling'} linear infinite`;
+            
+            document.body.appendChild(element);
+            
+            // Remove element when animation ends
+            element.addEventListener('animationend', function() {
+                if (this.parentNode) {
+                    this.parentNode.removeChild(this);
+                }
+            });
+        }
+        
+        // Create initial elements
+        const count = Math.floor(density * 5);
+        for (let i = 0; i < count; i++) {
+            createElement();
+        }
+        
+        // Continue creating elements at intervals
+        setInterval(createElement, 1000 / density);
     }
 });
-</script>
+
+// Keyframes for animations
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes falling {
+        to {
+            transform: translateY(100vh);
+        }
+    }
+    @keyframes particleMove {
+        0% {
+            transform: translate(0, 0);
+        }
+        100% {
+            transform: translate(100px, 100px);
+        }
+    }
+`;
+document.head.appendChild(style);
+</script>;
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaf</title>
