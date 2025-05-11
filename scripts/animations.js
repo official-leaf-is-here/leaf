@@ -89,7 +89,7 @@ function addBubbleAnimationStyles() {
 
         .bubble-layer div {
             position: absolute;
-            bottom: -10%; /* Bubbles now start from below the very bottom of the screen */
+            bottom: 0; /* Bubbles now start from the very bottom of the screen */
             left: calc(5% + 90% * var(--random-x));
             width: var(--size);
             height: var(--size);
@@ -102,69 +102,7 @@ function addBubbleAnimationStyles() {
         @keyframes rise {
             0% { transform: translate(0, 0); opacity: 0; }
             10% { opacity: 1; } /* Fade in */
-            100% { transform: translate(var(--random-direction), -110%); opacity: 0; } /* Fade out above the screen */
-        }
-    `;
-    document.head.appendChild(style);
-}
-
-// Create snowflake animation with layers
-function createSnowflakeLayers(container) {
-    const layers = ["layer1", "layer2", "layer3"];
-
-    layers.forEach(layerName => {
-        const layer = document.createElement("div");
-        layer.classList.add("snowflake-layer", layerName);
-
-        for (let i = 0; i < 5; i++) { // Add 5 snowflakes per layer
-            const snowflake = document.createElement("div");
-            const randomX = Math.random(); // Random horizontal starting position
-            const size = Math.random() * 20 + 10; // Random size between 10px and 30px
-
-            snowflake.style.setProperty("--random-x", randomX);
-            snowflake.style.setProperty("--size", size + "px");
-            layer.appendChild(snowflake);
-        }
-
-        container.appendChild(layer);
-    });
-
-    addSnowflakeAnimationStyles();
-}
-
-// Add styles for snowflake animation
-function addSnowflakeAnimationStyles() {
-    const style = document.createElement("style");
-    style.innerHTML = `
-        /* Snowflake Layers */
-        .snowflake-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .snowflake-layer div {
-            position: absolute;
-            top: -10%; /* Start above the screen */
-            left: calc(5% + 90% * var(--random-x));
-            width: var(--size);
-            height: var(--size);
-            background-color: white; /* Snowflakes are permanently white */
-            border-radius: 50%;
-            opacity: 0.9;
-            animation: fall 15s linear infinite;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(0); opacity: 0; }
-            10% { opacity: 1; } /* Fade in */
-            50% { transform: translateY(50%) rotate(180deg); }
-            100% { transform: translateY(110%); opacity: 0; } /* Fade out at the bottom */
+            100% { transform: translate(var(--random-direction), -110vh); opacity: 0; } /* Fade out above the screen */
         }
     `;
     document.head.appendChild(style);
@@ -235,7 +173,7 @@ function addLeafAnimationStyles() {
         @keyframes animateLayer1 {
             0% { top: -30%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(0deg); }
             10% { opacity: 1; } /* Fade in */
-            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); } /* Fade out at the bottom */
+            100% { top: 110vh; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); } /* Fade out at the bottom */
         }
 
         /* Layer 2 (Middle Background) */
@@ -246,7 +184,7 @@ function addLeafAnimationStyles() {
         @keyframes animateLayer2 {
             0% { top: -30%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(0deg); }
             10% { opacity: 1; } /* Fade in */
-            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); } /* Fade out at the bottom */
+            100% { top: 110vh; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); } /* Fade out at the bottom */
         }
 
         /* Layer 3 (Foreground) */
@@ -257,7 +195,7 @@ function addLeafAnimationStyles() {
         @keyframes animateLayer3 {
             0% { top: -30%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(0deg); }
             10% { opacity: 1; } /* Fade in */
-            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); } /* Fade out at the bottom */
+            100% { top: 110vh; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); } /* Fade out at the bottom */
         }
     `;
     document.head.appendChild(style);
