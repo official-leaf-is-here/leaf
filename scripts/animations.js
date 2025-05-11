@@ -69,6 +69,43 @@ function createBubbleLayers(container) {
     addBubbleAnimationStyles();
 }
 
+// Add styles for bubble animation
+function addBubbleAnimationStyles() {
+    const style = document.createElement("style");
+    style.innerHTML = `
+        /* Bubble Layers */
+        .bubble-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bubble-layer div {
+            position: absolute;
+            bottom: -5%; /* Bubbles now start from slightly below the bottom of the screen */
+            left: calc(5% + 90% * var(--random-x));
+            width: var(--size);
+            height: var(--size);
+            background-color: var(--primary-color, #8B4513); /* Use theme primary color */
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: rise 15s linear infinite;
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(0); opacity: 0; }
+            10% { opacity: 1; } /* Fade in */
+            100% { transform: translateY(-100vh); opacity: 0; } /* Fade out */
+        }
+    `;
+    document.head.appendChild(style);
+}
+
 // Create snowflake animation with layers
 function createSnowflakeLayers(container) {
     const layers = ["layer1", "layer2", "layer3"];
@@ -91,43 +128,6 @@ function createSnowflakeLayers(container) {
     });
 
     addSnowflakeAnimationStyles();
-}
-
-// Add styles for bubble animation
-function addBubbleAnimationStyles() {
-    const style = document.createElement("style");
-    style.innerHTML = `
-        /* Bubble Layers */
-        .bubble-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .bubble-layer div {
-            position: absolute;
-            bottom: -10%; /* Start below the screen */
-            left: calc(5% + 90% * var(--random-x));
-            width: var(--size);
-            height: var(--size);
-            background-color: var(--primary-color, #8B4513); /* Use theme primary color */
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: rise 15s linear infinite;
-        }
-
-        @keyframes rise {
-            0% { transform: translateY(0); opacity: 0; }
-            10% { opacity: 1; } /* Fade in */
-            100% { transform: translateY(-100vh); opacity: 0; } /* Fade out */
-        }
-    `;
-    document.head.appendChild(style);
 }
 
 // Add styles for snowflake animation
