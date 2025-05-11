@@ -18,7 +18,10 @@
             <h2>Tab Customization</h2>
             <div class="form-group">
                 <label for="tabTitle">Tab Title:</label>
-                <input type="text" id="tabTitle" placeholder="My Awesome Site">
+                <input type="text" id="tabTitle" placeholder="My Awesome Site" maxlength="25">
+                <small id="tabTitleWarning" class="warning-message" style="display: none; color: red;">
+                    Maximum 25 characters allowed.
+                </small>
             </div>
             <div class="form-group">
                 <label for="tabIcon">Tab Icon:</label>
@@ -71,6 +74,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Reset Settings Button -->
+        <div class="settings-section">
+            <button id="resetSettings" class="reset-btn">Reset to Default</button>
         </div>
     </div>
 
