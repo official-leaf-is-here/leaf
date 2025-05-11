@@ -21,7 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Background Animation
         if (settings.animationStyle) {
-            document.querySelector(`[data-animation="${settings.animationStyle}"]`).classList.add('active');
+            const activeOption = document.querySelector(`[data-animation="${settings.animationStyle}"]`);
+            if (activeOption) activeOption.classList.add('active');
             startAnimation(settings.animationStyle);
         }
     }
@@ -80,9 +81,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function applyThemeColors() {
+        // Update CSS variables for theme colors
         document.body.style.setProperty('--primary-color', settings.primaryColor || '#8B4513');
         document.body.style.setProperty('--secondary-color', settings.secondaryColor || '#A0522D');
         document.body.style.setProperty('--accent-color', settings.accentColor || '#CD853F');
+
+        // If an animation is active, restart it to apply new colors
+        if (settings.animationStyle) {
+            startAnimation(settings.animationStyle);
+        }
     }
 
     function showSaveNotification() {
