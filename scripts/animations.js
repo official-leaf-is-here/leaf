@@ -152,16 +152,17 @@ function addSnowflakeAnimationStyles() {
             left: calc(5% + 90% * var(--random-x));
             width: var(--size);
             height: var(--size);
-            background-color: var(--secondary-color, #A0522D); /* Use theme secondary color */
+            background-color: white; /* Snowflakes are permanently white */
             border-radius: 50%;
-            opacity: 0.8;
+            opacity: 0.9;
             animation: fall 15s linear infinite;
         }
 
         @keyframes fall {
             0% { transform: translateY(0); opacity: 0; }
             10% { opacity: 1; } /* Fade in */
-            100% { transform: translateY(100vh); opacity: 0; } /* Fade out */
+            50% { transform: translateY(50%) rotate(180deg); }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } /* Fade out */
         }
     `;
     document.head.appendChild(style);
@@ -230,9 +231,9 @@ function addLeafAnimationStyles() {
         }
 
         @keyframes animateLayer1 {
-            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); opacity: 0; }
+            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(0deg); }
             10% { opacity: 1; } /* Fade in */
-            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); opacity: 0; }
+            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); }
         }
 
         /* Layer 2 (Middle Background) */
@@ -241,9 +242,9 @@ function addLeafAnimationStyles() {
         }
 
         @keyframes animateLayer2 {
-            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); opacity: 0; }
+            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(0deg); }
             10% { opacity: 1; } /* Fade in */
-            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); opacity: 0; }
+            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); }
         }
 
         /* Layer 3 (Foreground) */
@@ -252,9 +253,9 @@ function addLeafAnimationStyles() {
         }
 
         @keyframes animateLayer3 {
-            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); opacity: 0; }
+            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(0deg); }
             10% { opacity: 1; } /* Fade in */
-            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); opacity: 0; }
+            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); }
         }
     `;
     document.head.appendChild(style);
