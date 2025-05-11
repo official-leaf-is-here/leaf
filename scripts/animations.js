@@ -89,7 +89,7 @@ function addBubbleAnimationStyles() {
 
         .bubble-layer div {
             position: absolute;
-            bottom: -5%; /* Bubbles now start from the very bottom of the screen */
+            bottom: -10%; /* Bubbles now start from below the very bottom of the screen */
             left: calc(5% + 90% * var(--random-x));
             width: var(--size);
             height: var(--size);
@@ -102,7 +102,7 @@ function addBubbleAnimationStyles() {
         @keyframes rise {
             0% { transform: translate(0, 0); opacity: 0; }
             10% { opacity: 1; } /* Fade in */
-            100% { transform: translate(var(--random-direction), -100vh); opacity: 0; } /* Fade out at the top */
+            100% { transform: translate(var(--random-direction), -110%); opacity: 0; } /* Fade out above the screen */
         }
     `;
     document.head.appendChild(style);
@@ -164,7 +164,7 @@ function addSnowflakeAnimationStyles() {
             0% { transform: translateY(0); opacity: 0; }
             10% { opacity: 1; } /* Fade in */
             50% { transform: translateY(50%) rotate(180deg); }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } /* Fade out */
+            100% { transform: translateY(110%); opacity: 0; } /* Fade out at the bottom */
         }
     `;
     document.head.appendChild(style);
