@@ -29,9 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setupEventListeners() {
-        // Save Settings
-        document.getElementById('saveBtn').addEventListener('click', saveSettings);
-
         // Tab Customization
         document.getElementById('tabTitle').addEventListener('input', saveSettings);
         document.getElementById('tabIcon').addEventListener('change', saveSettings);

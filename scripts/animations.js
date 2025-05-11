@@ -78,16 +78,17 @@ function createSnowflakes(container, speed, density) {
     document.head.appendChild(style);
 }
 
-// Create bubble animation
+// Create bubble animation (spawn from the bottom)
 function createBubbles(container, speed, density) {
     animationInterval = setInterval(() => {
         for (let i = 0; i < density; i++) {
+            const size = Math.random() * 30 + 10; // Random size between 10px and 40px
             const bubble = document.createElement("div");
             bubble.style.position = "absolute";
-            bubble.style.bottom = "-10px";
+            bubble.style.bottom = "-10px"; // Start below the screen
             bubble.style.left = `${Math.random() * 100}%`;
-            bubble.style.width = "10px";
-            bubble.style.height = "10px";
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
             bubble.style.borderRadius = "50%";
             bubble.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
             bubble.style.border = "1px solid rgba(255, 255, 255, 0.3)";
@@ -108,17 +109,27 @@ function createBubbles(container, speed, density) {
     document.head.appendChild(style);
 }
 
-// Create leaf animation
+// Create leaf animation (match leafy.html)
 function createLeaves(container, speed, density) {
+    const leafImages = [
+        "leafs/leaves1.png",
+        "leafs/leaves2.png",
+        "leafs/leaves3.png",
+        "leafs/leaves4.png"
+    ];
+
     animationInterval = setInterval(() => {
         for (let i = 0; i < density; i++) {
             const leaf = document.createElement("img");
-            leaf.src = "leafs/leaves1.png"; // Replace with actual leaf image path
+            const randomLeaf = leafImages[Math.floor(Math.random() * leafImages.length)];
+            const scale = Math.random() * 0.5 + 0.5; // Random scale between 0.5 and 1.0
+
+            leaf.src = randomLeaf;
             leaf.style.position = "absolute";
             leaf.style.top = "-10px";
             leaf.style.left = `${Math.random() * 100}%`;
-            leaf.style.width = "30px";
-            leaf.style.height = "30px";
+            leaf.style.width = `${50 * scale}px`; // Scaled width
+            leaf.style.height = "auto";
             leaf.style.opacity = "0.8";
             leaf.style.animation = `fall-rotate ${speed + Math.random() * 5}s linear infinite`;
 
