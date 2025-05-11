@@ -204,65 +204,41 @@ function createLeafLayers(container) {
     addLeafAnimationStyles();
 }
 
-// Add styles for leaf animation (unchanged)
+// Updated keyframes for leaf animation to ensure they fade out after reaching the screen bottom
 function addLeafAnimationStyles() {
     const style = document.createElement("style");
     style.innerHTML = `
-        /* Falling Leaves Layers */
-        .falling-leaves-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Random Leaf Sizes */
-        .falling-leaves-layer img {
-            position: absolute;
-            width: calc(5vw + 5vw * var(--scale)); /* Randomized sizes */
-            height: auto;
-            opacity: 0.8; /* Slight transparency for depth */
-        }
-
-        /* Layer 1 (Far Background) */
         .layer1 img {
             animation: animateLayer1 15s linear infinite;
         }
 
         @keyframes animateLayer1 {
-            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); transform: translateX(10px) scale(var(--scale)); opacity: 0; }
-            10% { opacity: 1; } /* Fade in as it enters the screen */
-            50% { transform: translateX(-10px) rotate(45deg); }
-            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-10px) scale(var(--scale)) rotate(90deg); opacity: 0; }
+            0% { top: -30%; opacity: 0; }
+            10% { opacity: 1; } /* Fade in */
+            100% { top: 110%; opacity: 0; } /* Ensure leaves fully reach the bottom */
         }
 
-        /* Layer 2 (Middle Background) */
         .layer2 img {
             animation: animateLayer2 12s linear infinite;
         }
 
         @keyframes animateLayer2 {
-            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); transform: translateX(20px) scale(var(--scale)); opacity: 0; }
-            10% { opacity: 1; } /* Fade in as it enters the screen */
-            50% { transform: translateX(-20px) rotate(90deg); }
-            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-20px) scale(var(--scale)) rotate(180deg); opacity: 0; }
+            0% { top: -30%; opacity: 0; }
+            10% { opacity: 1; }
+            100% { top: 110%; opacity: 0; }
         }
 
-        /* Layer 3 (Foreground) */
         .layer3 img {
             animation: animateLayer3 10s linear infinite;
         }
 
         @keyframes animateLayer3 {
-            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); transform: translateX(30px) scale(var(--scale)); opacity: 0; }
-            10% { opacity: 1; } /* Fade in as it enters the screen */
-            50% { transform: translateX(-30px) rotate(135deg); }
-            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-30px) scale(var(--scale)) rotate(270deg); opacity: 0; }
+            0% { top: -30%; opacity: 0; }
+            10% { opacity: 1; }
+            100% { top: 110%; opacity: 0; }
         }
     `;
     document.head.appendChild(style);
 }
+
+
