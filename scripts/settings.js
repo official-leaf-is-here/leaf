@@ -22,26 +22,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Background Animation
         if (settings.animationStyle) {
             document.querySelector(`[data-animation="${settings.animationStyle}"]`).classList.add('active');
-            startAnimation(settings.animationStyle, settings.animationSpeed, settings.animationDensity);
+            startAnimation(settings.animationStyle);
         }
-        if (settings.animationSpeed) document.getElementById('animationSpeed').value = settings.animationSpeed;
-        if (settings.animationDensity) document.getElementById('animationDensity').value = settings.animationDensity;
     }
 
     function setupEventListeners() {
         // Tab Customization
-        document.getElementById('tabTitle').addEventListener('input', saveSettings);
-        document.getElementById('tabIcon').addEventListener('change', saveSettings);
+        document.getElementById('tabTitle').addEventListener('input', () => {
+            saveSettings();
+        });
+
+        document.getElementById('tabIcon').addEventListener('change', () => {
+            saveSettings();
+        });
 
         // Theme Colors
         document.getElementById('primaryColor').addEventListener('input', () => {
             applyThemeColors();
             saveSettings();
         });
+
         document.getElementById('secondaryColor').addEventListener('input', () => {
             applyThemeColors();
             saveSettings();
         });
+
         document.getElementById('accentColor').addEventListener('input', () => {
             applyThemeColors();
             saveSettings();
@@ -53,17 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.animation-option').forEach(opt => opt.classList.remove('active'));
                 option.classList.add('active');
                 settings.animationStyle = option.dataset.animation;
-                startAnimation(option.dataset.animation, settings.animationSpeed, settings.animationDensity);
+                startAnimation(option.dataset.animation);
                 saveSettings();
             });
-        });
-        document.getElementById('animationSpeed').addEventListener('input', () => {
-            saveSettings();
-            startAnimation(settings.animationStyle, settings.animationSpeed, settings.animationDensity);
-        });
-        document.getElementById('animationDensity').addEventListener('input', () => {
-            saveSettings();
-            startAnimation(settings.animationStyle, settings.animationSpeed, settings.animationDensity);
         });
     }
 
@@ -73,8 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
         settings.primaryColor = document.getElementById('primaryColor').value;
         settings.secondaryColor = document.getElementById('secondaryColor').value;
         settings.accentColor = document.getElementById('accentColor').value;
-        settings.animationSpeed = document.getElementById('animationSpeed').value;
-        settings.animationDensity = document.getElementById('animationDensity').value;
 
         localStorage.setItem('siteSettings', JSON.stringify(settings));
         showSaveNotification();
