@@ -1,7 +1,6 @@
 // Animation manager for dynamic background animations
 
 const animationContainerId = "animationContainer";
-let animationElements = [];
 let animationInterval;
 let activeAnimation = "none";
 
@@ -23,14 +22,8 @@ function startAnimation(animationType) {
     document.body.appendChild(container);
 
     switch (animationType) {
-        case "snow":
-            createSnowflakes(container);
-            break;
-        case "bubbles":
-            createBubbles(container);
-            break;
         case "leaves":
-            createLeaves(container);
+            createLeafLayers(container);
             break;
         default:
             clearAnimation();
@@ -43,118 +36,102 @@ function clearAnimation() {
     if (container) {
         container.remove();
     }
-    animationElements.forEach(el => el.remove());
-    animationElements = [];
     clearInterval(animationInterval);
 }
 
-// Create snowflake animation (with random sizes)
-function createSnowflakes(container) {
-    const spawnInterval = 500; // Spawn snowflakes every 500ms
-    const animationSpeed = 10; // Fixed animation duration (seconds)
-
-    animationInterval = setInterval(() => {
-        for (let i = 0; i < 5; i++) { // Spawn 5 snowflakes at a time
-            const size = Math.random() * 20 + 10; // Random size between 10px and 30px
-            const snowflake = document.createElement("div");
-            snowflake.style.position = "absolute";
-            snowflake.style.top = "-10px";
-            snowflake.style.left = `${Math.random() * 100}%`;
-            snowflake.style.width = `${size}px`;
-            snowflake.style.height = `${size}px`;
-            snowflake.style.backgroundColor = "white";
-            snowflake.style.borderRadius = "50%";
-            snowflake.style.opacity = "0.8";
-            snowflake.style.animation = `fall ${animationSpeed}s linear infinite`;
-
-            container.appendChild(snowflake);
-            animationElements.push(snowflake);
-        }
-    }, spawnInterval);
-
-    const style = document.createElement("style");
-    style.innerHTML = `
-        @keyframes fall {
-            0% { transform: translateY(0); opacity: 0; }
-            10% { opacity: 1; } /* Fade in */
-            100% { transform: translateY(100vh); opacity: 0; } /* Fade out */
-        }
-    `;
-    document.head.appendChild(style);
-}
-
-// Create bubble animation (spawn from the bottom)
-function createBubbles(container) {
-    const spawnInterval = 500; // Spawn bubbles every 500ms
-    const animationSpeed = 10; // Fixed animation duration (seconds)
-
-    animationInterval = setInterval(() => {
-        for (let i = 0; i < 5; i++) { // Spawn 5 bubbles at a time
-            const size = Math.random() * 30 + 10; // Random size between 10px and 40px
-            const bubble = document.createElement("div");
-            bubble.style.position = "absolute";
-            bubble.style.bottom = "-10px"; // Start below the screen
-            bubble.style.left = `${Math.random() * 100}%`;
-            bubble.style.width = `${size}px`;
-            bubble.style.height = `${size}px`;
-            bubble.style.borderRadius = "50%";
-            bubble.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
-            bubble.style.border = "1px solid rgba(255, 255, 255, 0.3)";
-            bubble.style.animation = `rise ${animationSpeed}s linear infinite`;
-
-            container.appendChild(bubble);
-            animationElements.push(bubble);
-        }
-    }, spawnInterval);
-
-    const style = document.createElement("style");
-    style.innerHTML = `
-        @keyframes rise {
-            0% { transform: translateY(0); opacity: 0; }
-            10% { opacity: 1; } /* Fade in */
-            100% { transform: translateY(-100vh); opacity: 0; } /* Fade out */
-        }
-    `;
-    document.head.appendChild(style);
-}
-
-// Create leaf animation (match leafy.html)
-function createLeaves(container) {
+// Create leaf animation with layers
+function createLeafLayers(container) {
     const leafImages = [
         "leafs/leaves1.png",
         "leafs/leaves2.png",
         "leafs/leaves3.png",
         "leafs/leaves4.png"
     ];
-    const spawnInterval = 500; // Spawn leaves every 500ms
-    const animationSpeed = 12; // Fixed animation duration (seconds)
+    const layers = ["layer1", "layer2", "layer3"];
+    const animationSpeeds = [15, 12, 10]; // Animation speeds for each layer
 
-    animationInterval = setInterval(() => {
-        for (let i = 0; i < 3; i++) { // Spawn 3 leaves at a time
+    layers.forEach((layerName, index) => {
+        const layer = document.createElement("div");
+        layer.classList.add("falling-leaves-layer", layerName);
+
+        for (let i = 0; i < 3; i++) { // Add 3 leaves per layer
             const leaf = document.createElement("img");
             const randomLeaf = leafImages[Math.floor(Math.random() * leafImages.length)];
+            const randomX = Math.random(); // Random horizontal starting position
             const scale = Math.random() * 0.5 + 0.5; // Random scale between 0.5 and 1.0
 
             leaf.src = randomLeaf;
-            leaf.style.position = "absolute";
-            leaf.style.top = "-10px";
-            leaf.style.left = `${Math.random() * 100}%`;
-            leaf.style.width = `${50 * scale}px`; // Scaled width
-            leaf.style.height = "auto";
-            leaf.style.opacity = "0.8";
-            leaf.style.animation = `fall-rotate ${animationSpeed}s linear infinite`;
+            leaf.alt = `Leaf ${i + 1}`;
+            leaf.style.setProperty("--random-x", randomX);
+            leaf.style.setProperty("--scale", scale);
 
-            container.appendChild(leaf);
-            animationElements.push(leaf);
+            layer.appendChild(leaf);
         }
-    }, spawnInterval);
 
+        container.appendChild(layer);
+    });
+
+    addLeafAnimationStyles();
+}
+
+// Add styles for leaf animation
+function addLeafAnimationStyles() {
     const style = document.createElement("style");
     style.innerHTML = `
-        @keyframes fall-rotate {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; } /* Fade in */
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } /* Fade out */
+        /* Falling Leaves Layers */
+        .falling-leaves-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Prevent scrolling */
+            pointer-events: none; /* Leaves should not interact with the user */
+            z-index: 0; /* Place behind all other content */
+        }
+
+        /* Random Leaf Sizes */
+        .falling-leaves-layer img {
+            position: absolute;
+            width: calc(5vw + 5vw * var(--scale)); /* Randomized sizes */
+            height: auto;
+            opacity: 0.8; /* Slight transparency for depth */
+        }
+
+        /* Layer 1 (Far Background) */
+        .layer1 img {
+            animation: animateLayer1 15s linear infinite;
+        }
+
+        @keyframes animateLayer1 {
+            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); transform: translateX(10px) scale(var(--scale)); opacity: 0; }
+            10% { opacity: 1; } /* Fade in as it enters the screen */
+            50% { transform: translateX(-10px) rotate(45deg); }
+            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-10px) scale(var(--scale)) rotate(90deg); opacity: 0; }
+        }
+
+        /* Layer 2 (Middle Background) */
+        .layer2 img {
+            animation: animateLayer2 12s linear infinite;
+        }
+
+        @keyframes animateLayer2 {
+            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); transform: translateX(20px) scale(var(--scale)); opacity: 0; }
+            10% { opacity: 1; } /* Fade in as it enters the screen */
+            50% { transform: translateX(-20px) rotate(90deg); }
+            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-20px) scale(var(--scale)) rotate(180deg); opacity: 0; }
+        }
+
+        /* Layer 3 (Foreground) */
+        .layer3 img {
+            animation: animateLayer3 10s linear infinite;
+        }
+
+        @keyframes animateLayer3 {
+            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); transform: translateX(30px) scale(var(--scale)); opacity: 0; }
+            10% { opacity: 1; } /* Fade in as it enters the screen */
+            50% { transform: translateX(-30px) rotate(135deg); }
+            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-30px) scale(var(--scale)) rotate(270deg); opacity: 0; }
         }
     `;
     document.head.appendChild(style);
