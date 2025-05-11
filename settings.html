@@ -3,105 +3,414 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings</title>
+    <title>Advanced Settings</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #8B4513, #A0522D, #CD853F);
-            color: white;
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #A0522D;
+            --accent-color: #CD853F;
+            --text-color: #ffffff;
         }
         
-        .container {
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+        }
+        
+        .settings-container {
             max-width: 800px;
             margin: 0 auto;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeIn 0.5s forwards 0.3s;
         }
         
-        h1, h2 {
+        @keyframes fadeIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        h1 {
             text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            position: relative;
         }
         
-        .setting-group {
-            margin-bottom: 20px;
-            padding: 15px;
+        h1::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+        
+        .settings-section {
+            margin-bottom: 30px;
+            padding: 20px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border-left: 3px solid var(--accent-color);
+        }
+        
+        .settings-section:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            margin-top: 0;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
         }
         
         label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
         }
         
-        input, select {
+        input[type="text"], 
+        input[type="color"],
+        select {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
         }
         
-        button {
-            background: #4CAF50;
+        input[type="text"]:focus, 
+        select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(205, 133, 63, 0.3);
+        }
+        
+        .animation-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .animation-option {
+            position: relative;
+            cursor: pointer;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 80px;
+            background: rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .animation-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .animation-option.active {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 15px var(--accent-color);
+        }
+        
+        .animation-option img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        
+        .animation-option:hover img {
+            opacity: 1;
+        }
+        
+        .animation-option span {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .save-btn {
+            background: var(--accent-color);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 15px 30px;
+            border-radius: 50px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
             display: block;
-            margin: 20px auto;
+            margin: 30px auto 0;
             width: 200px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
         
-        button:hover {
-            background: #45a049;
+        .save-btn:hover {
+            background: #e6a048;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .save-btn:active {
+            transform: translateY(1px);
+        }
+        
+        /* Animation elements - will be shown based on selection */
+        .animation-element {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Leaf animation */
+        .leaf {
+            width: 30px;
+            height: 30px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ffffff"><path d="M17 8C8 10 5.9 16.2 4 20c2-3.5 3.9-5.7 7-7 1.8 5 8 3 8-3 0-3-1-6-3-7 0 3-2 5-5 5z"/></svg>');
+            background-size: contain;
+            opacity: 0.8;
+            animation: falling linear infinite;
+        }
+        
+        /* Snowflake animation */
+        .snowflake {
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: falling linear infinite;
+        }
+        
+        /* Bubble animation */
+        .bubble {
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: floatUp linear infinite;
+        }
+        
+        /* Particle animation */
+        .particle {
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: particleMove linear infinite;
+        }
+        
+        @keyframes falling {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes particleMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(100px, 100px);
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Settings</h1>
+    <button class="back-btn" onclick="window.location.href='index.html'">← Back</button>
+    
+    <div class="settings-container">
+        <h1>Advanced Settings</h1>
         
-        <div class="setting-group">
+        <div class="settings-section">
             <h2>Tab Customization</h2>
-            <label for="tabTitle">Tab Title:</label>
-            <input type="text" id="tabTitle" placeholder="My Awesome Site">
-            
-            <label for="tabIcon">Tab Icon URL:</label>
-            <input type="text" id="tabIcon" placeholder="https://example.com/favicon.ico">
+            <div class="form-group">
+                <label for="tabTitle">Tab Title:</label>
+                <input type="text" id="tabTitle" placeholder="My Awesome Site">
+            </div>
+            <div class="form-group">
+                <label for="tabIcon">Tab Icon URL:</label>
+                <input type="text" id="tabIcon" placeholder="https://example.com/favicon.ico">
+            </div>
         </div>
         
-        <div class="setting-group">
-            <h2>Theme Settings</h2>
-            <label for="themeColor">Theme Color:</label>
-            <input type="color" id="themeColor" value="#8B4513">
+        <div class="settings-section">
+            <h2>Theme Colors</h2>
+            <div class="form-group">
+                <label for="primaryColor">Primary Color:</label>
+                <input type="color" id="primaryColor" value="#8B4513">
+            </div>
+            <div class="form-group">
+                <label for="secondaryColor">Secondary Color:</label>
+                <input type="color" id="secondaryColor" value="#A0522D">
+            </div>
+            <div class="form-group">
+                <label for="accentColor">Accent Color:</label>
+                <input type="color" id="accentColor" value="#CD853F">
+            </div>
         </div>
         
-        <button id="saveBtn">Save Settings</button>
+        <div class="settings-section">
+            <h2>Background Animation</h2>
+            <div class="form-group">
+                <label>Select Animation Style:</label>
+                <div class="animation-options">
+                    <div class="animation-option active" data-animation="leaves">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTE3IDhDOCAxMCA1LjkgMTYuMiA0IDIwYzItMy41IDMuOS01LjcgNy03IDEuOCA1IDggMyA4LTMgMC0zLTEtNi0zLTcgMCAzLTIgNS01IDV6IiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==" alt="Leaves">
+                        <span>Leaves</span>
+                    </div>
+                    <div class="animation-option" data-animation="snow">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJMMTUgMTBMMjEgMTBMMTUgMTRMMTkgMjFMMTIgMTdMNSAyMUw5IDE0TDMgMTBMOSAxMFoiIGZpbGw9IndoaXRlIi8+PC9zdmc+" alt="Snow">
+                        <span>Snow</span>
+                    </div>
+                    <div class="animation-option" data-animation="bubbles">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMiIvPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjYiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMiIvPjwvc3ZnPg==" alt="Bubbles">
+                        <span>Bubbles</span>
+                    </div>
+                    <div class="animation-option" data-animation="particles">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMiIgZmlsbD0id2hpdGUiLz48Y2lyY2xlIGN4PSI2IiBjeT0iNiIgcj0iMSIgZmlsbD0id2hpdGUiLz48Y2lyY2xlIGN4PSIxOCIgY3k9IjYiIHI9IjEiIGZpbGw9IndoaXRlIi8+PGNpcmNsZSBjeD0iNiIgY3k9IjE4IiByPSIxIiBmaWxsPSJ3aGl0ZSIvPjxjaXJjbGUgY3g9IjE4IiBjeT0iMTgiIHI9IjEiIGZpbGw9IndoaXRlIi8+PC9zdmc+" alt="Particles">
+                        <span>Particles</span>
+                    </div>
+                    <div class="animation-option" data-animation="none">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTE5IDEzSDV2LTJoMTR2MnoiIGZpbGw9IndoaXRlIi8+PC9zdmc+" alt="None">
+                        <span>None</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="animationSpeed">Animation Speed:</label>
+                <input type="range" id="animationSpeed" min="1" max="10" value="5">
+            </div>
+            <div class="form-group">
+                <label for="animationDensity">Animation Density:</label>
+                <input type="range" id="animationDensity" min="1" max="10" value="5">
+            </div>
+        </div>
+        
+        <button id="saveBtn" class="save-btn">Save Settings</button>
     </div>
 
     <script>
-        // Load settings when page loads
+        // Current animation elements
+        let animationElements = [];
+        let currentAnimation = 'leaves';
+        let animationInterval;
+        
+        // DOM Content Loaded
         document.addEventListener('DOMContentLoaded', function() {
             loadSettings();
+            setupEventListeners();
+            startAnimation();
         });
-
-        // Save button click handler
-        document.getElementById('saveBtn').addEventListener('click', saveSettings);
-
+        
+        // Set up all event listeners
+        function setupEventListeners() {
+            // Save button
+            document.getElementById('saveBtn').addEventListener('click', saveSettings);
+            
+            // Animation option selection
+            document.querySelectorAll('.animation-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.animation-option').forEach(opt => {
+                        opt.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    currentAnimation = this.dataset.animation;
+                    startAnimation();
+                });
+            });
+            
+            // Theme color changes
+            document.getElementById('primaryColor').addEventListener('input', updateThemeColors);
+            document.getElementById('secondaryColor').addEventListener('input', updateThemeColors);
+            document.getElementById('accentColor').addEventListener('input', updateThemeColors);
+            
+            // Animation speed/density changes
+            document.getElementById('animationSpeed').addEventListener('input', updateAnimationSpeed);
+            document.getElementById('animationDensity').addEventListener('input', updateAnimationDensity);
+        }
+        
         // Load settings from localStorage
         function loadSettings() {
             const settings = JSON.parse(localStorage.getItem('siteSettings')) || {};
             
+            // Tab Customization
             if (settings.tabTitle) {
                 document.getElementById('tabTitle').value = settings.tabTitle;
                 document.title = settings.tabTitle;
@@ -112,18 +421,42 @@
                 updateFavicon(settings.tabIcon);
             }
             
-            if (settings.themeColor) {
-                document.getElementById('themeColor').value = settings.themeColor;
-                updateTheme(settings.themeColor);
+            // Theme Colors
+            if (settings.primaryColor) {
+                document.getElementById('primaryColor').value = settings.primaryColor;
+            }
+            if (settings.secondaryColor) {
+                document.getElementById('secondaryColor').value = settings.secondaryColor;
+            }
+            if (settings.accentColor) {
+                document.getElementById('accentColor').value = settings.accentColor;
+            }
+            updateThemeColors();
+            
+            // Background Animation
+            if (settings.animationStyle) {
+                currentAnimation = settings.animationStyle;
+                document.querySelector(`.animation-option[data-animation="${settings.animationStyle}"]`).classList.add('active');
+            }
+            if (settings.animationSpeed) {
+                document.getElementById('animationSpeed').value = settings.animationSpeed;
+            }
+            if (settings.animationDensity) {
+                document.getElementById('animationDensity').value = settings.animationDensity;
             }
         }
-
+        
         // Save settings to localStorage
         function saveSettings() {
             const settings = {
                 tabTitle: document.getElementById('tabTitle').value,
                 tabIcon: document.getElementById('tabIcon').value,
-                themeColor: document.getElementById('themeColor').value
+                primaryColor: document.getElementById('primaryColor').value,
+                secondaryColor: document.getElementById('secondaryColor').value,
+                accentColor: document.getElementById('accentColor').value,
+                animationStyle: currentAnimation,
+                animationSpeed: document.getElementById('animationSpeed').value,
+                animationDensity: document.getElementById('animationDensity').value
             };
             
             localStorage.setItem('siteSettings', JSON.stringify(settings));
@@ -137,11 +470,20 @@
                 updateFavicon(settings.tabIcon);
             }
             
-            updateTheme(settings.themeColor);
+            updateThemeColors();
             
-            alert('Settings saved successfully!');
+            // Show save confirmation
+            const saveBtn = document.getElementById('saveBtn');
+            const originalText = saveBtn.textContent;
+            saveBtn.textContent = 'Saved!';
+            saveBtn.style.backgroundColor = '#4CAF50';
+            
+            setTimeout(() => {
+                saveBtn.textContent = originalText;
+                saveBtn.style.backgroundColor = '';
+            }, 2000);
         }
-
+        
         // Update favicon
         function updateFavicon(iconUrl) {
             let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
@@ -150,28 +492,42 @@
             link.href = iconUrl;
             document.head.appendChild(link);
         }
-
-        // Update theme color
-        function updateTheme(color) {
-            document.body.style.background = `linear-gradient(135deg, ${color}, ${adjustBrightness(color, -20)}, ${adjustBrightness(color, 20)})`;
-        }
-
-        // Helper function to adjust color brightness
-        function adjustBrightness(color, percent) {
-            const num = parseInt(color.replace("#", ""), 16);
-            const amt = Math.round(2.55 * percent);
+        
+        // Update theme colors
+        function updateThemeColors() {
+            const primary = document.getElementById('primaryColor').value;
+            const secondary = document.getElementById('secondaryColor').value;
+            const accent = document.getElementById('accentColor').value;
             
-            const R = (num >> 16) + amt;
-            const G = (num >> 8 & 0x00FF) + amt;
-            const B = (num & 0x0000FF) + amt;
+            document.documentElement.style.setProperty('--primary-color', primary);
+            document.documentElement.style.setProperty('--secondary-color', secondary);
+            document.documentElement.style.setProperty('--accent-color', accent);
             
-            return `#${(
-                0x1000000 +
-                (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
-                (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 +
-                (B < 255 ? (B < 1 ? 0 : B) : 255)
-            ).toString(16).slice(1)}`;
+            document.body.style.background = `linear-gradient(135deg, ${primary}, ${secondary}, ${accent})`;
         }
-    </script>
-</body>
-</html>
+        
+        // Start the selected animation
+        function startAnimation() {
+            // Clear any existing animations
+            clearInterval(animationInterval);
+            animationElements.forEach(el => {
+                if (el.parentNode) {
+                    el.parentNode.removeChild(el);
+                }
+            });
+            animationElements = [];
+            
+            const density = document.getElementById('animationDensity').value;
+            const speed = document.getElementById('animationSpeed').value;
+            
+            if (currentAnimation === 'none') return;
+            
+            // Create new animation elements based on selection
+            const count = Math.floor(density * 5);
+            
+            animationInterval = setInterval(() => {
+                if (animationElements.length > count * 3) {
+                    const toRemove = animationElements.shift();
+                    if (toRemove.parentNode) {
+                        toRemove.parentNode.removeChild(toRemove);
+       
