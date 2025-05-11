@@ -55,7 +55,7 @@ function createBubbleLayers(container) {
 
         for (let i = 0; i < 5; i++) { // Add 5 bubbles per layer
             const bubble = document.createElement("div");
-            const randomX = Math.random(); // Random horizontal starting position
+            const randomX = Math.random(); // Horizontal starting position
             const randomDirection = Math.random() * 40 - 20; // Random horizontal drift direction
             const size = Math.random() * 20 + 10; // Random size between 10px and 30px
 
@@ -89,20 +89,20 @@ function addBubbleAnimationStyles() {
 
         .bubble-layer div {
             position: absolute;
-            bottom: 0; /* Bubbles now start from the very bottom of the screen */
+            bottom: -5%; /* Bubbles start slightly below the bottom of the screen */
             left: calc(5% + 90% * var(--random-x));
             width: var(--size);
             height: var(--size);
-            background-color: var(--primary-color, #8B4513); /* Use theme primary color */
+            background-color: var(--primary-color, #8B4513); /* Use primary theme color */
             border-radius: 50%;
             opacity: 0.8;
-            animation: rise 15s linear infinite;
+            animation: rise 12s linear infinite;
         }
 
         @keyframes rise {
             0% { transform: translate(0, 0); opacity: 0; }
             10% { opacity: 1; } /* Fade in */
-            100% { transform: translate(var(--random-direction), -110vh); opacity: 0; } /* Fade out above the screen */
+            100% { transform: translate(var(--random-direction), -120vh); opacity: 0; } /* Fade out above the screen */
         }
     `;
     document.head.appendChild(style);
@@ -125,11 +125,11 @@ function createLeafLayers(container) {
         for (let i = 0; i < 3; i++) { // Add 3 leaves per layer
             const leaf = document.createElement("img");
             const randomLeaf = leafImages[Math.floor(Math.random() * leafImages.length)];
-            const randomX = Math.random(); // Random horizontal starting position
+            const randomX = Math.random(); // Horizontal starting position
             const scale = Math.random() * 0.5 + 0.5; // Random scale between 0.5 and 1.0
 
             leaf.src = randomLeaf;
-            leaf.alt = `Leaf ${i + 1}`;
+            leaf.alt = "Leaf";
             leaf.style.setProperty("--random-x", randomX);
             leaf.style.setProperty("--scale", scale);
 
@@ -171,9 +171,9 @@ function addLeafAnimationStyles() {
         }
 
         @keyframes animateLayer1 {
-            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(0deg); }
+            0% { top: -10%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(0deg); }
             10% { opacity: 1; } /* Fade in */
-            100% { top: 110vh; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); } /* Fade out at the bottom */
+            100% { top: 120vh; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); } /* Fade out at the bottom */
         }
 
         /* Layer 2 (Middle Background) */
@@ -182,9 +182,9 @@ function addLeafAnimationStyles() {
         }
 
         @keyframes animateLayer2 {
-            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(0deg); }
+            0% { top: -10%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(0deg); }
             10% { opacity: 1; } /* Fade in */
-            100% { top: 110vh; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); } /* Fade out at the bottom */
+            100% { top: 120vh; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); } /* Fade out at the bottom */
         }
 
         /* Layer 3 (Foreground) */
@@ -193,9 +193,9 @@ function addLeafAnimationStyles() {
         }
 
         @keyframes animateLayer3 {
-            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(0deg); }
+            0% { top: -10%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(0deg); }
             10% { opacity: 1; } /* Fade in */
-            100% { top: 110vh; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); } /* Fade out at the bottom */
+            100% { top: 120vh; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); } /* Fade out at the bottom */
         }
     `;
     document.head.appendChild(style);
