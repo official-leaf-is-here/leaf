@@ -56,9 +56,11 @@ function createBubbleLayers(container) {
         for (let i = 0; i < 5; i++) { // Add 5 bubbles per layer
             const bubble = document.createElement("div");
             const randomX = Math.random(); // Random horizontal starting position
+            const randomDirection = Math.random() * 20 - 10; // Random horizontal drifting direction
             const size = Math.random() * 20 + 10; // Random size between 10px and 30px
 
             bubble.style.setProperty("--random-x", randomX);
+            bubble.style.setProperty("--random-direction", randomDirection + "px");
             bubble.style.setProperty("--size", size + "px");
             layer.appendChild(bubble);
         }
@@ -98,9 +100,9 @@ function addBubbleAnimationStyles() {
         }
 
         @keyframes rise {
-            0% { transform: translateY(0); opacity: 0; }
+            0% { transform: translate(0, 0); opacity: 0; }
             10% { opacity: 1; } /* Fade in */
-            100% { transform: translateY(-100vh); opacity: 0; } /* Fade out */
+            100% { transform: translate(var(--random-direction), -100vh); opacity: 0; } /* Fade out with random drift */
         }
     `;
     document.head.appendChild(style);
