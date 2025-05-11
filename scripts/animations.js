@@ -25,6 +25,12 @@ function startAnimation(animationType) {
         case "leaves":
             createLeafLayers(container);
             break;
+        case "bubbles":
+            createBubbleLayers(container);
+            break;
+        case "snow":
+            createSnowflakeLayers(container);
+            break;
         default:
             clearAnimation();
     }
@@ -39,7 +45,131 @@ function clearAnimation() {
     clearInterval(animationInterval);
 }
 
-// Create leaf animation with layers
+// Create bubble animation with layers
+function createBubbleLayers(container) {
+    const layers = ["layer1", "layer2", "layer3"];
+    const animationSpeeds = [15, 12, 10]; // Animation speeds for each layer
+
+    layers.forEach((layerName, index) => {
+        const layer = document.createElement("div");
+        layer.classList.add("bubble-layer", layerName);
+
+        for (let i = 0; i < 5; i++) { // Add 5 bubbles per layer
+            const bubble = document.createElement("div");
+            const randomX = Math.random(); // Random horizontal starting position
+            const size = Math.random() * 20 + 10; // Random size between 10px and 30px
+
+            bubble.style.setProperty("--random-x", randomX);
+            bubble.style.setProperty("--size", size + "px");
+            layer.appendChild(bubble);
+        }
+
+        container.appendChild(layer);
+    });
+
+    addBubbleAnimationStyles();
+}
+
+// Create snowflake animation with layers
+function createSnowflakeLayers(container) {
+    const layers = ["layer1", "layer2", "layer3"];
+    const animationSpeeds = [15, 12, 10]; // Animation speeds for each layer
+
+    layers.forEach((layerName, index) => {
+        const layer = document.createElement("div");
+        layer.classList.add("snowflake-layer", layerName);
+
+        for (let i = 0; i < 5; i++) { // Add 5 snowflakes per layer
+            const snowflake = document.createElement("div");
+            const randomX = Math.random(); // Random horizontal starting position
+            const size = Math.random() * 20 + 10; // Random size between 10px and 30px
+
+            snowflake.style.setProperty("--random-x", randomX);
+            snowflake.style.setProperty("--size", size + "px");
+            layer.appendChild(snowflake);
+        }
+
+        container.appendChild(layer);
+    });
+
+    addSnowflakeAnimationStyles();
+}
+
+// Add styles for bubble animation
+function addBubbleAnimationStyles() {
+    const style = document.createElement("style");
+    style.innerHTML = `
+        /* Bubble Layers */
+        .bubble-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bubble-layer div {
+            position: absolute;
+            bottom: -10%; /* Start below the screen */
+            left: calc(5% + 90% * var(--random-x));
+            width: var(--size);
+            height: var(--size);
+            background-color: var(--primary-color, #8B4513); /* Use theme primary color */
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: rise 15s linear infinite;
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(0); opacity: 0; }
+            10% { opacity: 1; } /* Fade in */
+            100% { transform: translateY(-100vh); opacity: 0; } /* Fade out */
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Add styles for snowflake animation
+function addSnowflakeAnimationStyles() {
+    const style = document.createElement("style");
+    style.innerHTML = `
+        /* Snowflake Layers */
+        .snowflake-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .snowflake-layer div {
+            position: absolute;
+            top: -10%; /* Start above the screen */
+            left: calc(5% + 90% * var(--random-x));
+            width: var(--size);
+            height: var(--size);
+            background-color: var(--secondary-color, #A0522D); /* Use theme secondary color */
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall 15s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0); opacity: 0; }
+            10% { opacity: 1; } /* Fade in */
+            100% { transform: translateY(100vh); opacity: 0; } /* Fade out */
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Create leaf animation with layers (unchanged)
 function createLeafLayers(container) {
     const leafImages = [
         "leafs/leaves1.png",
@@ -74,7 +204,7 @@ function createLeafLayers(container) {
     addLeafAnimationStyles();
 }
 
-// Add styles for leaf animation
+// Add styles for leaf animation (unchanged)
 function addLeafAnimationStyles() {
     const style = document.createElement("style");
     style.innerHTML = `
@@ -85,9 +215,9 @@ function addLeafAnimationStyles() {
             left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden; /* Prevent scrolling */
-            pointer-events: none; /* Leaves should not interact with the user */
-            z-index: 0; /* Place behind all other content */
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
         }
 
         /* Random Leaf Sizes */
