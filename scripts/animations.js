@@ -1,7 +1,6 @@
 // Animation manager for dynamic background animations
 
 const animationContainerId = "animationContainer";
-let animationInterval;
 let activeAnimation = "none";
 
 // Start animations based on user selection
@@ -28,9 +27,6 @@ function startAnimation(animationType) {
         case "bubbles":
             createBubbleLayers(container);
             break;
-        case "snow":
-            createSnowflakeLayers(container);
-            break;
         default:
             clearAnimation();
     }
@@ -42,7 +38,6 @@ function clearAnimation() {
     if (container) {
         container.remove();
     }
-    clearInterval(animationInterval);
 }
 
 // Create bubble animation with layers
@@ -55,7 +50,7 @@ function createBubbleLayers(container) {
 
         for (let i = 0; i < 5; i++) { // Add 5 bubbles per layer
             const bubble = document.createElement("div");
-            const randomX = Math.random(); // Horizontal starting position
+            const randomX = Math.random(); // Random horizontal starting position
             const randomDirection = Math.random() * 40 - 20; // Random horizontal drift direction
             const size = Math.random() * 20 + 10; // Random size between 10px and 30px
 
@@ -125,7 +120,7 @@ function createLeafLayers(container) {
         for (let i = 0; i < 3; i++) { // Add 3 leaves per layer
             const leaf = document.createElement("img");
             const randomLeaf = leafImages[Math.floor(Math.random() * leafImages.length)];
-            const randomX = Math.random(); // Horizontal starting position
+            const randomX = Math.random(); // Random horizontal starting position
             const scale = Math.random() * 0.5 + 0.5; // Random scale between 0.5 and 1.0
 
             leaf.src = randomLeaf;
@@ -153,11 +148,12 @@ function addLeafAnimationStyles() {
             left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 0;
+            overflow: hidden; /* Prevent scrolling */
+            pointer-events: none; /* Leaves should not interact with the user */
+            z-index: 0; /* Place behind all other content */
         }
 
+        /* Random Leaf Sizes */
         .falling-leaves-layer img {
             position: absolute;
             width: calc(5vw + 5vw * var(--scale)); /* Randomized sizes */
@@ -171,9 +167,10 @@ function addLeafAnimationStyles() {
         }
 
         @keyframes animateLayer1 {
-            0% { top: -10%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(0deg); }
-            10% { opacity: 1; } /* Fade in */
-            100% { top: 120vh; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); } /* Fade out at the bottom */
+            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); transform: translateX(10px) scale(var(--scale)); opacity: 0; }
+            10% { opacity: 1; } /* Fade in as it enters the screen */
+            50% { transform: translateX(-10px) rotate(45deg); }
+            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-10px) scale(var(--scale)) rotate(90deg); opacity: 0; }
         }
 
         /* Layer 2 (Middle Background) */
@@ -182,9 +179,10 @@ function addLeafAnimationStyles() {
         }
 
         @keyframes animateLayer2 {
-            0% { top: -10%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(0deg); }
-            10% { opacity: 1; } /* Fade in */
-            100% { top: 120vh; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); } /* Fade out at the bottom */
+            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); transform: translateX(20px) scale(var(--scale)); opacity: 0; }
+            10% { opacity: 1; } /* Fade in as it enters the screen */
+            50% { transform: translateX(-20px) rotate(90deg); }
+            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-20px) scale(var(--scale)) rotate(180deg); opacity: 0; }
         }
 
         /* Layer 3 (Foreground) */
@@ -193,9 +191,10 @@ function addLeafAnimationStyles() {
         }
 
         @keyframes animateLayer3 {
-            0% { top: -10%; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(0deg); }
-            10% { opacity: 1; } /* Fade in */
-            100% { top: 120vh; left: calc(5% + 90% * var(--random-x)); opacity: 0; transform: rotate(360deg); } /* Fade out at the bottom */
+            0% { top: -30%; left: calc(5% + 90% * var(--random-x)); transform: translateX(30px) scale(var(--scale)); opacity: 0; }
+            10% { opacity: 1; } /* Fade in as it enters the screen */
+            50% { transform: translateX(-30px) rotate(135deg); }
+            100% { top: 110%; left: calc(5% + 90% * var(--random-x)); transform: translateX(-30px) scale(var(--scale)) rotate(270deg); opacity: 0; }
         }
     `;
     document.head.appendChild(style);
